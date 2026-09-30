@@ -60,4 +60,4 @@ against about 293 authored and 487–591 as-played in PlayCanvas.
 ## Deployment
 
 GitHub: [Marcsarno/dumpling-2.0](https://github.com/Marcsarno/dumpling-2.0) (public), with its own Vercel project. Never the PlayCanvas repo, whose `main`
-auto-deploys to production). Vercel needs `ENABLE_EXPERIMENTAL_COREPACK=1` so the pinned pnpm is used.
+auto-deploys to production. Vercel needs `ENABLE_EXPERIMENTAL_COREPACK=1` so the pinned pnpm is used.
