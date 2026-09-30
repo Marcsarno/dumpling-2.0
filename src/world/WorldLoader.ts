@@ -1,11 +1,12 @@
 import {
-  BoxGeometry, CapsuleGeometry, ConeGeometry, CylinderGeometry, Group, Mesh, Object3D, PlaneGeometry, SphereGeometry,
+  Box3, BoxGeometry, CapsuleGeometry, ConeGeometry, CylinderGeometry, Group, Mesh, Object3D, PlaneGeometry, SphereGeometry,
   type BufferGeometry, type Material,
 } from 'three';
 import {GLTFLoader, type GLTF} from 'three/addons/loaders/GLTFLoader.js';
 import type {RegionFile, WorldNode} from './format';
 import {MaterialLibrary} from './materials';
 import {batchStatic} from './staticBatch';
+import type {GroundSurface} from '../characters/CharacterAnimator';
 
 /** PlayCanvas procedural primitives at their default dimensions (unit size, same segment counts). */
 const PRIMITIVES: Record<string, () => BufferGeometry> = {
@@ -67,6 +68,7 @@ export interface LoadedRegion {
   root: Group;
   data: RegionFile;
   problems: string[];
+  surfaces: GroundSurface[];
   stats: {nodes: number; meshes: number; triangles: number; hiddenNodes: number; batches: number; batchedMeshes: number};
   dispose(): void;
 }
@@ -125,6 +127,14 @@ export async function loadRegion(region: string, base = import.meta.env.BASE_URL
   const root = new Group(); root.name = `region:${region}`; root.add(objects[0]);
   objects[0].visible = true; // environment roots are toggled by the scene, not by their saved flag
   root.updateMatrixWorld(true);
+  // Walkable surfaces for visual foot contact (PlayCanvas CharacterGrounding), before batching merges them.
+  const surfaces: GroundSurface[] = [];
+  const visible = (o: Object3D) => { for (let p: Object3D | null = o; p; p = p.parent) if (!p.visible) return false; return true; };
+  data.nodes.forEach((node, i) => {
+    if (!node.shape || !/(?:floor|rug|runner|mat)$/i.test(node.name) || !visible(objects[i])) return;
+    const box = new Box3().setFromObject(objects[i]);
+    surfaces.push({minX: box.min.x, maxX: box.max.x, minZ: box.min.z, maxZ: box.max.z, top: box.max.y, oval: node.shape.type === 'cylinder'});
+  });
   // Props the player picks up, uses or that change state stay individual meshes.
   const keyOf = (o: Object3D) => { for (let p: Object3D | null = o; p; p = p.parent) { const key = p.userData.world?.key as string | undefined; if (key) return key; } return undefined; };
   const batching = batch ? batchStatic(root, mesh => /^(Cleanup props|Daily routines)\//.test(keyOf(mesh) ?? '')) : {batches: [], merged: 0, kept: 0};
@@ -135,6 +145,6 @@ export async function loadRegion(region: string, base = import.meta.env.BASE_URL
     if (mesh.isMesh && mesh.layers.mask !== 0) { meshes++; const g = mesh.geometry; triangles += (g.index ? g.index.count : g.getAttribute('position').count) / 3; }
   });
   for (const p of problems) console.error('World problem:', p);
-  return {region, root, data, problems, stats: {nodes: data.nodes.length, meshes, triangles, hiddenNodes, batches: batching.batches.length, batchedMeshes: batching.merged},
+  return {region, root, data, problems, surfaces, stats: {nodes: data.nodes.length, meshes, triangles, hiddenNodes, batches: batching.batches.length, batchedMeshes: batching.merged},
     dispose() { root.removeFromParent(); for (const b of batching.batches) b.geometry.dispose(); library.dispose(); urls.forEach(release); }};
 }

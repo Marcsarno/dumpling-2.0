@@ -26,7 +26,7 @@ const index=JSON.parse(readFileSync(resolve(dist,'world/index.json'),'utf8'));
 for(const [name,region] of Object.entries(index.regions))
  if(sha256(readFileSync(resolve(dist,region.file)))!==region.sha256)throw Error(`dist/${region.file} differs from world/index.json (${name})`);
 
-const entry=readdirSync(resolve(dist,'assets')).find(f=>/^index-.*\.js$/.test(f));
+const entry=readdirSync(resolve(dist,'assets')).find(f=>/^main-.*.js$/.test(f));
 if(!entry)throw Error('No entry bundle in dist/assets');
 let commit=process.env.VERCEL_GIT_COMMIT_SHA;
 if(!commit){try{commit=execFileSync('git',['-C',ROOT,'rev-parse','HEAD'],{encoding:'utf8',stdio:['ignore','pipe','ignore']}).trim();}catch{commit='uncommitted';}}

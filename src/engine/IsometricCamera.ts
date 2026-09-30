@@ -36,6 +36,20 @@ export class IsometricCamera {
     this.apply();
   }
 
+  /** Settle toward a floor point like the game's follow camera (1 − e^(−10·dt)). */
+  follow(focusX: number, focusZ: number, dt: number) {
+    const k = 1 - Math.exp(-10 * dt);
+    this.offset.x += (focusX - this.offset.x) * k; this.offset.z += (focusZ - .9 - this.offset.z) * k;
+    this.heightOverride = null; this.apply();
+  }
+
+  /** Screen-right and screen-up directions on the floor plane, for camera-relative movement. */
+  groundAxes() {
+    const right = new Vector3(1, 0, 0).applyQuaternion(this.camera.quaternion), forward = new Vector3(0, 0, -1).applyQuaternion(this.camera.quaternion);
+    right.y = forward.y = 0; right.normalize(); forward.normalize();
+    return {right: {x: right.x, z: right.z}, forward: {x: forward.x, z: forward.z}};
+  }
+
   private apply() {
     const h = this.heightOverride ?? this.playHeight, c = this.camera;
     c.left = -h * this.aspect; c.right = h * this.aspect; c.top = h; c.bottom = -h;

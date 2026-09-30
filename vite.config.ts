@@ -11,5 +11,6 @@ export default defineConfig({
     assetsInlineLimit: 0,
     sourcemap: true,
     chunkSizeWarningLimit: 1200,
+    rollupOptions: {input: {main: 'index.html', lab: 'lab.html'}},
   },
 });

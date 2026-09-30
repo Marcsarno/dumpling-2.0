@@ -17,7 +17,8 @@
     "convert": "node tools/convert-editor-scene.mjs",
     "baseline:playcanvas": "node tests/baseline/capture-playcanvas.mjs",
     "capture:three": "node tests/browser/capture-three.mjs",
-    "test:browser": "node tests/browser/no-arianna-writes.mjs"
+    "test:browser": "node tests/browser/no-arianna-writes.mjs && node tests/browser/play-walk.mjs",
+    "capture:motion": "node tests/browser/capture-motion.mjs"
   },
   "dependencies": {
     "three": "0.186.1"

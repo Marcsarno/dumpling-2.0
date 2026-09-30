@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Dumpling Three · motion lab</title>
+  <link rel="icon" href="./favicon.svg">
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #ede6f4; font: 14px system-ui, sans-serif; color: #3d3350; }
+    #game { position: fixed; inset: 0; }
+    #game-canvas { display: block; width: 100%; height: 100%; }
+    #controls { position: fixed; left: 8px; right: 8px; bottom: 8px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+      background: #fffaf2e6; padding: 8px; border-radius: 10px; }
+    #controls select, #controls button { font: inherit; padding: 4px 8px; border-radius: 6px; border: 1px solid #b9a7cd; background: #fff; color: inherit; }
+    #controls input[type=range] { flex: 1 1 160px; }
+    #readout { font-variant-numeric: tabular-nums; min-width: 9ch; }
+    body[data-capture] #controls { display: none; }
+  </style>
+</head>
+<body>
+  <div id="game"><canvas id="game-canvas"></canvas></div>
+  <div id="controls">
+    <select id="clip" aria-label="Clip"></select>
+    <select id="view" aria-label="View"><option>front</option><option>left</option><option>right</option><option>back</option><option>three-quarter</option><option>game</option></select>
+    <button id="play" type="button">Play</button>
+    <input id="time" type="range" min="0" max="1" step="0.001" value="0" aria-label="Time">
+    <span id="readout">0.000 s</span>
+  </div>
+  <script type="module" src="./src/lab/main.ts"></script>
+</body>
+</html>

@@ -14,12 +14,20 @@
     #viewer select { font: inherit; padding: 6px 8px; border-radius: 8px; border: 1px solid #b9a7cd; background: #fffaf2; color: #3d3350; }
     #status { position: fixed; bottom: 8px; left: 8px; z-index: 2; font: 12px system-ui, sans-serif; color: #3d3350; background: #fffaf2cc; padding: 4px 8px; border-radius: 6px; }
     body[data-capture] #viewer, body[data-capture] #status { display: none; }
+    #joystick { position: fixed; left: max(20px, env(safe-area-inset-left)); bottom: max(28px, env(safe-area-inset-bottom)); z-index: 3;
+      width: 132px; height: 132px; border-radius: 50%; background: #fffaf259; border: 2px solid #fffaf2b3; touch-action: none; display: none; }
+    #joystick-knob { position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 50%;
+      background: #b294dc; box-shadow: 0 2px 8px #3d335040; pointer-events: none; }
+    #joystick.dragging #joystick-knob { background: #9b7ac8; }
+    body[data-playing] #joystick { display: block; }
+    body[data-playing] #view { display: none; }
   </style>
 </head>
 <body>
   <div id="game"><canvas id="game-canvas"></canvas></div>
   <div id="viewer"><select id="region" aria-label="Region"></select><select id="view" aria-label="View"></select></div>
   <div id="status" role="status">Loading…</div>
+  <div id="joystick" aria-label="Move"><div id="joystick-knob"></div></div>
   <script type="module" src="./src/main.ts"></script>
 </body>
 </html>

@@ -10,6 +10,7 @@ import {Daylight} from './engine/lighting';
 import {loadRegion, type LoadedRegion} from './world/WorldLoader';
 import type {SceneSettings} from './world/format';
 import {installProbe} from './dev/probe';
+import {PlaySession} from './game/PlaySession';
 import {VIEWPOINTS} from '../tests/viewpoints.mjs';
 
 const params = new URLSearchParams(location.search);
@@ -28,16 +29,19 @@ const camera = new IsometricCamera(settings.camera);
 const daylight = new Daylight(scene, settings);
 
 let frameRequested = false;
+const drawNow = () => { daylight.fit(camera.camera); renderer.render(scene, camera.camera); };
+// Static views render on demand; the play session drives its own frame loop.
 const render = () => {
-  if (frameRequested) return;
+  if (frameRequested || session) return;
   frameRequested = true;
   requestAnimationFrame(() => {
     frameRequested = false;
-    daylight.fit(camera.camera);
-    renderer.render(scene, camera.camera);
+    drawNow();
     if (params.has('loop')) render();
   });
 };
+const playing = !params.has('capture') && !params.has('view') && !params.has('focus');
+let session: PlaySession | undefined;
 watchViewport(document.querySelector<HTMLElement>('#game')!, renderer, (width, height) => { camera.resize(width, height); render(); });
 
 const REGIONS = ['house', 'store-corner', 'store-toys', 'store-collector'];
@@ -49,6 +53,7 @@ async function show(region: string) {
   const next = await loadRegion(region, base, !params.has('nobatch'));
   current?.dispose();
   current = next; scene.add(next.root);
+  session?.setRegion(next);
   status.textContent = `${region}: ${next.stats.meshes} meshes, ${Math.round(next.stats.triangles).toLocaleString()} triangles${next.problems.length ? `, ${next.problems.length} problems` : ''}`;
   render();
 }
@@ -75,5 +80,12 @@ if (initialView) { viewSelect.value = initialView; frameView(initialView); }
 else if (params.has('focus')) {
   const [x, z] = params.get('focus')!.split(',').map(Number);
   camera.frame(x, z, params.has('height') ? Number(params.get('height')) : null); render();
-} else frameView(viewSelect.value);
+} else if (!playing) frameView(viewSelect.value);
+if (playing) {
+  document.body.dataset.playing = '';
+  status.textContent = 'Loading Arianna…';
+  session = await PlaySession.start(scene, renderer, camera, current!, drawNow);
+  status.textContent = 'Move with the joystick, WASD or arrow keys';
+}
+Object.defineProperty(window, '__player', {configurable: true, value: {snapshot: () => session?.snapshot(), session: () => session}});
 document.body.dataset.ready = 'true';
