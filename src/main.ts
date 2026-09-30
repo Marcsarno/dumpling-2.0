@@ -84,7 +84,12 @@ else if (params.has('focus')) {
 if (playing) {
   document.body.dataset.playing = '';
   status.textContent = 'Loading Arianna…';
-  session = await PlaySession.start(scene, renderer, camera, current!, drawNow);
+  // Until doors and travel arrive, the menu offers a preview trip to each shop.
+  const places = document.createElement('details'); places.className = 'adventure-places';
+  places.innerHTML = '<summary>Visit a place (preview)</summary><p>Doors and walking to the shops arrive in a later update.</p>';
+  places.append(regionSelect);
+  session = await PlaySession.start(scene, renderer, camera, current!, drawNow, places);
+  regionSelect.addEventListener('change', () => session?.hud.close());
   status.textContent = 'Move with the joystick, WASD or arrow keys';
 }
 Object.defineProperty(window, '__player', {configurable: true, value: {snapshot: () => session?.snapshot(), session: () => session}});

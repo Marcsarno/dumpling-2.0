@@ -5,6 +5,10 @@ import {CarrySocket, CharacterAnimator, groundHeight} from '../characters/Charac
 import {Lilah} from './Lilah';
 import {Marc} from './Marc';
 import {SunnyPup} from './SunnyPup';
+import {DayLoop} from './DayLoop';
+import {AdventureHUD, type HudState} from '../ui/AdventureHUD';
+import {ActionButton} from '../ui/ActionButton';
+import {STORES} from '../data/hunt';
 import {PlayerMovement, type MovementArea, type Walkable} from './movement';
 import {MoveInput} from '../input/Input';
 import {HOUSE_ROOMS} from '../data/house';
@@ -36,6 +40,11 @@ export class PlaySession {
   lilah?: Lilah;
   marc?: Marc;
   pup?: SunnyPup;
+  /** The household day: clock, chores, wallet and saves. */
+  readonly day: DayLoop;
+  hud!: AdventureHUD;
+  action!: ActionButton;
+  private readonly completed = new Set<string>();
   private region: LoadedRegion;
   private last = 0;
   private running = false;
@@ -46,10 +55,13 @@ export class PlaySession {
     this.movement = new PlayerMovement(axes.right, axes.forward, movementArea(region));
     this.input = new MoveInput(document.querySelector<HTMLElement>('#joystick') ?? undefined, document.querySelector<HTMLElement>('#joystick-knob') ?? undefined);
     this.player.name = 'Player'; scene.add(this.player);
+    this.day = new DayLoop(localStorage);
   }
 
-  static async start(scene: Scene, renderer: WebGLRenderer, camera: IsometricCamera, region: LoadedRegion, draw: () => void) {
+  static async start(scene: Scene, renderer: WebGLRenderer, camera: IsometricCamera, region: LoadedRegion, draw: () => void, extraMenu?: HTMLElement) {
     const session = new PlaySession(scene, renderer, camera, region, draw);
+    session.action = new ActionButton(document.querySelector<HTMLButtonElement>('#action-button')!, () => {}, () => {});
+    session.hud = new AdventureHUD(() => { session.input.reset(); session.action.reset(); }, extraMenu);
     session.character = await loadArianna(renderer);
     const library = buildClipLibrary(session.character);
     session.player.add(session.character.root);
@@ -92,26 +104,47 @@ export class PlaySession {
     if (!this.running) return;
     // Long stalls (tab switches) never teleport her; per-frame dt is capped like PlayCanvas.
     const dt = Math.min(.04, Math.max(0, (now - this.last) / 1000)); this.last = now;
-    this.movement.update(dt, this.input.read());
+    const home = this.region.region === 'house';
+    // The day runs only at home while Arianna is free (PlayCanvas GameLoop pause rules).
+    this.day.update(dt, home && !this.hud.modalOpen && !document.hidden && !this.animator.busy);
+    this.movement.update(dt, this.hud.modalOpen ? {x: 0, y: 0} : this.input.read());
     this.animator.update(dt, this.movement.velocity);
     this.socket.update();
     this.sync(dt);
-    const home = this.region.region === 'house', arianna = this.movement.position, surfaces = this.region.surfaces;
+    const arianna = this.movement.position, surfaces = this.region.surfaces;
     const marc = this.marc?.position, pup = this.pup?.position;
     this.lilah?.update(dt, arianna, surfaces, home, [...(marc ? [{...marc, space: .4}] : []), ...(pup ? [{...pup, space: .35}] : [])]);
     this.marc?.update(dt, arianna, this.lilah?.position ?? null, surfaces, home);
     this.pup?.update(dt, [arianna, ...[this.lilah?.position, this.marc?.position].filter(v => !!v)], surfaces, home);
     this.draw();
+    this.hud.update(this.hudState());
     this.lilah?.updateLabel(this.camera.camera, this.renderer.domElement);
     this.marc?.updateLabel(this.camera.camera, this.renderer.domElement);
     requestAnimationFrame(this.frame);
   };
 
+  /** Where she is: the room at home, or the shop's name. */
+  get location() {
+    if (this.region.region !== 'house') return STORES.find(s => 'store-' + s.id === this.region.region)?.name ?? 'Out and about';
+    const p = this.movement.position, room = HOUSE_ROOMS.find(r => p.x >= r.minX && p.x <= r.maxX && p.z >= r.minZ && p.z <= r.maxZ);
+    return room?.name ?? 'Home';
+  }
+
+  private hudState(): HudState {
+    const s = this.day.state, tasks = this.day.clock.tasks;
+    this.completed.clear(); for (const id of s.done) this.completed.add(id);
+    return {location: this.location, day: s.day, time: this.day.clock.label, phase: s.phase, balance: this.day.balance,
+      tasks, completed: this.completed, hint: this.day.hint, timed: false, remaining: '', urgent: false,
+      clockNote: this.region.region === 'house' ? 'Your day continues while you browse.' : '',
+      action: {ready: false, title: 'Action', detail: 'Come closer'}, message: this.day.message || this.day.problem};
+  }
+
   snapshot() {
     return {position: [this.movement.position.x, this.movement.position.y, this.movement.position.z], velocity: [this.movement.velocity.x, 0, this.movement.velocity.z],
       input: [this.input.value.x, this.input.value.y], animation: this.animator.snapshot(), quality: ariannaQuality(this.character, this.renderer),
       socket: this.socket.getWorldPosition(this.socket.position.clone()).toArray(), lilah: this.lilah?.snapshot(this.renderer),
-      marc: this.marc?.snapshot(this.renderer), pup: this.pup?.snapshot(this.renderer)};
+      marc: this.marc?.snapshot(this.renderer), pup: this.pup?.snapshot(this.renderer),
+      day: this.day.snapshot(), location: this.location};
   }
-  stop() { this.running = false; this.input.destroy(); this.player.removeFromParent(); this.lilah?.dispose(); this.marc?.dispose(); this.pup?.dispose(); }
+  stop() { this.running = false; this.input.destroy(); this.action.destroy(); this.hud.destroy(); this.player.removeFromParent(); this.lilah?.dispose(); this.marc?.dispose(); this.pup?.dispose(); }
 }
