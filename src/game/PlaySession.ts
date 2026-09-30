@@ -47,6 +47,7 @@ export class PlaySession {
   chores!: Chores;
   action!: ActionButton;
   private readonly completed = new Set<string>();
+  private syncPicker = () => {};
   private region: LoadedRegion;
   private last = 0;
   private running = false;
@@ -79,7 +80,9 @@ export class PlaySession {
     };
     session.day.onNewDay = () => session.chores.dayChanged();
     session.chores.routines.onSchool = () => session.hud.close();
-    session.chores.onFinished = (receipt, amount) => session.day.credit(receipt, amount);
+    // Explore rounds pay nothing, so they leave no receipt behind.
+    session.chores.onFinished = (receipt, amount) => { if (amount > 0) session.day.credit(receipt, amount); };
+    session.hud.menu.querySelector('[data-extra]')!.append(session.soundsRow());
     // The family lives in the house; they load alongside Arianna and wait out shop visits.
     // (The session starts in the house, so its region carries their chair and routes.)
     const area = movementArea(region);
@@ -140,6 +143,7 @@ export class PlaySession {
     this.pup?.update(dt, [arianna, ...[this.lilah?.position, this.marc?.position].filter(v => !!v)], surfaces, home);
     this.draw();
     this.hud.update(this.hudState());
+    if (this.hud.menu.open) this.syncPicker();
     this.lilah?.updateLabel(this.camera.camera, this.renderer.domElement);
     this.marc?.updateLabel(this.camera.camera, this.renderer.domElement);
     requestAnimationFrame(this.frame);
@@ -157,27 +161,36 @@ export class PlaySession {
     const everyday = this.chores.mode === 'day';
     this.completed.clear(); for (const id of everyday ? s.done : m.completed) this.completed.add(id);
     return {location: this.location, day: s.day, time: this.day.clock.label, phase: s.phase, balance: this.day.balance,
-      tasks: everyday ? this.day.clock.tasks : m.tasks, completed: this.completed, hint: everyday ? this.day.hint : this.chores.hint,
+      tasks: everyday ? this.day.clock.tasks : m.tasks, completed: this.completed, hint: everyday ? this.chores.dayHint ?? this.day.hint : this.chores.hint,
       timed: home && m.timed, remaining: `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`, urgent: seconds <= 10 && m.state === 'running',
       clockNote: !home ? '' : m.timed && m.state === 'running' ? 'Your round timer keeps running while you browse.' : everyday ? 'Your day continues while you browse.' : '',
       action: home ? this.chores.action : {ready: false, title: 'Action', detail: 'Come closer'}, message: this.day.message || this.day.problem};
   }
 
-  /** "Choose an activity" in the menu (PlayCanvas mission picker; more rounds land in slice 4). */
+  /** "Choose an activity" in the menu (PlayCanvas mission picker, same ids and labels). */
   private activityPicker() {
     const box = document.createElement('details'); box.className = 'adventure-activities';
-    box.innerHTML = '<summary>Choose an activity</summary><p>Everyday life, or a quick one-minute tidy.</p><div id="mission-picker" aria-label="Choose an activity"><button id="mission-day" type="button">Daily life</button><button id="mission-bedroom" type="button">Bedroom · 5</button></div>';
-    for (const [id, mode] of [['#mission-day', 'day'], ['#mission-bedroom', 'bedroom']] as [string, ChoreMode][])
-      box.querySelector(id)!.addEventListener('click', () => { this.chores.configure(mode); this.hud.close(); });
-    const sync = () => {
+    const modes: [ChoreMode, string][] = [['day', 'Daily life'], ['house', 'House · 6'], ['bedroom', 'Bedroom · 5'], ['pet', 'Puppy · 1'], ['practice', 'Explore']];
+    box.innerHTML = `<summary>Choose an activity</summary><p>Everyday life, a one-minute round for your allowance, or Explore to practise every chore.</p><div id="mission-picker" aria-label="Choose an activity">${modes.map(([mode, label]) => `<button id="mission-${mode}" type="button">${label}</button>`).join('')}</div>`;
+    for (const [mode] of modes) box.querySelector('#mission-' + mode)!.addEventListener('click', () => { this.chores.configure(mode); this.hud.close(); });
+    // Kept current every frame while the menu is open (a timed round locks the picker).
+    this.syncPicker = () => {
+      const locked = !!this.chores && this.chores.mission.state === 'running' && this.chores.mission.timed;
       for (const b of box.querySelectorAll<HTMLButtonElement>('button')) {
-        b.setAttribute('aria-pressed', String(b.id === 'mission-' + this.chores?.mode));
-        b.disabled = !!this.chores && this.chores.mission.state === 'running' && this.chores.mission.timed;
+        const pressed = String(b.id === 'mission-' + this.chores?.mode);
+        if (b.getAttribute('aria-pressed') !== pressed) b.setAttribute('aria-pressed', pressed);
+        b.disabled = locked;
       }
     };
-    box.addEventListener('toggle', sync);
-    this.hud?.menu.addEventListener('toggle', sync);
     return box;
+  }
+
+  /** Sounds in the menu: the house-sounds toggle (the volume dialog arrives with the music, slice 5). */
+  private soundsRow() {
+    const row = document.createElement('div'); row.className = 'adventure-sounds';
+    const label = document.createElement('span'); label.textContent = 'House sounds';
+    row.append(label, this.chores.audio.button);
+    return row;
   }
 
   snapshot() {

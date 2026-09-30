@@ -1,6 +1,6 @@
 // Records a review video of Arianna's motions from the motion lab, played in real time with
 // captions, in a disposable headless Edge context. Output: artifacts/motion/review.webm
-//   node tests/browser/record-motion-video.mjs [routines]
+//   node tests/browser/record-motion-video.mjs [routines|chores]
 import {chromium} from 'playwright-core';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
@@ -28,7 +28,16 @@ const ROUTINES=[
  ['SleepEnter','right','Into bed: sit back, swing the legs up, lie down',1],
  ['Sleep','right','Asleep: slow breathing, a sleepy head turn',2],
 ];
-const SHOTS=process.argv[2]==='routines'?ROUTINES:P1;
+// Slice 4 chores (P2): washing hands after pet care, filling the puppy's bowl.
+const CHORES=[
+ ['WashHands','front','Washing hands: hands together over the basin, palm over palm',4],
+ ['WashHands','right','Washing hands from the side: elbows stay in',3],
+ ['FeedBowl','front','Filling the puppy bowl: crouch, tip the scoop with a little shake, stand',2],
+ ['FeedBowl','right','Filling the bowl from the side',2],
+];
+const SET=process.argv[2]??'';
+const SHOTS=SET==='routines'?ROUTINES:SET==='chores'?CHORES:P1;
+const NAME=SET?SET+'-review.webm':'review.webm';
 const out=resolve(ROOT,'artifacts','motion');await mkdir(out,{recursive:true});
 const {createServer}=await import('vite');
 const server=await createServer({root:ROOT,logLevel:'warn',server:{host:'127.0.0.1',port:5214,strictPort:false}});await server.listen();
@@ -50,6 +59,6 @@ try{
   rec.stop();await new Promise(r=>rec.onstop=r);
   const bytes=new Uint8Array(await new Blob(chunks,{type:'video/webm'}).arrayBuffer());let str='';for(let i=0;i<bytes.length;i+=65536)str+=String.fromCharCode(...bytes.subarray(i,i+65536));return btoa(str);
  },SHOTS);
- await writeFile(resolve(out,process.argv[2]==='routines'?'routines-review.webm':'review.webm'),Buffer.from(webm,'base64'));
- console.log('Video:',resolve(out,process.argv[2]==='routines'?'routines-review.webm':'review.webm'));
+ await writeFile(resolve(out,NAME),Buffer.from(webm,'base64'));
+ console.log('Video:',resolve(out,NAME));
 }finally{await browser.close();await server.close();}

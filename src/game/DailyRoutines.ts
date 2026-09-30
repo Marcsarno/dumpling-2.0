@@ -1,12 +1,12 @@
-import {Box3, Group, Vector3, type Object3D} from 'three';
-import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-import {SPILL_LOCATIONS} from '../systems/DailyClock';
+import {Group, Vector3, type Object3D} from 'three';
+import {DUST_LOCATIONS, SPILL_LOCATIONS} from '../systems/DailyClock';
 import type {RegionSemantics} from '../world/format';
 import {propSpace} from '../world/propSpace';
 import {shapes, type Triple} from '../world/primitives';
 import type {DayLoop} from './DayLoop';
 import type {CarrySystem} from './CarrySystem';
 import type {CleanupItem, CleanupProps, Interaction} from './cleanupProps';
+import {importProp} from './importProp';
 
 /** House palette used by the routine props (PlayCanvas bedroom.ts materials). */
 const M = {trim: '#fff1df', pink: '#e99db9', yellow: '#f3d68f', blue: '#9cbed5', dark: '#76647e', sky: '#c4e4ea'};
@@ -14,8 +14,9 @@ const M = {trim: '#fff1df', pink: '#e99db9', yellow: '#f3d68f', blue: '#9cbed5',
 /**
  * Everyday routines (the chore half of PlayCanvas DailyLife): brushing teeth, choosing and
  * putting away clothes, the breakfast chain (take an egg, crack it — half the time it drops
- * and needs a paper towel — cook, carry, serve, sit and eat), the bedtime book, going to bed,
- * and leaving for school. Each routine is a 'daily' interaction whose availability follows
+ * and needs a paper towel — cook, carry, serve, sit and eat), the afternoon vacuuming (three
+ * dust piles, placed by the saved day), filling the puppy's bowl, the bedtime book, going to
+ * bed, and leaving for school. Each routine is a 'daily' interaction whose availability follows
  * the saved day, so a reload puts every prop back where the day left it.
  *
  * Static fixtures (pan, toothbrush cup, drawers, dog bowl) are already part of the converted
@@ -29,6 +30,7 @@ export class DailyRoutines {
   readonly outfit: CleanupItem; readonly towel: CleanupItem; readonly egg: CleanupItem; readonly plate: CleanupItem;
   readonly cooked = new Group(); readonly spill: Object3D; readonly eggSpill: Object3D;
   readonly bubbles = new Group(); readonly wipingPaper: Object3D; readonly book = new Group();
+  readonly dust: Group[] = []; readonly dogFood: Object3D; readonly kibbleScoop = new Group();
   private eggFall = 0;
   active = false;
   onSchool: () => void = () => {};
@@ -46,7 +48,7 @@ export class DailyRoutines {
     clothes('Shirt', 'box', [0, .03, 0], [.38, .06, .32], M.pink);
     for (const x of [-.23, .23]) clothes('Sleeve', 'box', [x, .03, -.1], [.18, .06, .15], M.pink);
     this.towel = item('paper-towel', 'Paper towel', '🧻', [-2.65, 1.02, 10.5]);
-    void this.importProp(this.towel.object, base + 'assets/pets/paper.glb', .23);
+    void importProp(this.towel.object, base + 'assets/pets/paper.glb', .23);
     this.egg = item('breakfast-egg', 'Egg', '🥚', [-2.68, 1.15, 14.55]);
     shapes(this.egg.object)('Egg', 'sphere', [0, .1, 0], [.14, .2, .14], M.trim);
     const stoveTop = this.at(this.stove, [-2.63, 1.12, 12.65]);
@@ -63,6 +65,17 @@ export class DailyRoutines {
       return g;
     };
     this.spill = makeSpill('Kitchen spill', [.1, .04, 11.1]); this.eggSpill = makeSpill('Dropped egg', [-1.5, .04, 12.55]);
+    for (let k = 0; k < 3; k++) {
+      const g = new Group(); g.name = 'Random dirt ' + k; this.root.add(g); const s = shapes(g);
+      for (let i = 0; i < 10; i++) s('Dust fleck', 'sphere', [Math.sin(i * 2) * .26, .016, Math.cos(i * 2) * .24], [.18, .045, .15], '#a69182', false);
+      this.dust.push(g);
+    }
+    // The puppy bowl itself is part of the converted house; its kibble comes and goes.
+    this.dogFood = shapes(this.root)('Puppy kibble', 'sphere', [4.95, .19, 8.55], [.33, .055, .33], '#b58655');
+    // Upgrade: a little scoop of kibble in her hands while she fills the bowl (PlayCanvas showed empty hands).
+    this.kibbleScoop.name = 'Kibble scoop'; const scoop = shapes(this.kibbleScoop);
+    scoop('Scoop cup', 'cylinder', [0, 0, 0], [.13, .1, .13], M.blue); scoop('Scoop kibble', 'sphere', [0, .05, 0], [.11, .05, .11], '#b58655', false);
+    this.root.add(this.kibbleScoop); this.kibbleScoop.visible = false;
     this.bubbles.name = 'Toothpaste foam'; this.root.add(this.bubbles);
     const foam = shapes(this.bubbles); for (let i = 0; i < 6; i++) foam('Foam', 'sphere', [Math.sin(i) * .05, i * .012, Math.cos(i) * .04], [.03, .03, .03], M.sky, false);
     this.wipingPaper = shapes(this.root)('Paper wiping the floor', 'box', [0, .09, 0], [.28, .012, .23], M.trim, false); this.wipingPaper.visible = false;
@@ -77,6 +90,7 @@ export class DailyRoutines {
         available: carried => this.active && available(carried)});
     };
     const s = () => this.day.state, phase = () => s().phase, notDone = (id: string) => !s().done.includes(id);
+    target('feed-dog', 'Fill puppy’s bowl', '🐾', [4.8, 0, 8.8], [4.95, .2, 8.55], h => !h && phase() === 'afternoon' && s().petTask === 'feed-dog' && notDone('feed-dog'), 1400, 'feed-dog');
     target('daily-teeth', 'Brush teeth', '🪥', [4.12, 0, -2.35], [4.12, 1.15, -3.03], h => !h && (phase() === 'morning' || phase() === 'night') && notDone('teeth'), 1800, 'teeth');
     target('choose-clothes', 'Choose clothes', '👕', [-.7, 0, 2.4], [-.7, .8, 3.05], h => !h && phase() === 'morning' && notDone('outfit'), 0);
     target('get-dressed', 'Get dressed', '👕', [-.85, 0, -.65], [-1.35, .9, -.65], h => h === 'daily-outfit' && phase() === 'morning', 850, 'outfit');
@@ -91,6 +105,9 @@ export class DailyRoutines {
     target('take-towel', 'Take paper towel', '🧻', [-1.8, 0, 10.5], [-2.65, 1.15, 10.5], h => !h && (s().breakfast === 'spill' && phase() === 'morning' || phase() === 'afternoon' && this.needs('spill')), 0);
     target('wipe-egg', 'Wipe dropped egg', '🧻', [-1.5, 0, 12.55], [-1.5, .12, 12.55], h => h === 'paper-towel' && s().breakfast === 'spill', 1200, undefined, true, this.eggSpill);
     target('wipe-spill', 'Wipe spill', '🧻', [.1, 0, 11.1], [.1, .12, 11.1], h => h === 'paper-towel' && phase() === 'afternoon' && notDone('spill'), 1200, 'spill', true, this.spill);
+    const vacuum = props.items.find(i => i.id === 'vacuum')!;
+    target('daily-vacuum', 'Pick up vacuum', '✦', vacuum.home, [vacuum.home[0], 1, vacuum.home[2]], h => !h && phase() === 'afternoon' && this.day.clock.tasks.some(t => t.id.startsWith('dust-') && notDone(t.id)), 0);
+    for (let i = 0; i < 3; i++) target('vacuum-' + i, 'Hold to vacuum', '✦', [0, 0, 0], [0, .3, 0], h => h === 'vacuum' && phase() === 'afternoon' && this.needs('dust-' + i), 1150, 'dust-' + i, true, this.dust[i]);
     target('put-tool-away', 'Put tool away', '↩', [0, 0, 0], [0, .8, 0], h => h === 'vacuum' || h === 'paper-towel', 0);
     target('bedtime-book', 'Read a bedtime book', '📘', [-.85, 0, -.8], [-1.4, .9, -.8], h => !h && phase() === 'night' && notDone('read'), 1600, 'read');
     target('school-door', 'Go to school', '🎒', [-2.35, 0, 8.2], [-3.1, 1.1, 8.2], h => !h && this.day.clock.schoolDue, 0);
@@ -107,6 +124,8 @@ export class DailyRoutines {
   }
 
   private at(space: ReturnType<typeof propSpace>, [x, y, z]: Triple): Triple { const p = space.point(x, z); return [p.x, y, p.z]; }
+  /** Any of today's dust piles still to vacuum. */
+  get dustLeft() { return [0, 1, 2].some(i => this.needs('dust-' + i)); }
   private needs(id: string) { return this.day.clock.tasks.some(t => t.id === id) && !this.day.state.done.includes(id); }
   /** All of today's chores done, at night (PlayCanvas also allows the afternoon once shopping is done — P3). */
   get canSleep() { return this.day.clock.ready && this.day.state.phase === 'night'; }
@@ -114,22 +133,23 @@ export class DailyRoutines {
   get seat() { const p = this.dining.point(.55, 12.49), f = this.dining.point(.55, 13.85); return {x: p.x, z: p.z, yaw: this.dining.yaw(0), face: f}; }
   get bedSpace() { return this.bed; }
 
-  private async importProp(parent: Object3D, url: string, height: number) {
-    const gltf = await new GLTFLoader().loadAsync(url), model = gltf.scene;
-    model.traverse(o => { if ((o as {isMesh?: boolean}).isMesh) { o.castShadow = true; o.receiveShadow = true; } });
-    model.updateMatrixWorld(true);
-    const box = new Box3().setFromObject(model), k = height / Math.max(1e-6, box.max.y - box.min.y);
-    model.scale.setScalar(k); model.position.set(-(box.min.x + box.max.x) / 2 * k, -box.min.y * k, -(box.min.z + box.max.z) / 2 * k);
-    parent.add(model);
-  }
-
   /** Put every routine prop where the saved day says it is (PlayCanvas DailyLife.refresh). */
   refresh() {
     const st = this.day.state;
     const spill = SPILL_LOCATIONS[st.spillSite ?? 0] ?? SPILL_LOCATIONS[0];
     this.spill.position.set(spill[0], .04, spill[1]);
     const wipe = this.props.interactions.find(t => t.id === 'wipe-spill')!; wipe.anchor.set(spill[0], 0, spill[1]); wipe.marker.set(spill[0], .12, spill[1]);
-    for (const m of [this.spill, this.eggSpill]) m.scale.setScalar(1);
+    for (const m of [this.spill, this.eggSpill, ...this.dust]) m.scale.setScalar(1);
+    for (let i = 0; i < 3; i++) {
+      const [x, z] = DUST_LOCATIONS[st.dust[i]], t = this.props.interactions.find(t => t.id === 'vacuum-' + i)!;
+      this.dust[i].position.set(x, .04, z); t.anchor.set(x, 0, z); t.marker.set(x, .35, z);
+      this.dust[i].visible = st.phase === 'afternoon' && this.needs('dust-' + i);
+    }
+    this.dogFood.visible = !st.dogFoodEmpty && (st.done.includes('feed-dog') || st.phase !== 'afternoon' || st.petTask !== 'feed-dog');
+    this.dogFood.scale.set(.33, .055, .33);
+    // The vacuum lives in the utility room and comes out for the afternoon chores.
+    const vacuum = this.props.items.find(i => i.id === 'vacuum')!;
+    if (this.active && this.carry.item !== vacuum) vacuum.object.visible = st.phase === 'afternoon';
     this.spill.visible = st.phase === 'afternoon' && this.needs('spill');
     this.eggSpill.visible = st.breakfast === 'spill' && st.phase === 'morning';
     this.cooked.visible = st.phase === 'morning' && st.breakfast === 'cook';
@@ -143,7 +163,7 @@ export class DailyRoutines {
     if (st.phase === 'night' && this.outfit.object.parent === this.root) this.outfit.object.position.set(...this.at(this.bed, [-1.4, .91, -.65]));
     this.egg.object.visible = st.phase === 'morning' && st.breakfast === 'eggs';
     this.towel.object.visible = true;
-    this.bubbles.visible = this.wipingPaper.visible = this.book.visible = false; this.eggFall = 0;
+    this.bubbles.visible = this.wipingPaper.visible = this.book.visible = this.kibbleScoop.visible = false; this.eggFall = 0;
   }
 
   /** Apply a finished routine (PlayCanvas DailyLife.perform). Pays the task's $1 through the day. */
@@ -155,6 +175,8 @@ export class DailyRoutines {
       case 'choose-clothes': case 'night-clothes': take(this.outfit); break;
       case 'take-egg': take(this.egg); break;
       case 'take-towel': take(this.towel); break;
+      case 'daily-vacuum': take(this.props.items.find(i => i.id === 'vacuum')!); break;
+      case 'feed-dog': st.dogFoodEmpty = false; this.dogFood.visible = true; this.dogFood.scale.set(.33, .055, .33); this.kibbleScoop.visible = false; break;
       case 'put-tool-away': { const it = this.carry.item; if (it) { this.carry.release(it.object === this.towel.object ? this.root : this.props.root, it.home); it.object.visible = true; } break; }
       case 'crack-egg':
         release(); this.day.clock.crackEgg(); this.eggSpill.visible = false; this.cooked.visible = st.breakfast === 'cook';
@@ -190,6 +212,13 @@ export class DailyRoutines {
     const wiping = !!working && working.id.startsWith('wipe-') && progress > 0;
     this.wipingPaper.visible = wiping;
     if (wiping) { this.wipingPaper.position.set(rightHand.x, Math.max(.06, rightHand.y - .05), rightHand.z); }
+    const feeding = working?.id === 'feed-dog' && progress > 0;
+    this.kibbleScoop.visible = feeding;
+    if (feeding) {
+      // The kibble pours from the scoop and rises in the bowl.
+      this.kibbleScoop.position.copy(hands); this.kibbleScoop.rotation.set(0, yaw, (20 + progress * 70) * Math.PI / 180, 'YXZ');
+      this.dogFood.visible = true; this.dogFood.scale.set(.33, .055 * Math.max(.1, progress), .33);
+    }
     this.book.visible = working?.id === 'bedtime-book' && progress > 0;
     if (this.book.visible) { this.book.position.copy(hands); this.book.rotation.set(-60 * Math.PI / 180, yaw, 0, 'YXZ'); }
   }

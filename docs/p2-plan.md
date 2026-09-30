@@ -124,3 +124,31 @@ Browser tests keep the PlayCanvas ids (`#action-button`, `#joystick`) and the `_
   - the morning chores, the dropped-egg path and a reload mid-breakfast;
   - school, and the night chores;
   - sleep → day 2, with $6 paid once.
+
+### Slice 4 — afternoon chores, pet care and timed missions (2026-09-29)
+
+- **`src/game/houseProps.ts`**: the ten PlayCanvas carry-and-put-away pairs (shoes, mail, living-room toy, cushion, dish, trash, dirty and clean laundry, bath towel, toiletries), built from primitives exactly as PlayCanvas builds them, with Editor anchor/marker/placement edits applied. The drop-off fixtures come from the converted house. The towel hangs on the rack; trash and laundry go inside.
+- **`src/game/PetCare.ts`** (PlayCanvas PetCleanup): take the scooper from the landing, scoop, flush (the poop swirls away) and wash hands. Only washing completes the task, and once the poop is flushed nothing else is offered until her hands are clean (the vendored `InteractionSystem` guard). Sunny stays the roaming `SunnyPup`; PlayCanvas kept a second, static dog here.
+- **`DailyRoutines`**: the afternoon's three dust piles at their saved `DUST_LOCATIONS`, fetching the vacuum (`daily-vacuum`), holding to vacuum each pile (`vacuum-0..2`) and putting it back; filling the puppy's bowl (`feed-dog`, 1.4 s) with the kibble state `dogFoodEmpty` ready for Sunny's bowl in slice 6. The vacuum only comes out in the afternoon.
+- **`Chores`**:
+  - Modes `house` (six of eleven chores, $6 + $2 bonus = $8), `bedroom` ($7), `pet` ($1 + $2 = $3) and `practice` (Explore: all 16 chores, no timer, no allowance).
+  - Round props show only for the round's tasks (PlayCanvas `houseProps.configure`).
+  - In everyday life the afternoon's house chores and pet care pay $1 each through `DayLoop.complete`. That makes the $11 routine assertable; tucking Lilah in (slice 6) is the twelfth dollar.
+- **Mission picker**: the PlayCanvas ids and labels (Daily life, House · 6, Bedroom · 5, Puppy · 1, Explore). It is locked while a timed round runs, and the lock is re-checked every frame while the menu is open.
+- **Chore audio** (`src/ui/ChoreAudio.ts`, `audioLevels.ts`): the PlayCanvas CC0 foley (vacuum, wipe, water, munch, handling), the same sound choice per chore, the same volumes, the five-voice limit and the saved mute (`house-effects.muted`), using the saved effects level. The toggle is in the menu. The volume dialog comes with the music in slice 5.
+- **New motions** (baked on her existing bones):
+  - `WashHands`: hands over the basin, alternating forward-and-back strokes. The hands stay a palm's width apart, so the sleeve cuffs never pass through each other.
+  - `FeedBowl`: bend to the bowl, tip the scoop with a little shake, then stand.
+  - PlayCanvas held the carry pose for both.
+  - Review video: `node tests/browser/record-motion-video.mjs chores`.
+- **Upgrades over PlayCanvas:**
+  - Chores already done today stay done after a reload: the shoes stay on the bench and the towel stays on the rack. PlayCanvas put their items back out, untidied.
+  - The journal nudge follows the chore under way in everyday life (the vacuum, the spill towel, pet-care steps, "take the dish to the kitchen sink").
+  - A little kibble scoop shows in her hands, and the kibble rises in the bowl as she pours.
+  - Loops fade out over 80 ms instead of clicking off.
+  - Explore rounds leave no $0 receipts behind.
+- **Tests:**
+  - `tests/browser/full-day.mjs`: a whole day with real key presses (morning, school, five afternoon chores, night, bed) pays $11 with one receipt per routine. A reload mid-afternoon keeps finished chores done. A second afternoon covers the spill, the book, the towel rack and the bowl.
+  - `tests/browser/missions.mjs`: House $8, then "Play again" draws a new six; Puppy $3 with every stage and hint; Explore covers all 16 chores with $0 and no receipt, the wash-first guard, the picker lock, and "Back to everyday life".
+  - The shared driver is `tests/browser/lib/chore-driver.mjs`.
+- **Noticed, deferred to P5 polish (it would need the owner's mesh approval):** when her forearms fold forward (Read, WashHands), a thin grey crease shows inside each sleeve cuff at the elbow bend. It comes from the cuff geometry, not a particular motion. It joins the braid on the polish list.

@@ -1,5 +1,6 @@
 import {Vector3, type Camera, type Object3D} from 'three';
 import {MissionSystem, TASKS, type TaskDefinition} from '../systems/MissionSystem';
+import {HOUSE_TASKS, EXTRA_HOUSE_TASKS} from '../data/house';
 import {InteractionSystem} from '../systems/InteractionSystem';
 import {saveId} from '../systems/saveId';
 import type {RegionSemantics} from '../world/format';
@@ -12,9 +13,12 @@ import {CarrySystem} from './CarrySystem';
 import {CleanupFeedback} from '../ui/CleanupFeedback';
 import {RoundMesses} from './RoundMesses';
 import {DailyRoutines} from './DailyRoutines';
+import {addHouseProps} from './houseProps';
+import {PetCare, PET_TASKS} from './PetCare';
+import {ChoreAudio} from '../ui/ChoreAudio';
 import type {PathArea} from './HousePath';
 
-export type ChoreMode = 'day' | 'bedroom';
+export type ChoreMode = 'day' | 'house' | 'bedroom' | 'pet' | 'practice';
 const WORK_MS: Partial<Record<Interaction['kind'], number>> = {crayons: 450, vacuum: 1150, pet: 1600};
 const DEG = Math.PI / 180;
 /** Routine pickups that play PickUp (the rest of the instant routines play PutDown). */
@@ -30,8 +34,10 @@ export const BED_ENTRY_SECONDS = 3.2;
  * the vendored MissionSystem ($1 per task, $2 all-clean bonus in a timed 60 s round) and paid
  * through a one-time receipt. Everyday routines (DailyRoutines) pay $1 each through the day.
  *
- * Modes so far: 'day' (everyday life) and 'bedroom' (the timed five-task tidy round). The
- * other rounds and the mission picker's full list land in slice 4.
+ * Modes (the PlayCanvas mission picker): 'day' (everyday life), the timed one-minute rounds
+ * 'house' (six of the eleven house chores, $8 when all done), 'bedroom' (five, $7) and 'pet'
+ * (scoop · flush · wash, $3), and 'practice' (Explore: every chore, no timer or allowance).
+ * In everyday life the afternoon's house chores and pet care pay $1 each through the day.
  */
 export class Chores {
   readonly mission = new MissionSystem();
@@ -41,7 +47,11 @@ export class Chores {
   readonly carry: CarrySystem;
   readonly feedback: CleanupFeedback;
   readonly roundMesses: RoundMesses;
+  readonly pet: PetCare;
+  readonly audio = new ChoreAudio();
+  /** Items that belong to rounds and house chores (not the everyday routine props). */
   private readonly roundItems: CleanupItem[];
+  private readonly extras: CleanupItem[];
   mode: ChoreMode = 'day';
   roundId = saveId();
   aligning: Interaction | null = null;
@@ -63,12 +73,14 @@ export class Chores {
     private readonly animator: CharacterAnimator, socket: Object3D, private readonly day: DayLoop, area: PathArea,
     private readonly rightHandBone: Object3D, base = import.meta.env.BASE_URL) {
     this.props = createCleanupProps(semantics);
+    this.extras = addHouseProps(this.props, semantics);
+    this.pet = new PetCare(this.props, base);
     this.roundItems = [...this.props.items];
     this.roundMesses = new RoundMesses(this.props, area);
     scene.add(this.props.root);
     this.carry = new CarrySystem(socket);
     this.routines = new DailyRoutines(this.props, semantics, day, this.carry, base);
-    this.interactions = new InteractionSystem(this.props.interactions);
+    this.interactions = new InteractionSystem(this.props.interactions, target => this.pet.allows(target));
     this.feedback = new CleanupFeedback(scene, camera, this.props.interactions);
     this.announcement.id = 'cleanup-announcement'; this.announcement.className = 'sr-only';
     this.announcement.setAttribute('role', 'status'); this.announcement.setAttribute('aria-live', 'polite');
@@ -96,21 +108,22 @@ export class Chores {
     if (this.mission.state === 'running' && this.mission.timed) return;
     this.mode = mode;
     this.mission.continuous = mode === 'day';
-    const tasks: readonly TaskDefinition[] = mode === 'day' ? this.day.clock.tasks : TASKS;
-    this.mission.configure(tasks, mode !== 'day');
+    const tasks: readonly TaskDefinition[] = mode === 'day' ? this.day.clock.tasks : mode === 'pet' ? PET_TASKS : mode === 'bedroom' ? TASKS
+      : mode === 'house' ? HOUSE_TASKS : [...TASKS, ...HOUSE_TASKS.filter(t => t.id !== 'book'), ...EXTRA_HOUSE_TASKS, ...PET_TASKS];
+    this.mission.configure(tasks, mode !== 'practice' && mode !== 'day');
     this.replay();
   }
 
   replay() {
     this.roundId = saveId();
     this.cancelActivity(); this.aligning = null; this.movement.cancelApproach();
-    const held = this.carry.item; if (held) this.carry.release(held.object.parent === this.carry.socket ? this.props.root : held.object.parent!, held.home);
-    this.props.reset(); this.mission.reset(); this.feedback.reset(); this.results.close(); this.announcement.textContent = '';
-    for (const it of this.roundItems) it.object.visible = this.mode !== 'day';
-    this.props.crayonMess.visible = this.props.dirt.visible = this.mode !== 'day';
+    this.dropHeld();
+    // The house round draws six of its eleven chores each time (never the same six twice running).
+    if (this.mode === 'house') this.mission.configure(this.roundMesses.houseTasks(), true);
+    this.mission.reset(); this.feedback.reset(); this.results.close(); this.announcement.textContent = '';
+    this.routines.active = this.mode === 'day'; this.routines.root.visible = this.mode === 'day';
+    this.arrange();
     this.roundMesses.apply(this.mode);
-    this.routines.active = this.mode === 'day'; this.routines.root.visible = this.mode === 'day'; this.routines.refresh();
-    this.syncDay();
     this.finishedHandled = this.celebrated = false; this.interactions.focus = null;
     if (this.mode !== 'day') { this.animator.cancelAction(); this.movement.place(0, .9); this.animator.setYaw(30 * DEG); }
   }
@@ -118,9 +131,44 @@ export class Chores {
   /** The day moved on (new phase or a new day): props follow the saved state. */
   dayChanged() {
     if (this.mode !== 'day') return;
-    this.cancelActivity(); this.aligning = null;
-    const held = this.carry.item; if (held && held.object.parent === this.carry.socket) this.carry.release(this.routines.root, held.home);
-    this.routines.refresh(); this.syncDay();
+    this.cancelActivity(); this.aligning = null; this.movement.cancelApproach();
+    this.dropHeld(); this.arrange();
+  }
+
+  /** Put down whatever she holds, back where it lives. */
+  private dropHeld() {
+    const held = this.carry.item;
+    if (!held) return;
+    const routine = [this.routines.outfit, this.routines.towel, this.routines.egg, this.routines.plate].includes(held);
+    this.carry.release(routine ? this.routines.root : this.props.root, held.home);
+  }
+
+  /**
+   * Show the props the current chores need (PlayCanvas houseProps.configure): round items for
+   * the round's tasks, the crayons or their tidy cup, the dust pile, and the pet-care set.
+   * In everyday life the routine props follow the saved day, and chores already done today
+   * stay done after a reload (an upgrade: PlayCanvas put their items back out untidied).
+   */
+  private arrange() {
+    this.syncDay();
+    this.props.reset();
+    for (const it of this.extras) { this.props.root.add(it.object); it.object.position.set(...it.home); it.object.rotation.set(0, 0, 0); it.object.scale.setScalar(1); }
+    const active = new Set(this.mission.tasks.map(t => t.id));
+    for (const it of this.roundItems) it.object.visible = active.has(it.id === 'vacuum' ? 'dirt' : it.id);
+    this.props.crayonMess.visible = active.has('crayons'); this.props.tidyCrayons.visible = !active.has('crayons'); this.props.dirt.visible = active.has('dirt');
+    this.pet.reset(active.has('pet-care'));
+    this.routines.refresh();
+    if (this.mode !== 'day') return;
+    const done = this.day.state.done;
+    for (const target of this.props.interactions) {
+      if (target.kind !== 'place' || !target.task || !done.includes(target.task) || !active.has(target.task)) continue;
+      const item = this.props.items.find(i => i.id === target.item);
+      if (!item || !target.placement) continue;
+      item.object.position.set(...target.placement);
+      if (target.placedStyle === 'hide') item.object.visible = false;
+      if (target.placedStyle === 'hang') item.object.rotation.set(Math.PI / 2, 0, 0);
+    }
+    if (done.includes('pet-care')) this.pet.finish();
   }
 
   private syncDay() {
@@ -152,12 +200,30 @@ export class Chores {
 
   private perform(target: Interaction, now: number) {
     const face = target.placement ? {x: target.placement[0], z: target.placement[2]} : {x: target.marker.x, z: target.marker.z};
+    if (target.id !== 'school-door') this.audio.start(target.id);
     if (target.kind === 'daily') return this.performRoutine(target, now, face);
     if (target.kind === 'pickup') {
       const item = this.props.items.find(i => i.id === target.item);
       if (!item) return;
       this.animator.playAction('PickUp', {face, onEvent: e => {
-        if (e === 'attach' && this.carry.pickUp(item)) this.announce(`Picked up ${item.name}. Follow the glowing destination.`);
+        if (e !== 'attach') return;
+        this.mission.tick(performance.now());
+        if (this.mission.state === 'finished' || !this.carry.pickUp(item)) return;
+        if (item.id === 'scooper') this.pet.pickedUp();
+        this.announce(`Picked up ${item.name}. Follow the glowing destination.`);
+      }});
+      return;
+    }
+    if (target.kind === 'pet' && target.id !== 'wash-hands') {
+      // Scoop (bend down with the scooper) and flush (tip it into the toilet).
+      const scoop = target.id === 'scoop-poop';
+      this.animator.playAction(scoop ? 'PickUp' : 'PutDown', {face, onEvent: e => {
+        if (e !== (scoop ? 'attach' : 'release')) return;
+        this.mission.tick(performance.now());
+        if (this.mission.state === 'finished') return;
+        if (scoop) this.pet.scoop();
+        else { this.carry.release(this.props.root, this.pet.tool.home); this.pet.flush(performance.now()); }
+        this.announce(this.pet.hint ?? '');
       }});
       return;
     }
@@ -166,6 +232,7 @@ export class Chores {
       this.animator.playAction('PutDown', {face, onEvent: e => {
         if (e !== 'release' || this.carried !== target.item) return;
         if (!this.mission.complete(target.task!, performance.now())) return;
+        if (this.mode === 'day') this.day.complete(target.task!);
         const item = this.carry.release(this.props.root, target.placement!);
         if (item && target.placedStyle === 'hide') item.object.visible = false;
         if (item && target.placedStyle === 'hang') item.object.rotation.set(Math.PI / 2, 0, 0);
@@ -175,6 +242,7 @@ export class Chores {
     }
     this.activity = {target, start: now, duration: WORK_MS[target.kind] ?? target.duration ?? 1000};
     if (target.kind === 'vacuum') { this.animator.workClip = 'Vacuum'; this.animator.faceTarget = {x: target.anchor.x, z: target.anchor.z}; }
+    if (target.kind === 'pet') { this.animator.workClip = 'WashHands'; this.animator.faceTarget = {x: target.marker.x, z: target.marker.z}; }
   }
 
   /** Everyday routines (PlayCanvas CleanupGame.perform 'daily' branch). */
@@ -205,6 +273,7 @@ export class Chores {
     // Upgrades: real brushing and reading motions (PlayCanvas held the carry pose for both).
     else if (target.id === 'daily-teeth') this.animator.workClip = 'BrushTeeth';
     else if (target.id === 'bedtime-book') this.animator.workClip = 'Read';
+    else if (target.id === 'feed-dog') this.animator.workClip = 'FeedBowl';
     else if (!target.hold) this.animator.workClip = 'CarryIdle';
   }
 
@@ -216,6 +285,7 @@ export class Chores {
   }
 
   private cancelActivity() {
+    this.audio.stop();
     this.leaveSeat();
     this.animator.workClip = null; this.animator.faceTarget = null;
     this.activity?.target.mess?.scale.setScalar(1);
@@ -242,6 +312,7 @@ export class Chores {
 
   /** Per frame. `held`: is the action still held; `moving`: any movement input (starts the round timer). */
   update(now: number, held: boolean, moving: boolean) {
+    if (!this.activity && !this.animator.busy) this.audio.stop();
     this.syncDay();
     if (moving && this.mode !== 'day') this.mission.start(now);
     this.mission.tick(now); this.refreshFocus();
@@ -276,6 +347,7 @@ export class Chores {
     }
     this.carry.socket.getWorldPosition(this.hands); this.rightHandBone.getWorldPosition(this.rightHand);
     this.routines.update(now, this.activity?.target ?? null, this.progress, this.hands, this.rightHand, this.animator.yaw);
+    this.pet.update(now, this.activity?.target.kind === 'pet' ? this.progress : 0, this.hands);
     this.feedback.update(now, this.interactions, this.carried, this.hands, this.mission, !this.activity && !this.animator.busy);
   }
 
@@ -290,6 +362,7 @@ export class Chores {
     }
     this.cancelActivity();
     if (!this.mission.complete(target.task!, now)) return;
+    if (target.kind === 'pet') { this.pet.finish(); if (this.mode === 'day') this.day.complete(target.task!); }
     if (target.kind === 'crayons') { this.props.crayonMess.visible = false; this.props.tidyCrayons.visible = true; }
     if (target.kind === 'vacuum') {
       this.props.dirt.visible = false;
@@ -318,12 +391,30 @@ export class Chores {
 
   /** The journal nudge during rounds (PlayCanvas CleanupHUD hint). */
   get hint() {
-    const m = this.mission, item = this.carry.item;
-    if (m.state === 'finished') return 'Every little bit helps. Nice work, Arianna!';
-    if (item) return item.id === 'vacuum' ? '✦ Go to the dirt, then hold Action to vacuum.' : `${item.icon} Take ${item.name.toLowerCase()} to ${this.feedback.destinationIcon || 'the glowing destination'}.`;
-    if (m.state === 'ready') return 'Move to start · 60 seconds · $1 per task';
-    if (this.interactions.focus?.kind === 'crayons') return '🖍 Tap Action to put the crayons in their cup.';
-    return 'Find an item. Walk close, then tap Action.';
+    const m = this.mission, item = this.carry.item, pet = this.pet.hint;
+    let hint = 'Find an item. Walk close, then tap Action.';
+    if (m.state === 'ready') hint = 'Move to start · 60 seconds · $1 per task';
+    else if (item) hint = item.id === 'vacuum' ? '✦ Go to the dirt, then hold Action to vacuum.' : `${item.icon} Take ${item.name.toLowerCase()} to ${this.feedback.destinationIcon || 'the glowing destination'}.`;
+    else if (this.interactions.focus?.kind === 'crayons') hint = '🖍 Tap Action to put the crayons in their cup.';
+    if (m.state === 'finished') hint = 'Every little bit helps. Nice work, Arianna!';
+    if (!m.timed && !item && m.state !== 'finished') hint = 'Explore freely · Practice tasks · No timer or allowance';
+    if (pet && m.state !== 'finished' && (m.tasks.length === 1 || item?.id === 'scooper' || pet.startsWith('🫧'))) hint = pet;
+    return hint;
+  }
+
+  /**
+   * Everyday life's nudge while a chore is under way (upgrade: PlayCanvas always showed the
+   * day's general line, even halfway through pet care). Null means the day's own hint.
+   */
+  get dayHint(): string | null {
+    if (this.mode !== 'day') return null;
+    const item = this.carry.item, pet = this.pet.hint;
+    if (pet && (item?.id === 'scooper' || pet.startsWith('🫧'))) return pet;
+    if (item?.id === 'vacuum') return this.routines.dustLeft ? '✦ Go to the dust, then hold Action to vacuum.' : '↩ All vacuumed! Put the vacuum back in the utility room.';
+    if (item?.id === 'paper-towel' && this.day.state.phase === 'afternoon') return '🧻 Hold Action over the kitchen spill to wipe it.';
+    const chore = item && this.props.interactions.find(t => t.kind === 'place' && t.item === item.id);
+    if (chore) return `${item.icon} Take ${item.name.toLowerCase()} to the ${chore.name.toLowerCase()}.`;
+    return null;
   }
 
   private showResults() {
@@ -347,10 +438,11 @@ export class Chores {
       tasks: this.mission.tasks.map(t => t.id), completed: [...this.mission.completed], focus: this.interactions.focus?.id ?? null,
       carrying: item?.id ?? null, carriedParent: item?.object.parent?.name ?? null, carriedPosition: item ? item.object.getWorldPosition(new Vector3()).toArray() : null,
       aligning: this.aligning?.id ?? null, working: this.activity?.target.id ?? null, progress: this.progress, roundId: this.roundId,
-      workClip: this.animator.workClip, seated: !!this.seatReturn, heightOverride: this.heightOverride,
+      workClip: this.animator.workClip, seated: !!this.seatReturn, heightOverride: this.heightOverride, pet: this.pet.snapshot(), audio: this.audio.snapshot(),
+      dust: this.routines.dust.map(d => ({visible: d.visible, position: d.position.toArray(), scale: d.scale.x})), dogFood: this.routines.dogFood.visible,
       items: this.props.items.map(i => ({id: i.id, visible: i.object.visible, position: i.object.getWorldPosition(new Vector3()).toArray(), home: i.home})),
       targets: this.props.interactions.map(t => ({id: t.id, position: [t.anchor.x, 0, t.anchor.z], range: t.range}))};
   }
 
-  dispose() { this.feedback.dispose(); this.props.root.removeFromParent(); this.announcement.remove(); this.results.remove(); }
+  dispose() { this.audio.destroy(); this.feedback.dispose(); this.props.root.removeFromParent(); this.announcement.remove(); this.results.remove(); }
 }

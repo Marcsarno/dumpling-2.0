@@ -69,6 +69,23 @@ export const ACTIONS: ActionSpec[] = [
   // Brushing teeth: the right hand at her mouth, brushing side to side; a little head tilt.
   {name: 'BrushTeeth', duration: .8, loop: true, breathe: .4, keys: [0, .2, .4, .6, .8].map((t, i) => ({t, ease: 'inOut' as const,
     head: [6, i % 2 ? 4 : -2] as [number, number], right: {at: {mouth: [i % 2 ? .015 : -.045, -.025, .06] as V3}, roll: 60, pole: [-.3, -1, .1] as V3}}))},
+  // Washing hands at the sink: leaning in a little, hands over the basin, rubbing with
+  // alternating forward-and-back strokes (PlayCanvas held the carry pose). The hands stay a
+  // palm's width apart so the two sleeve cuffs never pass through each other; elbows stay in.
+  {name: 'WashHands', duration: .8, loop: true, breathe: .4, keys: [0, .2, .4, .6, .8].map((t, i) => ({t, ease: 'inOut' as const,
+    lean: 18, head: [28, i % 2 ? 3 : -3] as [number, number],
+    left: {at: [.068 + (i % 2 ? .012 : 0), .7 + (i % 2 ? .012 : 0), .36 + (i % 2 ? .045 : -.02)] as V3, roll: 30},
+    right: {at: [-.068 - (i % 2 ? 0 : .012), .7 + (i % 2 ? 0 : .012), .36 + (i % 2 ? -.02 : .045)] as V3, roll: 30}}))},
+  // Filling the puppy's bowl (1.4 s, the PlayCanvas work time): crouch to the bowl with the
+  // scoop in both hands, tip it with a little shake so the kibble pours, then stand.
+  {name: 'FeedBowl', duration: 1.4, keys: [
+    standing(0),
+    {t: .38, ease: 'out', hips: [0, -.18, -.04], crouch: .5, lean: 40, head: [22, 0], ...sym([.05, .36, .34], 10)},
+    {t: .62, hips: [0, -.19, -.04], crouch: .5, lean: 42, head: [24, 0], ...sym([.05, .34, .36], 35)},
+    {t: .8, hips: [0, -.19, -.04], crouch: .5, lean: 42, head: [24, 2], ...sym([.05, .35, .36], 55)},
+    {t: .98, hips: [0, -.19, -.04], crouch: .5, lean: 42, head: [24, -2], ...sym([.05, .34, .36], 70)},
+    {t: 1.1, ease: 'inOut', hips: [0, -.16, -.03], crouch: .45, lean: 34, head: [18, 0], ...sym([.05, .38, .32], 30)},
+    standing(1.4)]},
   // Reading: the book held open at chest height, head bowed to the page.
   {name: 'Read', duration: 2.4, loop: true, keys: [
     {t: 0, head: [24, 2], ...sym([.09, .74, .27], 25)},
