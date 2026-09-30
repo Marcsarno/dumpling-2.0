@@ -5,8 +5,8 @@ import {AnimationMixer, CircleGeometry, Color, Mesh, MeshStandardMaterial, Ortho
 import {createRenderer, watchViewport} from '../engine/renderer';
 import {Daylight} from '../engine/lighting';
 import type {SceneSettings} from '../world/format';
-import {ARIANNA, LILAH, loadCharacter, characterQuality} from '../characters/Arianna';
-import {buildClipLibrary} from '../characters/clips';
+import {ARIANNA, LILAH, MARC, SUNNY_PUP, loadCharacter, characterQuality} from '../characters/Arianna';
+import {buildClipLibrary, buildLilahClips, buildMarcClips} from '../characters/clips';
 
 const params = new URLSearchParams(location.search);
 if (params.has('capture')) document.body.dataset.capture = '';
@@ -18,13 +18,14 @@ const daylight = new Daylight(scene, settings);
 const floor = new Mesh(new CircleGeometry(1.6, 64).rotateX(-Math.PI / 2), new MeshStandardMaterial({color: new Color('#e9d6bd'), roughness: .8}));
 floor.receiveShadow = true; scene.add(floor);
 
-const profile = params.get('character') === 'lilah' ? LILAH : ARIANNA;
+const profile = ({lilah: LILAH, marc: MARC, pup: SUNNY_PUP} as Record<string, typeof ARIANNA>)[params.get('character') ?? ''] ?? ARIANNA;
 // Dev review only: ?glb=<path> loads a candidate model (e.g. the armpit fix) in place of the shipped one.
 const glb = import.meta.env.DEV ? params.get('glb') : null;
 const character = await loadCharacter(glb ? {...profile, url: glb} : profile, renderer, base);
 scene.add(character.root);
-// Lilah plays her own authored clips as supplied; Arianna's library adds the generated motions.
-const library = profile === ARIANNA ? buildClipLibrary(character) : {clips: character.clips, notes: {} as Record<string, string>};
+// Arianna's library adds generated motions; Lilah, Marc and the pup use their own authored clips.
+const library = profile === ARIANNA ? buildClipLibrary(character) : profile === LILAH ? buildLilahClips(character)
+  : profile === MARC ? buildMarcClips(character) : {clips: character.clips, notes: {} as Record<string, string>};
 const mixer = new AnimationMixer(character.model);
 const actions = new Map<string, AnimationAction>(library.clips.map(c => [c.name, mixer.clipAction(c)]));
 
@@ -33,7 +34,9 @@ const camera = new OrthographicCamera(-1, 1, 1, -1, .1, 40);
 const VIEWS: Record<string, [number, number, number]> = {front: [0, .72, 6], left: [6, .72, 0], right: [-6, .72, 0], back: [0, .72, -6], 'three-quarter': [4.2, 1.2, 4.2], game: [6, 14, 18.9]};
 let view = params.get('view') ?? 'front', aspect = 1;
 function applyCamera() {
-  const h = .95 * profile.displayHeight / ARIANNA.displayHeight, eye = VIEWS[view] ?? VIEWS.front, target = new Vector3(0, .7 * profile.displayHeight / ARIANNA.displayHeight, 0);
+  // The pup is longer than he is tall, so he is framed by his length.
+  const size = profile === SUNNY_PUP ? .75 : profile.displayHeight;
+  const h = .95 * size / ARIANNA.displayHeight, eye = VIEWS[view] ?? VIEWS.front, target = new Vector3(0, .7 * size / ARIANNA.displayHeight, 0);
   camera.left = -h * aspect; camera.right = h * aspect; camera.top = h; camera.bottom = -h;
   camera.position.set(...eye).sub(view === 'game' ? new Vector3(0, .8, .9) : new Vector3()).normalize().multiplyScalar(12).add(target);
   camera.lookAt(target); camera.updateProjectionMatrix(); camera.updateMatrixWorld();

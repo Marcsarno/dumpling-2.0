@@ -3,6 +3,8 @@ import {loadArianna, ariannaQuality, type LoadedCharacter} from '../characters/A
 import {buildClipLibrary} from '../characters/clips';
 import {CarrySocket, CharacterAnimator, groundHeight} from '../characters/CharacterAnimator';
 import {Lilah} from './Lilah';
+import {Marc} from './Marc';
+import {SunnyPup} from './SunnyPup';
 import {PlayerMovement, type MovementArea, type Walkable} from './movement';
 import {MoveInput} from '../input/Input';
 import {HOUSE_ROOMS} from '../data/house';
@@ -32,6 +34,8 @@ export class PlaySession {
   /** Arianna's held-item point between her hands. */
   socket!: CarrySocket;
   lilah?: Lilah;
+  marc?: Marc;
+  pup?: SunnyPup;
   private region: LoadedRegion;
   private last = 0;
   private running = false;
@@ -52,9 +56,12 @@ export class PlaySession {
     session.animator = new CharacterAnimator(session.character.root, session.character.model, library.clips);
     const hand = (n: string) => session.character.bones.get(n)!;
     session.socket = new CarrySocket(session.character.root, [hand('LeftHand'), hand('RightHand')]);
-    // Lilah lives in the house; she loads alongside Arianna and waits out shop visits.
-    session.lilah = await Lilah.load(renderer, movementArea(region));
-    scene.add(session.lilah.root);
+    // The family lives in the house; they load alongside Arianna and wait out shop visits.
+    // (The session starts in the house, so its region carries their chair and routes.)
+    const area = movementArea(region);
+    [session.lilah, session.marc, session.pup] = await Promise.all([
+      Lilah.load(renderer, area), Marc.load(renderer, area, region.data.semantics), SunnyPup.load(renderer, area)]);
+    for (const member of [session.lilah, session.marc, session.pup]) scene.add(member.root);
     session.placeAtStart();
     session.running = true; session.last = performance.now();
     requestAnimationFrame(session.frame);
@@ -63,7 +70,10 @@ export class PlaySession {
 
   setRegion(region: LoadedRegion) {
     this.region = region; this.movement.setArea(movementArea(region)); this.placeAtStart();
-    if (region.region === 'house') this.lilah?.setArea(movementArea(region));
+    if (region.region === 'house') {
+      const area = movementArea(region);
+      this.lilah?.setArea(area); this.marc?.setArea(area, region.data.semantics); this.pup?.setArea(area);
+    }
   }
 
   private placeAtStart() {
@@ -86,16 +96,22 @@ export class PlaySession {
     this.animator.update(dt, this.movement.velocity);
     this.socket.update();
     this.sync(dt);
-    this.lilah?.update(dt, this.movement.position, this.region.surfaces, this.region.region === 'house');
+    const home = this.region.region === 'house', arianna = this.movement.position, surfaces = this.region.surfaces;
+    const marc = this.marc?.position, pup = this.pup?.position;
+    this.lilah?.update(dt, arianna, surfaces, home, [...(marc ? [{...marc, space: .4}] : []), ...(pup ? [{...pup, space: .35}] : [])]);
+    this.marc?.update(dt, arianna, this.lilah?.position ?? null, surfaces, home);
+    this.pup?.update(dt, [arianna, ...[this.lilah?.position, this.marc?.position].filter(v => !!v)], surfaces, home);
     this.draw();
     this.lilah?.updateLabel(this.camera.camera, this.renderer.domElement);
+    this.marc?.updateLabel(this.camera.camera, this.renderer.domElement);
     requestAnimationFrame(this.frame);
   };
 
   snapshot() {
     return {position: [this.movement.position.x, this.movement.position.y, this.movement.position.z], velocity: [this.movement.velocity.x, 0, this.movement.velocity.z],
       input: [this.input.value.x, this.input.value.y], animation: this.animator.snapshot(), quality: ariannaQuality(this.character, this.renderer),
-      socket: this.socket.getWorldPosition(this.socket.position.clone()).toArray(), lilah: this.lilah?.snapshot(this.renderer)};
+      socket: this.socket.getWorldPosition(this.socket.position.clone()).toArray(), lilah: this.lilah?.snapshot(this.renderer),
+      marc: this.marc?.snapshot(this.renderer), pup: this.pup?.snapshot(this.renderer)};
   }
-  stop() { this.running = false; this.input.destroy(); this.player.removeFromParent(); this.lilah?.dispose(); }
+  stop() { this.running = false; this.input.destroy(); this.player.removeFromParent(); this.lilah?.dispose(); this.marc?.dispose(); this.pup?.dispose(); }
 }

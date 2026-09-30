@@ -31,6 +31,8 @@ export class CharacterAnimator {
   state = '';
   yaw: number;
   carrying = false;
+  /** Clip held while standing still (Marc switches to SitIdle in his chair). */
+  idleClip = 'Idle';
   turnRate = 22;
   private readonly travel: Record<string, number>;
   private readonly canRun: boolean;
@@ -92,7 +94,7 @@ export class CharacterAnimator {
     }
     const run = this.canRun && speed > (this.state.includes('Run') ? 1.05 : 1.3);
     const gait = this.carrying ? (run ? 'CarryRun' : 'CarryWalk') : run ? 'Run' : 'Walk';
-    const desired = moving ? gait : this.carrying ? 'CarryIdle' : 'Idle';
+    const desired = moving ? gait : this.carrying ? 'CarryIdle' : this.idleClip;
     if (desired !== this.state) this.transition(desired, .14);
     const travel = this.travel[desired];
     if (this.current) this.current.timeScale = travel ? Math.min(1, speed / travel) : 1;
@@ -105,6 +107,9 @@ export class CharacterAnimator {
     let delta = (Math.atan2(x - p.x, z - p.z) - this.yaw + Math.PI) % (2 * Math.PI); if (delta < 0) delta += 2 * Math.PI; delta -= Math.PI;
     this.yaw += delta * (1 - Math.exp(-rate * dt)); this.pivot.rotation.y = this.yaw;
   }
+
+  /** Set facing directly (radians), e.g. to sit square in a chair. */
+  setYaw(yaw: number) { this.yaw = yaw; this.pivot.rotation.y = yaw; }
 
   /** Face a floor point (used when an action should look at its target). */
   face(x: number, z: number) {

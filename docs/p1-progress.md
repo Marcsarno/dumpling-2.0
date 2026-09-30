@@ -59,12 +59,20 @@ Started on 2026-09-29 after the owner approved P0.
 - **Carry socket:** `CarrySocket` (hand midpoint in yaw-pivot space, 2.5 cm forward) for both Arianna (LeftHand/RightHand) and Lilah (hand.L/hand.R, which three.js names handL/handR). Lilah's favourite block rides there.
 - **Behaviour** (`src/game/Lilah.ts`, `HousePath.ts` ported from PlayCanvas): first decision at 3 s, then every 12 s; 55% follow a spot beside Arianna, otherwise one of six explore spots; next decision 7 s after arriving; reaches each waypoint before turning; stops 0.4 m short of Arianna. Speech bubbles as in PlayCanvas. She stays home (hidden, clock paused) during shop visits.
 - **Deliberate upgrades:** follows to the nearest free spot beside Arianna (PlayCanvas always tried the same corner first); waits up to 1 s for Arianna to step aside before re-deciding (PlayCanvas dropped the route at once); turns to watch Arianna while standing within 3.5 m.
-- **Tests:** `tests/node/house-path.test.mjs` (routes on the real house), `tests/browser/lilah-house.mjs` (quality, pace, free floor, personal space, carry socket, 3× PickUp timing, shop visit). Review video: `node tests/browser/record-lilah-play.mjs`.
+- **Tests:** `tests/node/house-path.test.mjs` (routes on the real house), `tests/browser/lilah-house.mjs` (quality, pace, free floor, personal space, carry socket, 3× PickUp timing, shop visit). Review video: `node tests/browser/record-home-play.mjs`.
 - **Later, with their features (P2):** bedtime (Sleep pose and crib), play-together, home-toy invites, messes and the Tornado event, and the evening "sleepy" walk to the crib. Braid secondary motion is a polish idea.
+
+## Marc and Sunny Pup (2026-09-29)
+
+- **Marc** (`src/game/Marc.ts`): his Meshy file as shipped (1024 colour, 512 metal/rough, 10,428 triangles, 28 joints) at 1.3 × Arianna. Clips: his authored ten, Walk = Walk_Basic, CarryIdle = CarryWalk's first frame held; SitDown/StandUp once. The rejected Run_Alternative is asserted absent. He walks at 1.2 m/s (carry 1.05), never runs, loops chair (18 s seated, 1.3 s sit-down and 1 s stand-up glides) → patrol point → chair, gives Arianna 0.6 m and Lilah 0.48 m, and says one of six remarks every 24 s when Arianna is within 5 m. The chair points follow the Editor prop via `src/world/propSpace.ts` (converted `propSpaces`). Carry socket between his hands for the dinner tray.
+- **Sunny Pup** (`src/game/SunnyPup.ts`): the owner's Meshy dog on the CC0 Mesh2Motion rig (1024 colour + normal, 512 metal/rough, 10,455 triangles, 49 joints), fitted to 0.48 m from the mesh like PlayCanvas importProp. Idle/Walk chosen by real speed (> 0.015 m/s), 0.16 s blends, Walk at speed/0.20 clamped 0.35–2.5×. Roams seven spots at 0.3 m/s, waits 4–10 s, pauses 0.48 m from anyone and replans after 2 s blocked.
+- **Deliberate upgrades:** the pup turns smoothly and follows rug heights; Lilah also gives Marc (0.4 m) and the pup (0.35 m) room; Marc's turns use the shared smoothed facing; everyone is grounded on rugs.
+- **Shared:** `SpeechLabel` (Lilah's cream bubble, Marc's green one), `CharacterAnimator.idleClip`/`setYaw`, lab `?character=marc|pup`.
+- **Tests:** `tests/browser/family-house.mjs` (as-shipped quality, heights 0.48 m and 1.3×, Marc reaches the seat and plays SitIdle, spacing, pup pace and free floor, shop visit). Review video: `node tests/browser/record-home-play.mjs family`.
+- **P2, with their features:** Marc's dinner service and tidying Lilah's messes (the tray socket is ready), and the pup's bowl, fetch, pet care and Tornado cameo.
 
 ## Remaining in P1
 
 - Owner review of the motion captures. The eating, pick-up and celebrate motions are new.
 - The chore, sleep, fishing, scooter and play clips land with their features (P2/P4). Their inputs (CMU and KayKit motion) are already shipped assets.
-- Marc and Sunny Pup loaders and animators.
 - Owner review of Lilah in play (`artifacts/play/lilah-play.webm`).

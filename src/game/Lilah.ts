@@ -1,4 +1,5 @@
 import {BoxGeometry, Group, Mesh, MeshStandardMaterial, Vector3, type Bone, type Camera, type WebGLRenderer} from 'three';
+import {SpeechLabel} from './SpeechLabel';
 import {LILAH, loadCharacter, characterQuality, type LoadedCharacter} from '../characters/Arianna';
 import {buildLilahClips, LILAH_ACTION_RATE, LILAH_WALK_SPEED} from '../characters/clips';
 import {CarrySocket, CharacterAnimator, groundHeight, type GroundSurface} from '../characters/CharacterAnimator';
@@ -8,8 +9,9 @@ import {HousePath, type FloorPoint, type PathArea} from './HousePath';
 const EXPLORE_SPOTS: FloorPoint[] = [{x: 1.1, z: 1.3}, {x: 3.8, z: 2}, {x: 1.4, z: 5.6}, {x: .5, z: 10.8}, {x: 4.3, z: 11.4}, {x: 8.4, z: .5}];
 const FOLLOW_OFFSETS: FloorPoint[] = [{x: .9, z: .7}, {x: -.9, z: .7}, {x: .9, z: -.7}, {x: -.9, z: -.7}];
 const FOLLOW_LINES = ['Ari! Wait for me!', 'I do it too!', 'Whatcha doing?'];
-/** She stops rather than walk into Arianna, and gives her this much room. */
+/** She stops rather than walk into Arianna (0.4 m, PlayCanvas) or the rest of the family. */
 const PERSONAL_SPACE = .4;
+export interface Neighbour { x: number; z: number; space: number }
 
 const findBone = (character: LoadedCharacter, ...names: string[]) => {
   // three.js strips "." from node names (hand.L becomes handL).
@@ -39,17 +41,13 @@ export class Lilah {
   private nextDecision = 3;
   private blockedFor = 0;
   state = 'watching';
-  speech = 'Hi, Ari!';
-  private speechUntil = 0;
   carrying = false;
-  private readonly label = document.createElement('div');
+  private readonly label = new SpeechLabel('lilah', 2.6, {top: 130, bottom: 130, side: 10});
   private readonly velocity = {x: 0, z: 0};
 
   private constructor(area: PathArea, private readonly random: () => number) {
     this.planner = new HousePath(area);
     this.root.name = 'Lilah · age 2';
-    this.label.className = 'speech-label'; this.label.hidden = true;
-    document.querySelector('#game')?.append(this.label);
   }
 
   static async load(renderer: WebGLRenderer, area: PathArea, options: {random?: () => number; base?: string} = {}) {
@@ -73,7 +71,8 @@ export class Lilah {
   /** Show or hide her favourite block in her hands (carry pose). */
   carry(on: boolean) { this.carrying = on; this.animator.carrying = on; this.toy.visible = on; }
 
-  private say(text: string) { this.speech = text; this.label.textContent = text; this.speechUntil = performance.now() + 2600; }
+  private say(text: string) { this.label.say(text); }
+  get speech() { return this.label.text; }
 
   private go(point: FloorPoint, purpose: string) {
     this.route = this.planner.route(this.position, point); this.destination = purpose; this.blockedFor = 0;
@@ -98,13 +97,13 @@ export class Lilah {
   }
 
   /** active: she is in the current region and free to wander (her clock only runs then). */
-  update(dt: number, arianna: FloorPoint, surfaces: GroundSurface[], active: boolean) {
+  update(dt: number, arianna: FloorPoint, surfaces: GroundSurface[], active: boolean, others: Neighbour[] = []) {
     this.root.visible = active;
     this.velocity.x = this.velocity.z = 0;
-    if (!active) { this.label.hidden = true; return; }
+    if (!active) { this.label.hide(); return; }
     this.time += dt;
     if (!this.animator.busy) {
-      if (this.route.length) this.walk(dt, arianna);
+      if (this.route.length) this.walk(dt, arianna, others);
       else {
         if (this.time >= this.nextDecision) this.decide(arianna);
         // Standing still, she watches her big sister.
@@ -116,12 +115,12 @@ export class Lilah {
     this.socket.update();
   }
 
-  private walk(dt: number, arianna: FloorPoint) {
+  private walk(dt: number, arianna: FloorPoint, others: Neighbour[]) {
     const p = this.root.position, next = this.route[0], dx = next.x - p.x, dz = next.z - p.z, distance = Math.hypot(dx, dz);
     // She reaches each waypoint exactly before turning, so she never cuts furniture corners.
     if (distance < 1e-4) { this.route.shift(); if (!this.route.length) this.arrive(); return; }
     const step = Math.min(distance, LILAH_WALK_SPEED * dt), x = p.x + dx / distance * step, z = p.z + dz / distance * step;
-    if (Math.hypot(x - arianna.x, z - arianna.z) <= PERSONAL_SPACE) {
+    if (Math.hypot(x - arianna.x, z - arianna.z) <= PERSONAL_SPACE || others.some(o => Math.hypot(x - o.x, z - o.z) <= o.space)) {
       // Wait for Arianna to move; after a second, give up and think again shortly.
       this.blockedFor += dt;
       if (this.blockedFor > 1) { this.route = []; this.state = 'watching'; this.nextDecision = this.time + 1; }
@@ -132,16 +131,8 @@ export class Lilah {
     p.x = x; p.z = z; this.velocity.x = dx / distance * LILAH_WALK_SPEED; this.velocity.z = dz / distance * LILAH_WALK_SPEED;
   }
 
-  /** Place her speech bubble above her head (hidden near the screen edges, like PlayCanvas). */
-  updateLabel(camera: Camera, canvas: HTMLElement) {
-    if (!this.root.visible || performance.now() > this.speechUntil) { this.label.hidden = true; return; }
-    const head = new Vector3(this.root.position.x, this.root.position.y + LILAH.displayHeight + .12, this.root.position.z).project(camera);
-    const rect = canvas.getBoundingClientRect(), x = (head.x + 1) / 2 * rect.width, y = (1 - head.y) / 2 * rect.height;
-    this.label.hidden = x < 10 || x > rect.width - 10 || y < 130 || y > rect.height - 130;
-    if (this.label.hidden) return;
-    const w = this.label.offsetWidth, h = this.label.offsetHeight;
-    this.label.style.transform = `translate(${Math.max(4, Math.min(rect.width - w - 4, x - w / 2))}px,${y - h}px)`;
-  }
+  /** Place her speech bubble above her head. */
+  updateLabel(camera: Camera, canvas: HTMLElement) { this.label.place(this.root, LILAH.displayHeight + .12, camera, canvas); }
 
   snapshot(renderer: WebGLRenderer) {
     return {position: [this.root.position.x, this.root.position.y, this.root.position.z], state: this.state, speech: this.speech, destination: this.destination,
@@ -149,5 +140,5 @@ export class Lilah {
       socket: this.socket.getWorldPosition(new Vector3()).toArray(), animation: this.animator.snapshot(), quality: characterQuality(this.character, renderer)};
   }
 
-  dispose() { this.label.remove(); this.root.removeFromParent(); }
+  dispose() { this.label.dispose(); this.root.removeFromParent(); }
 }

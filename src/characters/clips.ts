@@ -62,3 +62,31 @@ export function buildLilahClips(character: LoadedCharacter): ClipLibrary {
   });
   return {clips, notes: {PickUp: 'Authored; plays at 3x (0.8 s), take-toy at 1.1 s clip time.', PutDown: 'Authored; plays at 3x (0.8 s), drop-toy at 1.3 s clip time.'}};
 }
+
+/**
+ * Marc's motion library (PlayCanvas Marc.ts): his authored clips, Walk aliased to the
+ * retargeted Walk_Basic, and CarryIdle as CarryWalk's first frame held still. SitDown and
+ * StandUp play once. The owner-rejected Run_Alternative is not in the file and never added.
+ */
+export const MARC_WALK_SPEED = 1.2;
+export const MARC_CARRY_SPEED = 1.05;
+export function buildMarcClips(character: LoadedCharacter): ClipLibrary {
+  for (const name of ['SitDown', 'SitIdle', 'StandUp', 'Idle', 'Walk_Basic', 'CarryWalk'])
+    if (!character.clips.some(c => c.name === name)) throw Error(`Marc is missing authored clip ${name}`);
+  if (character.clips.some(c => c.name === 'Run_Alternative')) throw Error('Marc must not ship the rejected Run_Alternative clip');
+  const clips = character.clips.map(source => {
+    const clip = fromFirstKey(source, source.name);
+    clip.userData = {loop: !['SitDown', 'StandUp'].includes(clip.name), events: []};
+    return clip;
+  });
+  const walk = fromFirstKey(character.clips.find(c => c.name === 'Walk_Basic')!, 'Walk'); walk.userData = {loop: true, events: []};
+  const carry = character.clips.find(c => c.name === 'CarryWalk')!;
+  const hold = new AnimationClip('CarryIdle', 1, carry.tracks.map(t => {
+    const size = t.getValueSize(), c = t.clone() as KeyframeTrack;
+    c.times = new Float32Array([0, 1]) as typeof c.times;
+    c.values = new Float32Array([...t.values.slice(0, size), ...t.values.slice(0, size)]) as typeof c.values;
+    return c;
+  }));
+  hold.userData = {loop: true, events: []};
+  return {clips: [...clips, walk, hold], notes: {Walk: 'Walk_Basic (Quaternius Walk_Loop retargeted), as PlayCanvas.', CarryIdle: 'CarryWalk first frame, held.'}};
+}
