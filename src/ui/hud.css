@@ -78,7 +78,13 @@ body[data-playing] .controls{display:flex}
 #adventure-menu #mission-picker button{position:static;width:auto;min-height:46px;padding:10px;border:1px solid #d8cce0;border-radius:9px;background:#f2ebf6;color:#4f3f60;font:600 13px "Segoe UI",sans-serif;white-space:normal}
 #adventure-menu #mission-picker button[aria-pressed=true]{background:var(--plum);color:var(--paper);border-color:var(--plum)}
 .results-back{width:100%;margin-top:10px;border:0;background:none;color:#7b6a86;font:600 13px "Segoe UI",sans-serif;min-height:44px;cursor:pointer;text-decoration:underline}
-/* House sounds toggle in the menu. */
-#adventure-menu .adventure-sounds{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 16px;color:#4f3f60;font:600 13px "Segoe UI",sans-serif}
-#adventure-menu #house-effects{min-height:44px;padding:8px 14px;border:1px solid #d8cce0;border-radius:9px;background:#f2ebf6;color:#4f3f60;font:600 13px "Segoe UI",sans-serif;cursor:pointer}
-#adventure-menu #house-effects[aria-pressed=false]{background:#fff;color:#8a7b94}
+/* Sound & performance: the menu entry and its dialog. */
+#adventure-menu .adventure-sound-open{width:100%;min-height:46px;margin:0 0 16px;padding:10px 14px;border:1px solid #d8cce0;border-radius:9px;background:#f2ebf6;color:#4f3f60;font:600 13px "Segoe UI",sans-serif;text-align:left;cursor:pointer}
+.sound-settings .sound-level{display:grid;grid-template-columns:1fr auto;gap:6px 10px;margin:0 0 18px;color:var(--ink);font:600 14px "Segoe UI",sans-serif}
+.sound-settings .sound-level input{grid-column:1/-1;width:100%;min-height:32px;accent-color:var(--plum)}
+.sound-settings .sound-level output{color:var(--muted-ink);font-weight:600}
+.sound-settings .audio-mutes{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 12px}
+.sound-settings .audio-mutes button{min-height:44px;padding:8px 14px;border:1px solid #d8cce0;border-radius:9px;background:#f2ebf6;color:#4f3f60;font:600 13px "Segoe UI",sans-serif;cursor:pointer}
+.sound-settings .audio-mutes button[aria-pressed=false]{background:#fff;color:#8a7b94}
+.sound-settings .sound-note{font-size:13px;color:var(--muted-ink);margin:0 0 6px}
+.sound-settings .adventure-resume{margin-top:16px}

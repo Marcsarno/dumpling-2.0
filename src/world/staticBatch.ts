@@ -1,5 +1,6 @@
 import {BufferAttribute, Float32BufferAttribute, Mesh, MeshStandardMaterial, type BufferGeometry, type Material, type Object3D} from 'three';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
+import {setExterior} from '../engine/interiorLights';
 
 /**
  * Static scenery batching. Every visible, opaque, non-interactive mesh is baked into
@@ -45,6 +46,8 @@ export function batchStatic(root: Object3D, isDynamic: (mesh: Mesh) => boolean):
   const batches: Mesh[] = [];
   let merged = 0;
   for (const group of groups.values()) {
+    // Garden and house share batches; garden vertices carry the outdoor flag (interiorLights.ts).
+    if (group.sources.some(s => s.userData.exterior)) group.geometries.forEach((g, i) => setExterior(g, !!group.sources[i].userData.exterior));
     const geometry = mergeGeometries(group.geometries, false);
     for (const g of group.geometries) g.dispose();
     if (!geometry) { kept += group.sources.length; continue; }

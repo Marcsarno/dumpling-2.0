@@ -27,6 +27,18 @@ export class Daylight {
   }
 
   /**
+   * Dusk (PlayCanvas main.ts): as the lamps come on, the sun dims to a sliver and cools
+   * toward blue, and the sky ambient darkens, following the house lamps' fade (0 day, 1 night).
+   * Shadows stay on (switching them would recompile every shader).
+   */
+  dusk(amount: number) {
+    const {sun, ambient} = this.settings, d = Math.max(0, Math.min(1, amount));
+    this.sun.intensity = sun.intensity * (1 - .98 / 1.2 * d) * Math.PI;
+    this.sun.color.setRGB(sun.color[0] * (1 - .28 * d), sun.color[1] * (1 - .12 / .92 * d), Math.min(1, sun.color[2] * (1 + .17 / .83 * d)), SRGBColorSpace);
+    this.ambient.color.setRGB(ambient[0] * (1 - .42 / .72 * d), ambient[1] * (1 - .36 / .68 * d), ambient[2] * (1 - .31 / .77 * d), SRGBColorSpace);
+  }
+
+  /**
    * Fit the shadow map to the visible slice of the view (up to the PlayCanvas shadow
    * distance), extended toward the sun so off-screen casters still shade the view.
    */

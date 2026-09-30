@@ -152,3 +152,30 @@ Browser tests keep the PlayCanvas ids (`#action-button`, `#joystick`) and the `_
   - `tests/browser/missions.mjs`: House $8, then "Play again" draws a new six; Puppy $3 with every stage and hint; Explore covers all 16 chores with $0 and no receipt, the wash-first guard, the picker lock, and "Back to everyday life".
   - The shared driver is `tests/browser/lib/chore-driver.mjs`.
 - **Noticed, deferred to P5 polish (it would need the owner's mesh approval):** when her forearms fold forward (Read, WashHands), a thin grey crease shows inside each sleeve cuff at the elbow bend. It comes from the cuff geometry, not a particular motion. It joins the braid on the polish list.
+
+### Slice 5 — day/night lighting and audio (2026-09-30)
+
+- **`src/engine/HouseLighting.ts`** (PlayCanvas HouseLighting): the 13 Editor-authored interior lights (12 lamps and fixtures plus the warm interior bounce) fade in over 1.2 s when night falls at home in everyday life. The bedside shade, the imported lamp shades and the sconce glass glow (the materials the converter flags as `lamp`; batching keeps them apart). **`Daylight.dusk`** dims and cools the sun and darkens the sky with the same formulas as PlayCanvas `main.ts`.
+- **`src/engine/interiorLights.ts`**, two shader patches:
+  - The PlayCanvas **linear falloff** (`max((range − d)/range, 0)`) for the lamps.
+  - **Indoor-only lamps** (PlayCanvas masks lamps to interior geometry). Garden geometry carries an `exterior` vertex flag, and there the lamps and the bounce are skipped. Without it the garden stayed bright green at night; PlayCanvas's goes dark.
+- **For phones:**
+  - The lamps are switched off entirely by day.
+  - The lit house's shaders are compiled at load, so nightfall compiles nothing (asserted).
+  - The garden skips the lamps.
+  - The outdoor flag keeps garden and house in the same batches: daytime draw calls are unchanged (bedroom view 162). A first version with separate outdoor materials added about 20 draw calls.
+  - Capping the lamps at the nearest eight was measured and rejected: dropped lamps changed up to 27% of the screen on a tall phone.
+- **Music** (`src/ui/HouseMusic.ts`, PlayCanvas HouseMusic):
+  - Home track in the morning and at night, the after-school track in the afternoon, and the two shopping songs alternating per new shop.
+  - The same fades, the same end fade and the five-second gap, and the saved `house-music.muted`.
+  - **Upgrade:** the level goes through a Web Audio gain node, so fades and the volume slider work on iPhones and iPads. iOS ignores `audio.volume`, so PlayCanvas music played at full volume there.
+  - `src/ui/audioContext.ts` is the one shared context, unlocked on the first tap or key. Chore sounds now use it too.
+- **Sound & performance** (`src/ui/SoundSettings.ts`, PlayCanvas AudioSettings + PerformanceSettings):
+  - Music and sound-effect sliders saved under `audio.music` and `audio.effects`, plus the music and house-sounds toggles.
+  - A render-rate readout.
+  - Rendering pauses behind menus, as in PlayCanvas; a resize still redraws.
+  - It is opened from the menu.
+- **Not carried over:** footsteps. PlayCanvas deliberately retired them (`public/assets/audio/SOURCES.md`). The school trading track waits for recess (P4); music ducking waits for squishy reveals.
+- **Tests:**
+  - `tests/browser/night-house.mjs`: lamps off by day; the 1.2 s fade; the authored strengths; shade glow; dusk; no shader compiled at nightfall; the garden flagged outdoors; captures of seven rooms at night; the settings dialog saves, and nothing draws behind it; music routed through its gain node, playing the right track per phase; back to full sun in the afternoon.
+  - `tests/baseline/capture-playcanvas-night.mjs` captures PlayCanvas at night for comparison (`artifacts/baseline/night/`).

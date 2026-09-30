@@ -72,7 +72,7 @@ export class MaterialLibrary {
       if (def.blend === 2 || (def.opacity ?? 1) < 1) { m.transparent = def.blend === 2; m.opacity = def.opacity ?? 1; }
       if (def.depthWrite === false) m.depthWrite = false;
       if (def.alphaTest) m.alphaTest = def.alphaTest;
-      m.userData.world = {source: def.source, index};
+      m.userData.world = {source: def.source, index}; if (def.lamp) m.userData.lamp = true;
       return m;
     });
   }
@@ -91,7 +91,7 @@ export class MaterialLibrary {
         transparent: from.transparent, opacity: from.opacity, depthWrite: from.depthWrite, alphaTest: from.alphaTest, side: from.side,
       });
       if (def.emissive) { m.emissive = srgb(def.emissive); m.emissiveIntensity = def.emissiveIntensity ?? 0; }
-      m.userData.world = {source: def.source, index};
+      m.userData.world = {source: def.source, index}; if (def.lamp) m.userData.lamp = true;
       return m;
     });
   }

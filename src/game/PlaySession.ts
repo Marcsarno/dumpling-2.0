@@ -14,6 +14,10 @@ import {PlayerMovement, type MovementArea, type Walkable} from './movement';
 import {MoveInput} from '../input/Input';
 import {HOUSE_ROOMS} from '../data/house';
 import type {IsometricCamera} from '../engine/IsometricCamera';
+import type {Daylight} from '../engine/lighting';
+import {HouseLighting} from '../engine/HouseLighting';
+import {HouseMusic} from '../ui/HouseMusic';
+import {SoundSettings} from '../ui/SoundSettings';
 import type {LoadedRegion} from '../world/WorldLoader';
 
 /** Movement area for a converted region: authored walkables and active colliders. */
@@ -46,14 +50,21 @@ export class PlaySession {
   hud!: AdventureHUD;
   chores!: Chores;
   action!: ActionButton;
+  /** The house's lamps after dark (only while the house is loaded). */
+  lighting?: HouseLighting;
+  readonly music = new HouseMusic();
+  settings!: SoundSettings;
+  private drawnSize = '';
   private readonly completed = new Set<string>();
   private syncPicker = () => {};
   private region: LoadedRegion;
   private last = 0;
   private running = false;
 
-  private constructor(private readonly scene: Scene, private readonly renderer: WebGLRenderer, private readonly camera: IsometricCamera, region: LoadedRegion, private readonly draw: () => void) {
+  private constructor(private readonly scene: Scene, private readonly renderer: WebGLRenderer, private readonly camera: IsometricCamera, region: LoadedRegion,
+    private readonly draw: () => void, private readonly daylight?: Daylight) {
     this.region = region;
+    if (region.region === 'house') this.lighting = new HouseLighting(scene, region.data.semantics, region.root);
     const axes = camera.groundAxes();
     this.movement = new PlayerMovement(axes.right, axes.forward, movementArea(region));
     this.input = new MoveInput(document.querySelector<HTMLElement>('#joystick') ?? undefined, document.querySelector<HTMLElement>('#joystick-knob') ?? undefined);
@@ -61,10 +72,13 @@ export class PlaySession {
     this.day = new DayLoop(localStorage);
   }
 
-  static async start(scene: Scene, renderer: WebGLRenderer, camera: IsometricCamera, region: LoadedRegion, draw: () => void, extraMenu: HTMLElement[] = []) {
-    const session = new PlaySession(scene, renderer, camera, region, draw);
+  static async start(scene: Scene, renderer: WebGLRenderer, camera: IsometricCamera, region: LoadedRegion, draw: () => void, extraMenu: HTMLElement[] = [], daylight?: Daylight) {
+    const session = new PlaySession(scene, renderer, camera, region, draw, daylight);
     session.action = new ActionButton(document.querySelector<HTMLButtonElement>('#action-button')!, () => session.chores?.press(), () => session.chores?.cancelHold());
-    session.hud = new AdventureHUD(() => { session.input.reset(); session.action.reset(); }, [session.activityPicker(), ...extraMenu]);
+    const sound = document.createElement('button'); sound.id = 'sound-settings-open'; sound.type = 'button'; sound.className = 'adventure-sound-open';
+    sound.textContent = '♫ Sound & performance';
+    sound.addEventListener('click', () => { session.hud.close(); session.settings.open(); });
+    session.hud = new AdventureHUD(() => { session.input.reset(); session.action.reset(); }, [session.activityPicker(), sound, ...extraMenu]);
     session.character = await loadArianna(renderer);
     const library = buildClipLibrary(session.character);
     session.player.add(session.character.root);
@@ -82,7 +96,7 @@ export class PlaySession {
     session.chores.routines.onSchool = () => session.hud.close();
     // Explore rounds pay nothing, so they leave no receipt behind.
     session.chores.onFinished = (receipt, amount) => { if (amount > 0) session.day.credit(receipt, amount); };
-    session.hud.menu.querySelector('[data-extra]')!.append(session.soundsRow());
+    session.settings = new SoundSettings(renderer, [session.music.button, session.chores.audio.button]);
     // The family lives in the house; they load alongside Arianna and wait out shop visits.
     // (The session starts in the house, so its region carries their chair and routes.)
     const area = movementArea(region);
@@ -90,6 +104,8 @@ export class PlaySession {
       Lilah.load(renderer, area), Marc.load(renderer, area, region.data.semantics), SunnyPup.load(renderer, area)]);
     for (const member of [session.lilah, session.marc, session.pup]) scene.add(member.root);
     session.placeAtStart();
+    // Compile the lit house now so nightfall never stalls a frame.
+    session.lighting?.prepare(renderer, camera.camera);
     session.running = true; session.last = performance.now();
     requestAnimationFrame(session.frame);
     return session;
@@ -97,7 +113,10 @@ export class PlaySession {
 
   setRegion(region: LoadedRegion) {
     this.region = region; this.movement.setArea(movementArea(region)); this.placeAtStart();
+    this.lighting?.dispose(); this.lighting = undefined;
     if (region.region === 'house') {
+      this.lighting = new HouseLighting(this.scene, region.data.semantics, region.root);
+      this.lighting.prepare(this.renderer, this.camera.camera);
       const area = movementArea(region);
       this.lilah?.setArea(area); this.marc?.setArea(area, region.data.semantics); this.pup?.setArea(area);
     }
@@ -141,7 +160,14 @@ export class PlaySession {
     this.lilah?.update(dt, arianna, surfaces, home, [...(marc ? [{...marc, space: .4}] : []), ...(pup ? [{...pup, space: .35}] : [])]);
     this.marc?.update(dt, arianna, this.lilah?.position ?? null, surfaces, home);
     this.pup?.update(dt, [arianna, ...[this.lilah?.position, this.marc?.position].filter(v => !!v)], surfaces, home);
-    this.draw();
+    // After dark at home in everyday life, the lamps come on and the sun sets (PlayCanvas main.ts).
+    const night = home && chores.mode === 'day' && this.day.state.phase === 'night';
+    this.lighting?.update(night, document.hidden ? 0 : dt);
+    this.daylight?.dusk(home ? this.lighting?.amount ?? 0 : 0);
+    this.music.update({mode: home ? 'home' : 'store', phase: this.day.state.phase, store: home ? '' : this.region.region, paused: false, revealing: false}, dt);
+    // Rendering pauses behind menus (PlayCanvas PerformanceSettings); a resize still redraws.
+    const size = `${this.renderer.domElement.width}x${this.renderer.domElement.height}`;
+    if (!this.hud.modalOpen || size !== this.drawnSize) { this.draw(); this.drawnSize = size; this.settings.drew(); }
     this.hud.update(this.hudState());
     if (this.hud.menu.open) this.syncPicker();
     this.lilah?.updateLabel(this.camera.camera, this.renderer.domElement);
@@ -185,20 +211,14 @@ export class PlaySession {
     return box;
   }
 
-  /** Sounds in the menu: the house-sounds toggle (the volume dialog arrives with the music, slice 5). */
-  private soundsRow() {
-    const row = document.createElement('div'); row.className = 'adventure-sounds';
-    const label = document.createElement('span'); label.textContent = 'House sounds';
-    row.append(label, this.chores.audio.button);
-    return row;
-  }
-
   snapshot() {
     return {position: [this.movement.position.x, this.movement.position.y, this.movement.position.z], velocity: [this.movement.velocity.x, 0, this.movement.velocity.z],
       input: [this.input.value.x, this.input.value.y], animation: this.animator.snapshot(), quality: ariannaQuality(this.character, this.renderer),
       socket: this.socket.getWorldPosition(this.socket.position.clone()).toArray(), lilah: this.lilah?.snapshot(this.renderer),
       marc: this.marc?.snapshot(this.renderer), pup: this.pup?.snapshot(this.renderer),
-      day: this.day.snapshot(), location: this.location, cleanup: this.chores.snapshot()};
+      day: this.day.snapshot(), location: this.location, cleanup: this.chores.snapshot(),
+      lighting: this.lighting?.snapshot() ?? null, daylight: this.daylight ? {sun: this.daylight.sun.intensity, ambient: this.daylight.ambient.color.toArray()} : null,
+      music: this.music.snapshot()};
   }
-  stop() { this.running = false; this.input.destroy(); this.action.destroy(); this.hud.destroy(); this.chores.dispose(); this.player.removeFromParent(); this.lilah?.dispose(); this.marc?.dispose(); this.pup?.dispose(); }
+  stop() { this.running = false; this.input.destroy(); this.action.destroy(); this.hud.destroy(); this.chores.dispose(); this.music.destroy(); this.settings.destroy(); this.lighting?.dispose(); this.player.removeFromParent(); this.lilah?.dispose(); this.marc?.dispose(); this.pup?.dispose(); }
 }

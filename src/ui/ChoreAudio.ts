@@ -1,5 +1,6 @@
 import {saveKey} from '../systems/SaveNamespace';
 import {audioLevel, onAudioChange} from './audioLevels';
+import {audioContext, unlockAudio} from './audioContext';
 
 const SOUNDS = ['vacuum', 'munch', 'wipe', 'water', 'handle'] as const;
 type Sound = typeof SOUNDS[number];
@@ -52,9 +53,11 @@ export class ChoreAudio {
   }
 
   private async unlock() {
-    this.context ??= new AudioContext();
-    if (!this.master) { this.master = this.context.createGain(); this.master.connect(this.context.destination); this.volume(); }
-    await this.context.resume().catch(() => {});
+    await unlockAudio();
+    const ctx = audioContext();
+    if (!ctx) return;
+    this.context = ctx;
+    if (!this.master) { this.master = ctx.createGain(); this.master.connect(ctx.destination); this.volume(); }
     this.loading ??= Promise.all(SOUNDS.map(async name => {
       try {
         const response = await fetch(`${this.base}assets/audio/foley/${name}.mp3`);
@@ -105,5 +108,5 @@ export class ChoreAudio {
   silence() { this.stop(); for (const voice of this.voices) { try { voice.stop(); } catch { /* already stopped */ } } }
   get busy() { return !!this.kind; }
   snapshot() { return {kind: this.kind, playing: !!this.current, muted: this.muted, state: this.context?.state, decoded: this.buffers.size, failures: this.failures}; }
-  destroy() { this.silence(); this.unsubscribe(); this.abort.abort(); this.button.remove(); void this.context?.close(); }
+  destroy() { this.silence(); this.unsubscribe(); this.abort.abort(); this.button.remove(); this.master?.disconnect(); }
 }

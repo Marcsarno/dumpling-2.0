@@ -1,4 +1,5 @@
 import {Color, NoToneMapping, PCFShadowMap, SRGBColorSpace, WebGLRenderer} from 'three';
+import './interiorLights'; // PlayCanvas lamp falloff and interior-only lamps, before any shader compiles
 
 /**
  * One WebGL renderer at the display's full native resolution.

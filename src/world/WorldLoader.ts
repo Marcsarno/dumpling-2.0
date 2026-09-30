@@ -1,11 +1,12 @@
 import {
-  Box3, Group, Mesh, Object3D, type Material,
+  Box3, Group, Mesh, Object3D, Vector3, type Material,
 } from 'three';
 import {GLTFLoader, type GLTF} from 'three/addons/loaders/GLTFLoader.js';
 import type {RegionFile, WorldNode} from './format';
 import {MaterialLibrary} from './materials';
 import {primitive} from './primitives';
 import {batchStatic} from './staticBatch';
+import {setExterior} from '../engine/interiorLights';
 import type {GroundSurface} from '../characters/CharacterAnimator';
 
 /** Shared, reference-counted GLB cache: regions acquire models on load and release them on dispose. */
@@ -46,6 +47,9 @@ function meshOnly(gltf: GLTF, source: Object3D, meshIndex: number): Object3D {
   for (const child of source.children) if (own(child)) group.add(child.clone(false));
   return group;
 }
+
+/** The house's garden (PlayCanvas house.ts after `exterior = true`, plus its 'nature' art); the terrace bench is picked by position. */
+const OUTDOORS = /^(Garden terrain|Lawn edging|Gravel driveway|Driveway curb|Front path|Entry porch|Porch board|Patio terrace|Terrace joint|Raised flower border|Mailbox (post|body|door)|(Art )?(tree_|plant_bush|flower_|grass_large|fence_planks|benchCushion))/;
 
 export interface LoadedRegion {
   region: string;
@@ -111,6 +115,11 @@ export async function loadRegion(region: string, base = import.meta.env.BASE_URL
   const root = new Group(); root.name = `region:${region}`; root.add(objects[0]);
   objects[0].visible = true; // environment roots are toggled by the scene, not by their saved flag
   root.updateMatrixWorld(true);
+  // The garden beyond the cutaway is lit by the sun and sky only, as in PlayCanvas (mask 8).
+  if (region === 'house') data.nodes.forEach((node, i) => {
+    if (!OUTDOORS.test(node.name) || (node.name.endsWith('benchCushion') && objects[i].getWorldPosition(new Vector3()).z < 13.5)) return;
+    objects[i].traverse(o => { if ((o as Mesh).isMesh) o.userData.exterior = true; });
+  });
   // Walkable surfaces for visual foot contact (PlayCanvas CharacterGrounding), before batching merges them.
   const surfaces: GroundSurface[] = [];
   const visible = (o: Object3D) => { for (let p: Object3D | null = o; p; p = p.parent) if (!p.visible) return false; return true; };
@@ -122,6 +131,8 @@ export async function loadRegion(region: string, base = import.meta.env.BASE_URL
   // Props the player picks up, uses or that change state stay individual meshes.
   const keyOf = (o: Object3D) => { for (let p: Object3D | null = o; p; p = p.parent) { const key = p.userData.world?.key as string | undefined; if (key) return key; } return undefined; };
   const batching = batch ? batchStatic(root, mesh => /^(Cleanup props|Daily routines)\//.test(keyOf(mesh) ?? '')) : {batches: [], merged: 0, kept: 0};
+  // Garden meshes left unbatched carry the outdoor flag on their own (copied) geometry.
+  root.traverse(o => { const mesh = o as Mesh; if (mesh.isMesh && mesh.userData.exterior && mesh.layers.mask !== 0 && !mesh.geometry.getAttribute('exterior')) { mesh.geometry = mesh.geometry.clone(); setExterior(mesh.geometry, true); } });
   let meshes = 0, triangles = 0;
   root.traverse(o => {
     o.matrixAutoUpdate = false; o.matrixWorldAutoUpdate = false;
