@@ -7,14 +7,20 @@ import type {CharacterAnimator} from '../characters/CharacterAnimator';
 import type {PlayerMovement} from './movement';
 import {RUN_SPEED, WALK_SPEED} from './movement';
 import type {DayLoop} from './DayLoop';
-import {createCleanupProps, type CleanupProps, type Interaction} from './cleanupProps';
+import {createCleanupProps, type CleanupItem, type CleanupProps, type Interaction} from './cleanupProps';
 import {CarrySystem} from './CarrySystem';
 import {CleanupFeedback} from '../ui/CleanupFeedback';
 import {RoundMesses} from './RoundMesses';
+import {DailyRoutines} from './DailyRoutines';
 import type {PathArea} from './HousePath';
 
 export type ChoreMode = 'day' | 'bedroom';
 const WORK_MS: Partial<Record<Interaction['kind'], number>> = {crayons: 450, vacuum: 1150, pet: 1600};
+const DEG = Math.PI / 180;
+/** Routine pickups that play PickUp (the rest of the instant routines play PutDown). */
+const ROUTINE_PICKUPS = ['choose-clothes', 'night-clothes', 'take-egg', 'take-towel', 'daily-vacuum', 'take-breakfast'];
+/** Getting into bed: 3.2 s path from where she stands onto the mattress (PlayCanvas BedEntry). */
+export const BED_ENTRY_SECONDS = 3.2;
 
 /**
  * Doing things around the house (the gameplay half of PlayCanvas CleanupGame): press the
@@ -22,36 +28,46 @@ const WORK_MS: Partial<Record<Interaction['kind'], number>> = {crayons: 450, vac
  * Targets come from the vendored InteractionSystem (nearest available within range, with a
  * little hysteresis); carrying uses the socket between Arianna's hands; rounds are scored by
  * the vendored MissionSystem ($1 per task, $2 all-clean bonus in a timed 60 s round) and paid
- * through a one-time receipt.
+ * through a one-time receipt. Everyday routines (DailyRoutines) pay $1 each through the day.
  *
- * Modes so far: 'day' (everyday life, chores arrive with slice 3) and 'bedroom' (the timed
- * five-task tidy round). The other rounds and the mission picker's full list land in slice 4.
+ * Modes so far: 'day' (everyday life) and 'bedroom' (the timed five-task tidy round). The
+ * other rounds and the mission picker's full list land in slice 4.
  */
 export class Chores {
   readonly mission = new MissionSystem();
   readonly props: CleanupProps;
+  readonly routines: DailyRoutines;
   readonly interactions: InteractionSystem;
   readonly carry: CarrySystem;
   readonly feedback: CleanupFeedback;
   readonly roundMesses: RoundMesses;
+  private readonly roundItems: CleanupItem[];
   mode: ChoreMode = 'day';
   roundId = saveId();
   aligning: Interaction | null = null;
   progress = 0;
+  /** Floor height override while she sits at the table or lies in bed (else the rug/floor). */
+  heightOverride: number | null = null;
   private activity: {target: Interaction; start: number; duration: number} | null = null;
+  /** Where she stood before sitting down or getting into bed, and her facing then. */
+  private seatReturn: {x: number; z: number; yaw: number} | null = null;
   private finishedHandled = false;
   private celebrated = false;
   private readonly announcement = document.createElement('p');
   readonly results = document.createElement('dialog');
   private readonly hands = new Vector3();
+  private readonly rightHand = new Vector3();
   onFinished: (receipt: string, amount: number) => void = () => {};
 
   constructor(scene: Object3D, camera: Camera, semantics: RegionSemantics, private readonly movement: PlayerMovement,
-    private readonly animator: CharacterAnimator, socket: Object3D, private readonly day: DayLoop, area: PathArea) {
+    private readonly animator: CharacterAnimator, socket: Object3D, private readonly day: DayLoop, area: PathArea,
+    private readonly rightHandBone: Object3D, base = import.meta.env.BASE_URL) {
     this.props = createCleanupProps(semantics);
+    this.roundItems = [...this.props.items];
     this.roundMesses = new RoundMesses(this.props, area);
     scene.add(this.props.root);
     this.carry = new CarrySystem(socket);
+    this.routines = new DailyRoutines(this.props, semantics, day, this.carry, base);
     this.interactions = new InteractionSystem(this.props.interactions);
     this.feedback = new CleanupFeedback(scene, camera, this.props.interactions);
     this.announcement.id = 'cleanup-announcement'; this.announcement.className = 'sr-only';
@@ -88,20 +104,29 @@ export class Chores {
   replay() {
     this.roundId = saveId();
     this.cancelActivity(); this.aligning = null; this.movement.cancelApproach();
-    this.carry.item = null; this.animator.carrying = false; this.animator.carryPace = 'run'; this.movement.speed = RUN_SPEED;
+    const held = this.carry.item; if (held) this.carry.release(held.object.parent === this.carry.socket ? this.props.root : held.object.parent!, held.home);
     this.props.reset(); this.mission.reset(); this.feedback.reset(); this.results.close(); this.announcement.textContent = '';
-    for (const it of this.props.items) it.object.visible = this.mode !== 'day';
+    for (const it of this.roundItems) it.object.visible = this.mode !== 'day';
     this.props.crayonMess.visible = this.props.dirt.visible = this.mode !== 'day';
     this.roundMesses.apply(this.mode);
+    this.routines.active = this.mode === 'day'; this.routines.root.visible = this.mode === 'day'; this.routines.refresh();
     this.syncDay();
     this.finishedHandled = this.celebrated = false; this.interactions.focus = null;
-    if (this.mode !== 'day') { this.animator.cancelAction(); this.movement.place(0, .9); this.animator.setYaw(30 * Math.PI / 180); }
+    if (this.mode !== 'day') { this.animator.cancelAction(); this.movement.place(0, .9); this.animator.setYaw(30 * DEG); }
+  }
+
+  /** The day moved on (new phase or a new day): props follow the saved state. */
+  dayChanged() {
+    if (this.mode !== 'day') return;
+    this.cancelActivity(); this.aligning = null;
+    const held = this.carry.item; if (held && held.object.parent === this.carry.socket) this.carry.release(this.routines.root, held.home);
+    this.routines.refresh(); this.syncDay();
   }
 
   private syncDay() {
     if (this.mode !== 'day') return;
     this.mission.tasks = this.day.clock.tasks;
-    for (const id of this.day.state.done) this.mission.completed.add(id);
+    this.mission.completed.clear(); for (const id of this.day.state.done) this.mission.completed.add(id);
   }
 
   private refreshFocus() { this.interactions.update(this.movement.position as Vector3, this.carried, this.mission); }
@@ -127,16 +152,12 @@ export class Chores {
 
   private perform(target: Interaction, now: number) {
     const face = target.placement ? {x: target.placement[0], z: target.placement[2]} : {x: target.marker.x, z: target.marker.z};
+    if (target.kind === 'daily') return this.performRoutine(target, now, face);
     if (target.kind === 'pickup') {
       const item = this.props.items.find(i => i.id === target.item);
       if (!item) return;
       this.animator.playAction('PickUp', {face, onEvent: e => {
-        if (e !== 'attach' || !this.carry.pickUp(item)) return;
-        this.animator.carrying = true;
-        const bulky = item.carryPace === 'walk';
-        this.animator.carryPace = bulky ? 'walk' : 'run';
-        this.movement.speed = bulky ? WALK_SPEED * (item.id === 'vacuum' ? 1.5 : 1) : RUN_SPEED;
-        this.announce(`Picked up ${item.name}. Follow the glowing destination.`);
+        if (e === 'attach' && this.carry.pickUp(item)) this.announce(`Picked up ${item.name}. Follow the glowing destination.`);
       }});
       return;
     }
@@ -148,17 +169,55 @@ export class Chores {
         const item = this.carry.release(this.props.root, target.placement!);
         if (item && target.placedStyle === 'hide') item.object.visible = false;
         if (item && target.placedStyle === 'hang') item.object.rotation.set(Math.PI / 2, 0, 0);
-        this.dropped();
         this.reward(target, performance.now());
       }});
       return;
     }
     this.activity = {target, start: now, duration: WORK_MS[target.kind] ?? target.duration ?? 1000};
+    if (target.kind === 'vacuum') { this.animator.workClip = 'Vacuum'; this.animator.faceTarget = {x: target.anchor.x, z: target.anchor.z}; }
   }
 
-  private dropped() { this.animator.carrying = false; this.animator.carryPace = 'run'; this.movement.speed = RUN_SPEED; }
+  /** Everyday routines (PlayCanvas CleanupGame.perform 'daily' branch). */
+  private performRoutine(target: Interaction, now: number, face: {x: number; z: number}) {
+    if (target.duration === 0) {
+      this.animator.playAction(ROUTINE_PICKUPS.includes(target.id) ? 'PickUp' : 'PutDown', {face, onEvent: e => {
+        if (e !== 'attach' && e !== 'release') return;
+        this.routines.perform(target);
+        if (target.task) this.feedback.reward(target.marker, '+$1', performance.now());
+      }});
+      return;
+    }
+    this.activity = {target, start: now, duration: target.duration ?? 1000};
+    const p = this.movement.position;
+    if (target.id === 'sleep') {
+      this.seatReturn = {x: p.x, z: p.z, yaw: this.animator.yaw}; this.movement.cancelApproach(); this.animator.workClip = 'SleepEnter'; this.animator.faceTarget = null;
+      return;
+    }
+    if (target.id === 'eat-breakfast') {
+      const seat = this.routines.seat;
+      this.seatReturn = {x: p.x, z: p.z, yaw: this.animator.yaw}; this.movement.place(seat.x, seat.z); this.animator.setYaw(seat.yaw);
+      this.heightOverride = .07; this.animator.workClip = 'EatSit'; this.animator.faceTarget = seat.face;
+      return;
+    }
+    this.animator.faceTarget = face;
+    if (target.id.startsWith('wipe-')) this.animator.workClip = 'Wipe';
+    else if (target.id.includes('vacuum')) this.animator.workClip = 'Vacuum';
+    // Upgrades: real brushing and reading motions (PlayCanvas held the carry pose for both).
+    else if (target.id === 'daily-teeth') this.animator.workClip = 'BrushTeeth';
+    else if (target.id === 'bedtime-book') this.animator.workClip = 'Read';
+    else if (!target.hold) this.animator.workClip = 'CarryIdle';
+  }
+
+  /** Back to where she was standing after eating or waking (PlayCanvas leaveSeat). */
+  private leaveSeat() {
+    if (!this.seatReturn) return;
+    this.movement.place(this.seatReturn.x, this.seatReturn.z); this.animator.setYaw(this.seatReturn.yaw);
+    this.seatReturn = null; this.heightOverride = null;
+  }
 
   private cancelActivity() {
+    this.leaveSeat();
+    this.animator.workClip = null; this.animator.faceTarget = null;
     this.activity?.target.mess?.scale.setScalar(1);
     this.activity = null; this.progress = 0;
     this.props.dirt.scale.setScalar(1); this.props.crayonMess.scale.setScalar(1);
@@ -170,34 +229,40 @@ export class Chores {
   }
   private announce(text: string) { this.announcement.textContent = text; }
 
+  /** Bed entry pose at progress t (PlayCanvas bedEntry: reach, tuck, sit, recline). */
+  private bedPose(t: number) {
+    const start = this.seatReturn!, bed = this.routines.bedSpace;
+    const key = (tt: number, x: number, z: number, h: number, y: number) => { const q = bed.point(x, z); return {t: tt, x: q.x, z: q.z, h: bed.height(h), y: bed.yaw(y)}; };
+    const keys = [{t: 0, x: start.x, z: start.z, h: .027, y: start.yaw}, key(.2, -1, -1.75, .08, 90), key(.43, -1.35, -1.85, .91, 90), key(.65, -1.8, -1.85, .91, 35), key(1, -2.05, -1.85, .91, 0)];
+    const c = Math.max(0, Math.min(1, t)), b = Math.max(1, keys.findIndex(k => k.t >= c)), a = keys[b - 1], z = keys[b];
+    const raw = (c - a.t) / (z.t - a.t), u = raw * raw * (3 - 2 * raw);
+    let dy = (z.y - a.y) % (2 * Math.PI); if (dy > Math.PI) dy -= 2 * Math.PI; if (dy < -Math.PI) dy += 2 * Math.PI;
+    return {x: a.x + (z.x - a.x) * u, z: a.z + (z.z - a.z) * u, h: a.h + (z.h - a.h) * u, yaw: a.y + dy * u};
+  }
+
   /** Per frame. `held`: is the action still held; `moving`: any movement input (starts the round timer). */
   update(now: number, held: boolean, moving: boolean) {
     this.syncDay();
     if (moving && this.mode !== 'day') this.mission.start(now);
     this.mission.tick(now); this.refreshFocus();
+    // Carrying pace follows the item: bulky things (vacuum, a full plate) are a steady walk.
+    const item = this.carry.item, bulky = item?.carryPace === 'walk';
+    this.animator.carrying = !!item; this.animator.carryPace = bulky ? 'walk' : 'run';
+    this.movement.speed = bulky ? WALK_SPEED * (item!.id === 'vacuum' ? 1.5 : 1) : RUN_SPEED;
     const a = this.activity;
     if (a) {
-      const inRange = this.interactions.distance(a.target, this.movement.position as Vector3) <= a.target.range + .1;
+      if (a.target.id === 'sleep' && this.seatReturn) {
+        const t = (now - a.start) / (BED_ENTRY_SECONDS * 1000), pose = this.bedPose(t);
+        this.movement.position.x = pose.x; this.movement.position.z = pose.z; this.animator.setYaw(pose.yaw); this.heightOverride = pose.h;
+        if (t >= 1) this.animator.workClip = 'Sleep';
+      }
+      const inRange = !!this.seatReturn || this.interactions.distance(a.target, this.movement.position as Vector3) <= a.target.range + .1;
       if (!inRange || document.hidden || ((a.target.kind === 'vacuum' || a.target.hold) && !held)) this.cancelActivity();
       else {
         this.progress = Math.min(1, (now - a.start) / a.duration);
         const mess = a.target.kind === 'vacuum' ? this.props.dirt : a.target.kind === 'crayons' ? this.props.crayonMess : a.target.mess;
         mess?.scale.setScalar(1 - this.progress * .92);
-        if (this.progress >= 1) {
-          const target = a.target; this.cancelActivity();
-          if (this.mission.complete(target.task!, now)) {
-            if (target.kind === 'crayons') { this.props.crayonMess.visible = false; this.props.tidyCrayons.visible = true; }
-            if (target.kind === 'vacuum') {
-              this.props.dirt.visible = false;
-              const vacuum = this.props.items.find(i => i.id === 'vacuum')!;
-              this.animator.playAction('PutDown', {face: {x: target.anchor.x, z: target.anchor.z}, onEvent: e => {
-                if (e === 'release' && this.carried === 'vacuum') { this.carry.release(this.props.root, vacuum.home); this.dropped(); }
-              }});
-            }
-            if (target.mess) target.mess.visible = false;
-            this.reward(target, now);
-          }
-        }
+        if (this.progress >= 1) this.finishWork(a.target, now);
       }
     }
     if (this.mission.state === 'finished') {
@@ -209,8 +274,32 @@ export class Chores {
       if (this.mission.reason === 'complete' && !this.animator.busy && !this.celebrated) { this.celebrated = true; this.animator.playAction('Celebrate'); }
       else if (!this.animator.busy) this.showResults();
     }
-    this.carry.socket.getWorldPosition(this.hands);
+    this.carry.socket.getWorldPosition(this.hands); this.rightHandBone.getWorldPosition(this.rightHand);
+    this.routines.update(now, this.activity?.target ?? null, this.progress, this.hands, this.rightHand, this.animator.yaw);
     this.feedback.update(now, this.interactions, this.carried, this.hands, this.mission, !this.activity && !this.animator.busy);
+  }
+
+  private finishWork(target: Interaction, now: number) {
+    if (target.kind === 'daily') {
+      this.animator.workClip = null; this.animator.faceTarget = null;
+      this.activity = null; this.progress = 0;
+      this.routines.perform(target);
+      this.leaveSeat();
+      this.feedback.reward(target.marker, target.task ? '+$1' : '✓', now);
+      return;
+    }
+    this.cancelActivity();
+    if (!this.mission.complete(target.task!, now)) return;
+    if (target.kind === 'crayons') { this.props.crayonMess.visible = false; this.props.tidyCrayons.visible = true; }
+    if (target.kind === 'vacuum') {
+      this.props.dirt.visible = false;
+      const vacuum = this.props.items.find(i => i.id === 'vacuum')!;
+      this.animator.playAction('PutDown', {face: {x: target.anchor.x, z: target.anchor.z}, onEvent: e => {
+        if (e === 'release' && this.carried === 'vacuum') this.carry.release(this.props.root, vacuum.home);
+      }});
+    }
+    if (target.mess) target.mess.visible = false;
+    this.reward(target, now);
   }
 
   /** What the big button says (PlayCanvas CleanupHUD titles). */
@@ -258,6 +347,7 @@ export class Chores {
       tasks: this.mission.tasks.map(t => t.id), completed: [...this.mission.completed], focus: this.interactions.focus?.id ?? null,
       carrying: item?.id ?? null, carriedParent: item?.object.parent?.name ?? null, carriedPosition: item ? item.object.getWorldPosition(new Vector3()).toArray() : null,
       aligning: this.aligning?.id ?? null, working: this.activity?.target.id ?? null, progress: this.progress, roundId: this.roundId,
+      workClip: this.animator.workClip, seated: !!this.seatReturn, heightOverride: this.heightOverride,
       items: this.props.items.map(i => ({id: i.id, visible: i.object.visible, position: i.object.getWorldPosition(new Vector3()).toArray(), home: i.home})),
       targets: this.props.interactions.map(t => ({id: t.id, position: [t.anchor.x, 0, t.anchor.z], range: t.range}))};
   }

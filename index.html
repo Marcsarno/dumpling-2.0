@@ -21,10 +21,17 @@
       font: 700 12px system-ui, sans-serif; pointer-events: none; box-shadow: 0 3px 12px #7c627525; z-index: 5; text-align: center; }
     .speech-label[hidden] { display: none; }
     .speech-label.marc { background: #e7f0e4ef; color: #4f655c; }
+    /* The short school interlude between morning and afternoon (PlayCanvas #school-transition). */
+    #school-transition { position: absolute; inset: 0; z-index: 30; display: grid; place-content: center; text-align: center; gap: 6px;
+      background: #fff9eef2; color: #3c304a; font-family: "Segoe UI", system-ui, sans-serif; }
+    #school-transition[hidden] { display: none; }
+    #school-transition span { font-size: 54px; } #school-transition h2 { margin: 6px 0 0; font-size: 28px; letter-spacing: -.5px; }
+    #school-transition p { margin: 0; color: #726778; font-size: 15px; }
   </style>
 </head>
 <body>
   <div id="game"><canvas id="game-canvas"></canvas>
+    <section id="school-transition" hidden><span aria-hidden="true">🎒</span><h2>A little time at school</h2><p>See you after class!</p></section>
     <div class="controls">
       <div class="joystick-group"><div id="joystick" aria-label="Move"><div id="joystick-knob"></div></div></div>
       <div class="action-group"><button id="action-button" type="button" disabled><strong id="action-title">Action</strong><small id="action-detail">Come closer</small></button></div>

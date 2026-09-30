@@ -36,6 +36,12 @@ export interface PoseKey {
   crouch?: number;
   /** Forward lean in degrees, spread over the spine. */
   lean?: number;
+  /** 0 upright, 1 lying on her back (head toward -Z, face up). */
+  recline?: number;
+  /** 0 legs down, 1 legs straight out in front (sitting up in bed). */
+  legsForward?: number;
+  /** Knee bend in degrees, used with recline / legsForward. */
+  knees?: number;
   /** Head look [down, turn-left] in degrees. */
   head?: [number, number];
   left?: ArmKey;
@@ -110,6 +116,7 @@ export class ActionBaker {
         ik: mix(weight(a, 'ik'), weight(b, 'ik')), carry: mix(weight(a, 'carry'), weight(b, 'carry'))};
     };
     return {hips: new Vector3(num(k => k.hips?.[0]), num(k => k.hips?.[1]), num(k => k.hips?.[2])), seat: num(k => k.seat), crouch: num(k => k.crouch),
+      recline: num(k => k.recline), legsForward: num(k => k.legsForward), knees: num(k => k.knees),
       lean: num(k => k.lean), headDown: num(k => k.head?.[0]), headTurn: num(k => k.head?.[1]), Left: arm('Left'), Right: arm('Right')};
   }
 
@@ -123,8 +130,15 @@ export class ActionBaker {
       poser.restore();
       const hips = poser.bone('Hips'), feet = SIDES.map(side => ({side, p: poser.bone(side + 'Foot').getWorldPosition(new Vector3()), q: poser.world(side + 'Foot')}));
       hips.position.add(s.hips.clone().divide(hips.parent!.getWorldScale(new Vector3()))); hips.updateMatrixWorld(true);
+      // Lying back rotates the whole body about the hips; legs can fold out in front and bend at the knee.
+      const lying = s.recline > 0 || s.legsForward > 0;
+      if (s.recline) this.tilt('Hips', right, -90 * s.recline * DEG);
+      if (lying) for (const side of SIDES) {
+        this.tilt(side + 'UpLeg', right, (-90 * s.legsForward - s.knees / 2) * DEG);
+        this.tilt(side + 'Leg', right, s.knees * DEG);
+      }
       // Legs: seated (thighs forward, shins down) and/or crouched (feet stay planted).
-      for (const {side, p, q} of feet) {
+      for (const {side, p, q} of lying ? [] : feet) {
         const thigh = side + 'UpLeg', shin = side + 'Leg', foot = side + 'Foot';
         const base = [thigh, shin, foot].map(n => poser.bone(n).quaternion.clone());
         if (s.seat > 0) {

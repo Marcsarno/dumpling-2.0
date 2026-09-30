@@ -128,11 +128,13 @@ export function createCleanupProps(semantics: RegionSemantics): CleanupProps {
     if (edit.marker) target.marker.set(...edit.marker);
     if (edit.placement) target.placement = [...edit.placement];
   }
-  const homes = new Map(interactions.map(t => [t.id, {anchor: t.anchor.clone(), marker: t.marker.clone()}]));
+  // Reset touches only this set; other systems (daily routines) add their own items and targets later.
+  const homes = new Map(interactions.map(t => [t, {anchor: t.anchor.clone(), marker: t.marker.clone()}]));
+  const own = [...items];
   const reset = () => {
-    for (const it of items) { root.add(it.object); it.object.position.set(...it.home); it.object.rotation.set(0, 0, 0); it.object.scale.setScalar(1); it.object.visible = true; }
+    for (const it of own) { root.add(it.object); it.object.position.set(...it.home); it.object.rotation.set(0, 0, 0); it.object.scale.setScalar(1); it.object.visible = true; }
     crayonMess.visible = true; crayonMess.scale.setScalar(1); dirt.visible = true; dirt.scale.setScalar(1); tidyCrayons.visible = false;
-    for (const t of interactions) { const h = homes.get(t.id)!; t.anchor.copy(h.anchor); t.marker.copy(h.marker); }
+    for (const [t, h] of homes) { t.anchor.copy(h.anchor); t.marker.copy(h.marker); }
   };
   return {root, items, interactions, crayonMess, tidyCrayons, dirt, reset};
 }

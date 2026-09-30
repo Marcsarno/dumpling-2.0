@@ -17,7 +17,7 @@
     "convert": "node tools/convert-editor-scene.mjs",
     "baseline:playcanvas": "node tests/baseline/capture-playcanvas.mjs",
     "capture:three": "node tests/browser/capture-three.mjs",
-    "test:browser": "node tests/browser/no-arianna-writes.mjs && node tests/browser/play-walk.mjs && node tests/browser/lilah-house.mjs && node tests/browser/family-house.mjs && node tests/browser/day-hud.mjs && node tests/browser/chores-bedroom.mjs",
+    "test:browser": "node tests/browser/no-arianna-writes.mjs && node tests/browser/play-walk.mjs && node tests/browser/lilah-house.mjs && node tests/browser/family-house.mjs && node tests/browser/day-hud.mjs && node tests/browser/chores-bedroom.mjs && node tests/browser/daily-routines.mjs",
     "capture:motion": "node tests/browser/capture-motion.mjs"
   },
   "dependencies": {

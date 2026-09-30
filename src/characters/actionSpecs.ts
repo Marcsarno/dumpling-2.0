@@ -55,6 +55,38 @@ export const ACTIONS: ActionSpec[] = [
   {name: 'MealDrink', duration: 1.25, events: [{time: .65, event: 'mouth-contact'}], keys: [seated({t: 0}), ...bite(0, -14, 40, {mouth: [.05, -.055, .05]}, -4), seated({t: 1.25})]},
   {name: 'MealStand', duration: .65, keys: [seated({t: 0}), standing(.65)]},
   {name: 'EatSit', duration: 4.2, keys: [standing(0), seated({t: .55}), seated({t: .9}), ...bite(.75), seated({t: 2.05}), ...bite(1.9), seated({t: 3.2}), seated({t: 3.6}), standing(4.2)]},
+  // Chore work (played as the work clip while the task progresses).
+  // Wiping: a low squat, leaning in, the right hand circling a paper towel on the floor.
+  {name: 'Wipe', duration: 1.2, loop: true, breathe: .3, keys: [0, .3, .6, .9, 1.2].map((t, i) => ({t, ease: 'linear' as const,
+    hips: [0, -.36, -.06] as V3, crouch: 1, lean: 58, head: [18, 0] as [number, number],
+    right: {at: [-.08 + Math.cos(i * Math.PI / 2) * .09, .16, .4 + Math.sin(i * Math.PI / 2) * .06] as V3, roll: 70},
+    left: {at: [.15, .34, .24] as V3, roll: 20}}))},
+  // Vacuuming: both hands on the handle, pushing the head forward and drawing it back.
+  {name: 'Vacuum', duration: 1.1, loop: true, keys: [
+    {t: 0, lean: 8, head: [14, 0], ...sym([.06, .62, .28], 10)},
+    {t: .55, lean: 14, head: [16, 0], hips: [0, -.02, .03], ...sym([.06, .6, .42], 10)},
+    {t: 1.1, lean: 8, head: [14, 0], ...sym([.06, .62, .28], 10)}]},
+  // Brushing teeth: the right hand at her mouth, brushing side to side; a little head tilt.
+  {name: 'BrushTeeth', duration: .8, loop: true, breathe: .4, keys: [0, .2, .4, .6, .8].map((t, i) => ({t, ease: 'inOut' as const,
+    head: [6, i % 2 ? 4 : -2] as [number, number], right: {at: {mouth: [i % 2 ? .015 : -.045, -.025, .06] as V3}, roll: 60, pole: [-.3, -1, .1] as V3}}))},
+  // Reading: the book held open at chest height, head bowed to the page.
+  {name: 'Read', duration: 2.4, loop: true, keys: [
+    {t: 0, head: [24, 2], ...sym([.09, .74, .27], 25)},
+    {t: 1.2, head: [26, -4], ...sym([.095, .745, .27], 25)},
+    {t: 2.4, head: [24, 2], ...sym([.09, .74, .27], 25)}]},
+  // Getting into bed (3.2 s, matched to the bed-entry path): sit back onto the mattress, swing
+  // the legs up, lie back. Ends exactly on Sleep's first frame.
+  {name: 'SleepEnter', duration: 3.2, keys: [
+    {t: 0},
+    {t: .64, hips: [0, -.12, 0], lean: 12, head: [8, 0], ...sym([.2, .42, -.1], 0)},
+    {t: 1.38, hips: [0, -.44, 0], legsForward: .75, knees: 70, lean: 8, ...sym([.2, .3, -.05], 0)},
+    {t: 2.08, hips: [0, -.45, 0], legsForward: 1, knees: 35, recline: .2, head: [-4, 0]},
+    {t: 3.2, ease: 'out', hips: [0, -.46, 0], recline: 1, knees: 25, head: [-6, 0]}]},
+  // Asleep: lying on her back, knees a little bent, slow breathing, a sleepy head turn.
+  {name: 'Sleep', duration: 4, loop: true, breathe: 1.6, keys: [
+    {t: 0, hips: [0, -.46, 0], recline: 1, knees: 25, head: [-6, 0]},
+    {t: 2, hips: [0, -.46, 0], recline: 1, knees: 24, head: [-6, 8]},
+    {t: 4, hips: [0, -.46, 0], recline: 1, knees: 25, head: [-6, 0]}]},
   {name: 'SitCar', duration: 2, loop: true, keys: [
     {t: 0, seat: 1, hips: [0, -.2, 0], ...sym([.1, .52, .24], 5)}, {t: 2, seat: 1, hips: [0, -.2, 0], ...sym([.1, .52, .24], 5)}]},
 ];

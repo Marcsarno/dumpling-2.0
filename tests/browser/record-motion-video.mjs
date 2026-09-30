@@ -1,12 +1,12 @@
 // Records a review video of Arianna's motions from the motion lab, played in real time with
 // captions, in a disposable headless Edge context. Output: artifacts/motion/review.webm
-//   node tests/browser/record-motion-video.mjs
+//   node tests/browser/record-motion-video.mjs [routines]
 import {chromium} from 'playwright-core';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {ROOT} from '../../tools/paths.mjs';
 
-const SHOTS=[
+const P1=[
  ['RunAuthored','right','Original run (her right side): watch the wrist flick down',2],
  ['Run','right','Rebuilt run: same body and rhythm, relaxed wrists',2],
  ['Run','front','Rebuilt run from the front',2],
@@ -18,6 +18,17 @@ const SHOTS=[
  ['PutDown','three-quarter','Put down',2],
  ['Celebrate','front','Celebrate: dip, hop, fist pump',3],
 ];
+// Slice 3 routines (P2): brushing, wiping, vacuuming, reading, getting into bed, sleeping.
+const ROUTINES=[
+ ['BrushTeeth','front','Brushing teeth: brush at her mouth, side to side',4],
+ ['BrushTeeth','right','Brushing teeth from the side',3],
+ ['Wipe','three-quarter','Wiping a spill: low squat, circling the paper towel',3],
+ ['Vacuum','right','Vacuuming: push the head forward, draw it back',3],
+ ['Read','front','Bedtime book: held open, head bowed to the page',2],
+ ['SleepEnter','right','Into bed: sit back, swing the legs up, lie down',1],
+ ['Sleep','right','Asleep: slow breathing, a sleepy head turn',2],
+];
+const SHOTS=process.argv[2]==='routines'?ROUTINES:P1;
 const out=resolve(ROOT,'artifacts','motion');await mkdir(out,{recursive:true});
 const {createServer}=await import('vite');
 const server=await createServer({root:ROOT,logLevel:'warn',server:{host:'127.0.0.1',port:5214,strictPort:false}});await server.listen();
@@ -39,6 +50,6 @@ try{
   rec.stop();await new Promise(r=>rec.onstop=r);
   const bytes=new Uint8Array(await new Blob(chunks,{type:'video/webm'}).arrayBuffer());let str='';for(let i=0;i<bytes.length;i+=65536)str+=String.fromCharCode(...bytes.subarray(i,i+65536));return btoa(str);
  },SHOTS);
- await writeFile(resolve(out,'review.webm'),Buffer.from(webm,'base64'));
- console.log('Video:',resolve(out,'review.webm'));
+ await writeFile(resolve(out,process.argv[2]==='routines'?'routines-review.webm':'review.webm'),Buffer.from(webm,'base64'));
+ console.log('Video:',resolve(out,process.argv[2]==='routines'?'routines-review.webm':'review.webm'));
 }finally{await browser.close();await server.close();}

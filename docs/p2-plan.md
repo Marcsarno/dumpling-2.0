@@ -103,3 +103,24 @@ Browser tests keep the PlayCanvas ids (`#action-button`, `#joystick`) and the `_
   - put-away positions, the crayon tap, and the early-release vacuum reset;
   - $7 with the bonus, the wallet, receipt idempotence, and replay.
 - **Not yet:** the Vacuum and Wipe work clips (she holds the vacuum in CarryIdle while cleaning) and chore audio. These land with slice 4.
+
+### Slice 3 — morning and night routines, sleep (2026-09-29)
+
+- **`src/game/DailyRoutines.ts`**: the chore half of PlayCanvas `DailyLife`.
+  - Brush teeth (1.8 s), then choose clothes and get dressed.
+  - The breakfast chain: take an egg and crack it. Half the time it drops, so take a paper towel and hold to wipe. Then cook (2.2 s), carry the plate at a walk, serve, and sit to eat (4.2 s).
+  - At night: clothes back in the drawer, the bedtime book (1.6 s), and going to bed.
+  - Each routine pays $1 once through `DayLoop.complete`.
+  - `refresh()` rebuilds every prop from the saved day, so a reload mid-breakfast leaves the plate waiting on the stove.
+  - Static fixtures (pan, toothbrush cup, drawers, bowl) come from the converted house; only the moving props are built here.
+- **Sleep:** the PlayCanvas bed-entry path (3.2 s, onto the mattress through the bed prop space) plays `SleepEnter`, then `Sleep`. At 6.5 s the next day starts at 7:00 and she wakes where she stood.
+- **School:** a stand-in until outdoors (P4). Once school is due, the front door offers "Go to school". That starts the 3 s school interlude card, then the afternoon begins at 3:00 with her at the doorway. PlayCanvas walks there along the garden path.
+- **New motions** (baked on her existing bones):
+  - `Wipe`, `Vacuum`, `SleepEnter` and `Sleep` (the baker gains `recline`, `legsForward` and `knees`).
+  - Upgrades over PlayCanvas, which held the carry pose for both: a real `BrushTeeth` motion with toothpaste foam, and a `Read` pose with an open storybook in her hands.
+  - `CharacterAnimator` gains `workClip`, `faceTarget` and play-once clips.
+  - Review video: `node tests/browser/record-motion-video.mjs routines`.
+- **Test:** `tests/browser/daily-routines.mjs`. With real key presses it covers:
+  - the morning chores, the dropped-egg path and a reload mid-breakfast;
+  - school, and the night chores;
+  - sleep → day 2, with $6 paid once.

@@ -114,9 +114,9 @@ try {
  c = await cleanup();
  assert.deepEqual([c.state, c.allowance, c.completed], ['ready', 0, []]);
  // Each round re-scatters the room (RoundMesses): items are loose on the floor again, matched by their prompts.
- const loose = await page.evaluate(() => window.__player.session().chores.props.items.map(i => ({id: i.id, parent: i.object.parent.name, visible: i.object.visible})));
+ const loose = await page.evaluate(() => window.__player.session().chores.props.items.filter(i => ['teddy', 'shirt', 'book', 'vacuum'].includes(i.id)).map(i => ({id: i.id, parent: i.object.parent.name, visible: i.object.visible})));
  assert.ok(loose.every(i => i.parent === 'Cleanup props' && i.visible), 'nothing left in the socket or hidden');
- for (const it of c.items) {
+ for (const it of c.items.filter(i => ['teddy', 'shirt', 'book', 'vacuum'].includes(i.id))) {
   const t = c.targets.find(t => t.id === 'pickup-' + it.id);
   assert.ok(Math.hypot(it.position[0] - t.position[0], it.position[2] - t.position[2]) < .001, `${it.id} prompt follows it`);
  }
@@ -124,7 +124,7 @@ try {
  // Back to everyday life: the round props leave, the day's chores return.
  await page.evaluate(() => window.__player.session().chores.configure('day'));
  c = await cleanup(); assert.equal(c.mode, 'day'); assert.equal(c.timed, false);
- assert.ok(c.items.every(i => !i.visible), 'round props hidden in daily life');
+ assert.ok(c.items.filter(i => ['teddy', 'shirt', 'book', 'vacuum'].includes(i.id)).every(i => !i.visible), 'round props hidden in daily life');
  assert.deepEqual(errors, []);
  console.log('PASS chores-bedroom:', JSON.stringify({allowance: 7, balance: day.balance, receipt: c.roundId !== undefined}));
 } finally { await browser.close(); await server?.close(); }

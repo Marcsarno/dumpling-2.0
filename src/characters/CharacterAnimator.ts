@@ -35,6 +35,10 @@ export class CharacterAnimator {
   carryPace: 'walk' | 'run' = 'run';
   /** Clip held while standing still (Marc switches to SitIdle in his chair). */
   idleClip = 'Idle';
+  /** A chore's working motion (Wipe, Vacuum, BrushTeeth, SleepEnter…); overrides locomotion while set. */
+  workClip: string | null = null;
+  /** Floor point to keep facing while standing or working. */
+  faceTarget: {x: number; z: number} | null = null;
   turnRate = 22;
   private readonly travel: Record<string, number>;
   private readonly canRun: boolean;
@@ -54,6 +58,9 @@ export class CharacterAnimator {
     if (!next || next === this.current) return;
     const previous = this.current;
     next.reset(); next.enabled = true; next.setEffectiveWeight(1);
+    // Clips marked as one-shots (SleepEnter, actions) play once and hold their last frame.
+    const once = next.getClip().userData?.loop === false;
+    next.setLoop(once ? LoopOnce : LoopRepeat, Infinity); next.clampWhenFinished = once;
     if (previous && GAITS.has(this.state) && GAITS.has(name)) next.time = (previous.time / previous.getClip().duration % 1) * next.getClip().duration;
     next.play();
     if (previous && fade > 0) next.crossFadeFrom(previous, fade, false); else previous?.stop();
@@ -99,7 +106,8 @@ export class CharacterAnimator {
     }
     const run = this.canRun && speed > (this.state.includes('Run') ? 1.05 : 1.3);
     const gait = this.carrying ? (run && this.carryPace === 'run' ? 'CarryRun' : 'CarryWalk') : run ? 'Run' : 'Walk';
-    const desired = moving ? gait : this.carrying ? 'CarryIdle' : this.idleClip;
+    const desired = this.workClip ?? (moving ? gait : this.carrying ? 'CarryIdle' : this.idleClip);
+    if (this.faceTarget && (!moving || this.workClip)) this.turnToward(this.faceTarget.x, this.faceTarget.z, dt, 18);
     if (desired !== this.state) this.transition(desired, .14);
     const travel = this.travel[desired];
     if (this.current) this.current.timeScale = travel ? Math.min(1, speed / travel) : 1;

@@ -70,7 +70,15 @@ export class PlaySession {
     session.animator = new CharacterAnimator(session.character.root, session.character.model, library.clips);
     const hand = (n: string) => session.character.bones.get(n)!;
     session.socket = new CarrySocket(session.character.root, [hand('LeftHand'), hand('RightHand')]);
-    session.chores = new Chores(scene, camera.camera, region.data.semantics, session.movement, session.animator, session.socket, session.day, movementArea(region));
+    session.chores = new Chores(scene, camera.camera, region.data.semantics, session.movement, session.animator, session.socket, session.day, movementArea(region), hand('RightHand'));
+    // The day moving on (a new phase, school, a new morning) resets the routine props.
+    session.day.onPhaseChange = phase => {
+      session.chores.dayChanged();
+      // Home from school: in through the front door (PlayCanvas repositions to the doorway).
+      if (phase === 'afternoon') { session.movement.place(-2.1, 8.2); session.animator.setYaw(90 * Math.PI / 180); }
+    };
+    session.day.onNewDay = () => session.chores.dayChanged();
+    session.chores.routines.onSchool = () => session.hud.close();
     session.chores.onFinished = (receipt, amount) => session.day.credit(receipt, amount);
     // The family lives in the house; they load alongside Arianna and wait out shop visits.
     // (The session starts in the house, so its region carries their chair and routes.)
@@ -100,7 +108,7 @@ export class PlaySession {
 
   private sync(dt: number) {
     const p = this.movement.position;
-    this.player.position.set(p.x, groundHeight(this.region.surfaces, p.x, p.z), p.z);
+    this.player.position.set(p.x, this.chores?.heightOverride ?? groundHeight(this.region.surfaces, p.x, p.z), p.z);
     this.camera.follow(p.x, p.z, dt);
   }
 
@@ -111,9 +119,13 @@ export class PlaySession {
     const home = this.region.region === 'house';
     // The day runs only at home in everyday life while Arianna is free (PlayCanvas GameLoop pause rules).
     const chores = this.chores;
-    this.day.update(dt, home && chores.mode === 'day' && !this.hud.modalOpen && !document.hidden && !this.animator.busy && !chores.working && !this.movement.approaching);
+    // School is a short transition that always runs (PlayCanvas counts it down whenever the day is active).
+    const atSchool = this.day.state.phase === 'school';
+    this.day.update(dt, home && chores.mode === 'day' && !this.hud.modalOpen && !document.hidden && (atSchool || !this.animator.busy && !chores.working && !this.movement.approaching));
     const input = this.hud.modalOpen ? {x: 0, y: 0} : this.input.read();
-    this.movement.enabled = !chores.movementLocked && chores.mission.state !== 'finished';
+    const school = this.day.state.phase === 'school';
+    this.movement.enabled = !chores.movementLocked && chores.mission.state !== 'finished' && !school;
+    const card = document.querySelector<HTMLElement>('#school-transition'); if (card) card.hidden = !school || !home;
     this.movement.update(dt, input);
     this.action.enabled = home;
     chores.props.root.visible = home;
