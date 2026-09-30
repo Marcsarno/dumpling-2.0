@@ -6,10 +6,15 @@ import {resolve,relative,sep} from 'node:path';
  * Owner-protected characters. They ship byte-identical and no tool may optimise,
  * compress, resize, re-export or otherwise rewrite them (see AGENTS.md / CLAUDE.md
  * in the PlayCanvas project). Paths are relative to public/ and dist/.
+ *
+ * Arianna's entry is the owner-approved armpit fix (2026-09-29): the original Meshy file
+ * (sha256 35cfde9d…, still in the PlayCanvas repo and this repo's history) with its fused
+ * sleeve seams opened by tools/arianna-armpit/build.py. Textures, rig, material and clips
+ * are byte-identical to the original; only the mesh data around the armpits changed.
  */
 export const PROTECTED=[
- {path:'assets/characters/arianna/arianna.glb',bytes:6226316,sha256:'35cfde9dba8d20d53019d654728972c04f7455ccc533040d00818f86d3f82989',
-  rule:'Arianna original: mesh, rig, materials and 2048x2048 colour + normal maps. Native display resolution.'},
+ {path:'assets/characters/arianna/arianna.glb',bytes:6293876,sha256:'747b164324d4fd7d0eb1719daaa537d149b0801fa488834ed738225985cbf9ea',
+  rule:'Arianna (owner-approved armpit fix of the original): mesh, rig, materials and 2048x2048 colour + normal maps. Native display resolution.'},
  {path:'assets/characters/lilah/lilah.glb',bytes:6864000,sha256:'9070bb9846d6ef53d46a0af0296ab6e8eadffb2c25139267323b2574d6b68a6e',
   rule:'Lilah original mesh, rig, animations, 2048x2048 colour + owner-approved 1024x1024 metallic/roughness map.'},
 ];

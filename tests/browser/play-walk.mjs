@@ -19,7 +19,7 @@ try{
  const snap=()=>page.evaluate(()=>window.__player.snapshot());
  const start=await snap();
  assert.deepEqual(start.quality.colorMap,[2048,2048]);assert.deepEqual(start.quality.normalMap,[2048,2048]);
- assert.equal(start.quality.triangles,14694);assert.equal(start.quality.joints,28);assert.equal(start.quality.pixelRatio,3);
+ assert.equal(start.quality.triangles,15822);assert.equal(start.quality.joints,28);assert.equal(start.quality.pixelRatio,3);
  assert.equal(start.animation.state,'Idle');
  await page.screenshot({path:resolve(out,'00-idle.png')});
 

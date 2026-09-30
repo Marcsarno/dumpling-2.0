@@ -1,5 +1,5 @@
 {
- "note": "Byte-identical copies of PlayCanvas public/ files at the pinned commit. Verify with `node tools/asset-manifest.mjs --verify`. Do not edit by hand; rerun `pnpm assets:sync`.",
+ "note": "Byte-identical copies of PlayCanvas public/ files at the pinned commit, except OVERRIDES (tools/asset-rules.mjs). Verify with `node tools/asset-manifest.mjs --verify`. Do not edit by hand; rerun `pnpm assets:sync`.",
  "source": {
   "repo": "Marcsarno/Dumpling",
   "commit": "9a40b4ed1dcedd7659d7c78c96c28cb1104c87e5",
@@ -7,7 +7,7 @@
  },
  "totals": {
   "files": 269,
-  "bytes": 95493950,
+  "bytes": 95562335,
   "protected": 2
  },
  "files": [
@@ -261,27 +261,33 @@
   },
   {
    "path": "assets/characters/arianna/README.md",
-   "bytes": 1667,
-   "sha256": "88fea467f234dbadd924b69acffa3e22f8bb5cd84e3bc2c455c2c9a35d6e03bd",
-   "gitBlob": "7cf0d6985712e9a796e55485ffdb91ce46c4fd18",
+   "bytes": 2262,
+   "sha256": "66bf1747689f9af726fa5cd431347debba67181516c9014ae49502d3e221e977",
+   "gitBlob": "637a04c5e5f11a4c1d7cec764d96ac97991b4ee8",
    "protected": false,
-   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README",
+   "override": "documents the armpit fix",
+   "playcanvasBlob": "7cf0d6985712e9a796e55485ffdb91ce46c4fd18"
   },
   {
    "path": "assets/characters/arianna/arianna.glb",
-   "bytes": 6226316,
-   "sha256": "35cfde9dba8d20d53019d654728972c04f7455ccc533040d00818f86d3f82989",
-   "gitBlob": "df2eab7e6085ce8934eb3ad3e5a48555b67b1209",
+   "bytes": 6293876,
+   "sha256": "747b164324d4fd7d0eb1719daaa537d149b0801fa488834ed738225985cbf9ea",
+   "gitBlob": "b4238e9dfe90455c7c5754677644304a5ec1dc1b",
    "protected": true,
-   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README",
+   "override": "owner-approved armpit fix (tools/arianna-armpit/build.py); PlayCanvas has the original",
+   "playcanvasBlob": "df2eab7e6085ce8934eb3ad3e5a48555b67b1209"
   },
   {
    "path": "assets/characters/arianna/asset_manifest.json",
-   "bytes": 916,
-   "sha256": "7a47df922eb550c770b728f4593089a15a354b64a22172529b113289922e9e19",
-   "gitBlob": "eb63aff225feb1db427c4bc16e5b8f37b8b0c67c",
+   "bytes": 1146,
+   "sha256": "65bdacf1dcb35b68048ab58bc86a9c67239f00ad02444af2c5df58ead21f78ec",
+   "gitBlob": "9e22a2d41a44d08772223f59bc3db3a3a9edca94",
    "protected": false,
-   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README",
+   "override": "describes the armpit-fixed file",
+   "playcanvasBlob": "eb63aff225feb1db427c4bc16e5b8f37b8b0c67c"
   },
   {
    "path": "assets/characters/arianna/character.json",

@@ -1,12 +1,18 @@
 {
   "name": "Arianna",
-  "revision": "meshy-carry-v1",
-  "triangles": 14694,
+  "revision": "meshy-carry-v1-armpit",
+  "triangles": 15822,
   "joints": 28,
   "embedded_images": 2,
-  "bytes": 6226316,
-  "sha256": "35cfde9dba8d20d53019d654728972c04f7455ccc533040d00818f86d3f82989",
-  "source": "Dumpling Collector/experiments/meshy/revisions/carry_v1/arianna/arianna.glb",
+  "bytes": 6293876,
+  "sha256": "747b164324d4fd7d0eb1719daaa537d149b0801fa488834ed738225985cbf9ea",
+  "source": "tools/arianna-armpit/build.py applied to Dumpling Collector/experiments/meshy/revisions/carry_v1/arianna/arianna.glb",
+  "original": {
+    "revision": "meshy-carry-v1",
+    "triangles": 14694,
+    "bytes": 6226316,
+    "sha256": "35cfde9dba8d20d53019d654728972c04f7455ccc533040d00818f86d3f82989"
+  },
   "clips": [
     {
       "name": "Casual_Walk",

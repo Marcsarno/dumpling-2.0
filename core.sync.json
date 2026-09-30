@@ -170,9 +170,10 @@
   },
   {
    "path": "scripts/verify-arianna-quality.mjs",
-   "mode": "verbatim",
+   "mode": "patched",
    "sourceSha256": "fe18c0216220b02cc1abad1806ed37a2558ae4c07c437b8c26dd49b9314118d2",
-   "localSha256": "fe18c0216220b02cc1abad1806ed37a2558ae4c07c437b8c26dd49b9314118d2"
+   "localSha256": "68a4431903e62cfe1bfcb2d1a50c8942c83b3cb63c3d5c84f79e3241da233621",
+   "reason": "Owner-approved armpit fix (2026-09-29): the expected hash moves from the original 35cfde9d… to the fixed file 747b1643…; the 2048x2048 texture checks are unchanged."
   },
   {
    "path": "scripts/verify-lilah-quality.mjs",

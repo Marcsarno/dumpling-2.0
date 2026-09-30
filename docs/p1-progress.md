@@ -40,6 +40,17 @@ Started on 2026-09-29 after the owner approved P0.
 - **Play mode** is the default at `/`: Arianna in the house or a shop, follow camera and grounding on rugs.
 - **Tests:** `tests/browser/play-walk.mjs` drives real keyboard and CDP touch input. It checks run, walk, idle, wall collision, the quality probe, and that the bite contact fires at about 650 ms.
 
+## Arianna armpit fix (owner-approved, swapped in 2026-09-29)
+
+- **Problem:** the Meshy mesh is one shell with no inner sleeve. Each sleeve was fused to the jacket side from the hem (~0.48 m) to just under the shoulder (~0.75 m), so lifting an arm dragged the jacket into the "bat wing" the owner rejected.
+- **Fix:** `tools/arianna-armpit/build.py` (headless Blender Python). It finds the front and back creases on horizontal slices, rips the seam along them, adds hidden inner-sleeve and jacket-side panels (UVs mirrored from the neighbouring jacket islands, kept 4 texels inside), makes the sleeves follow the arm and the jacket sides follow the spine, and blends a hinge at the armpit apex.
+- **Preserved:** `tools/arianna-armpit/verify-candidate.mjs` confirms the 2048×2048 colour and normal maps, rig, material and all six clips are byte-identical, and every original vertex keeps its position, normal, UV and tangent. Rest pose is unchanged.
+- **Shipped file:** sha256 `747b1643…`, 19,419 vertices, **15,822 triangles** (was 14,694). The original (`35cfde9d…`) is archived in `artifacts/armpit/original/`, the PlayCanvas repo and git history.
+- **Guards updated with owner approval:** verifier hash (a recorded `patched` vendored file in `tools/core-files.mjs`), `tools/protected.mjs`, runtime probe expectation, play-walk test. `pnpm assets:sync` keeps the fix via `OVERRIDES` in `tools/asset-rules.mjs`.
+- **Review:** `node tests/browser/record-armpit-review.mjs` records original vs shipped side by side; the lab accepts `?glb=<path>` in dev.
+- **Deferred to polish (owner, 2026-09-29):** the braid is weighted to RightShoulder/RightArm and lifts with that arm.
+- **Follow-up:** the coat-safe limits on upper-arm lift in `actionSpecs.ts` were set for the fused mesh and can now be relaxed where a motion looks better with more lift.
+
 ## Remaining in P1
 
 - Owner review of the motion captures. The eating, pick-up and celebrate motions are new.

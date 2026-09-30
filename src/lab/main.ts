@@ -19,7 +19,9 @@ const floor = new Mesh(new CircleGeometry(1.6, 64).rotateX(-Math.PI / 2), new Me
 floor.receiveShadow = true; scene.add(floor);
 
 const profile = params.get('character') === 'lilah' ? LILAH : ARIANNA;
-const character = await loadCharacter(profile, renderer, base);
+// Dev review only: ?glb=<path> loads a candidate model (e.g. the armpit fix) in place of the shipped one.
+const glb = import.meta.env.DEV ? params.get('glb') : null;
+const character = await loadCharacter(glb ? {...profile, url: glb} : profile, renderer, base);
 scene.add(character.root);
 // Lilah plays her own authored clips as supplied; Arianna's library adds the generated motions.
 const library = profile === ARIANNA ? buildClipLibrary(character) : {clips: character.clips, notes: {} as Record<string, string>};

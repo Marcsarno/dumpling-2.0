@@ -6,7 +6,7 @@ import {resolve,dirname,join} from 'node:path';
 import {createHash} from 'node:crypto';
 import {ROOT,REFERENCE,requirePlaycanvas,fromPlaycanvas,playcanvasGit,playcanvasBlob,assertWritable,warnIfReferenceMoved} from './paths.mjs';
 import {checkFile,isProtectedPath,sha256} from './protected.mjs';
-import {excluded,licenceFor,EXTRA_PUBLIC} from './asset-rules.mjs';
+import {excluded,override,licenceFor,EXTRA_PUBLIC} from './asset-rules.mjs';
 
 requirePlaycanvas();warnIfReferenceMoved();
 const prune=process.argv.includes('--prune');
@@ -22,6 +22,14 @@ for(const {blob,path:repoPath} of tree){
  const rel=repoPath.slice('public/'.length);
  if(!rel.startsWith('assets/')&&!EXTRA_PUBLIC.includes(rel)){skipped.push({path:rel,why:'not an asset (PlayCanvas-only file)'});continue;}
  const rule=excluded(rel);if(rule){skipped.push({path:rel,why:rule.why});continue;}
+ const own=override(rel);
+ if(own){
+  const target=resolve(ROOT,'public',rel);
+  if(!existsSync(target))throw Error(`${rel} is overridden by the rebuild but missing from public/`);
+  const mine=readFileSync(target);problems.push(...checkFile(rel,mine));unchanged++;
+  files.push({path:rel,bytes:mine.length,sha256:sha256(mine),gitBlob:gitBlobId(mine),protected:isProtectedPath(rel),licence:licenceFor(rel),override:own.why,playcanvasBlob:blob});
+  continue;
+ }
  // Prefer the working file when it is exactly the committed blob; otherwise take the blob itself.
  let bytes;const working=fromPlaycanvas(repoPath);
  if(existsSync(working)){const candidate=readFileSync(working);if(gitBlobId(candidate)===blob){bytes=candidate;fromWorkingTree++;}}
@@ -44,7 +52,7 @@ if(stale.length&&prune)for(const p of stale)rmSync(assertWritable(resolve(ROOT,'
 
 files.sort((a,b)=>a.path<b.path?-1:1);skipped.sort((a,b)=>a.path<b.path?-1:1);
 const manifest={
- note:'Byte-identical copies of PlayCanvas public/ files at the pinned commit. Verify with `node tools/asset-manifest.mjs --verify`. Do not edit by hand; rerun `pnpm assets:sync`.',
+ note:'Byte-identical copies of PlayCanvas public/ files at the pinned commit, except OVERRIDES (tools/asset-rules.mjs). Verify with `node tools/asset-manifest.mjs --verify`. Do not edit by hand; rerun `pnpm assets:sync`.',
  source:{repo:REFERENCE.playcanvasRepo,commit:REFERENCE.playcanvasCommit,folder:'public/'},
  totals:{files:files.length,bytes:files.reduce((n,f)=>n+f.bytes,0),protected:files.filter(f=>f.protected).length},
  files,excluded:skipped,

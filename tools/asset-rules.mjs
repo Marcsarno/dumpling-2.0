@@ -13,6 +13,17 @@ export const EXCLUDE=[
  {test:p=>p.endsWith('/.gitkeep'),why:'empty directory marker'},
 ];
 
+/**
+ * Files the rebuild deliberately ships in a different version from PlayCanvas. The sync
+ * keeps the rebuild's file (it must already be in public/) instead of copying PlayCanvas's.
+ */
+export const OVERRIDES=[
+ {path:'assets/characters/arianna/arianna.glb',why:'owner-approved armpit fix (tools/arianna-armpit/build.py); PlayCanvas has the original'},
+ {path:'assets/characters/arianna/README.md',why:'documents the armpit fix'},
+ {path:'assets/characters/arianna/asset_manifest.json',why:'describes the armpit-fixed file'},
+];
+export const override=path=>OVERRIDES.find(rule=>rule.path===path);
+
 /** Top-level public files copied alongside assets/. */
 export const EXTRA_PUBLIC=['asset-credits.html','favicon.svg'];
 

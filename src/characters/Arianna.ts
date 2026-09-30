@@ -18,7 +18,7 @@ export interface CharacterProfile {
 }
 const ARIANNA_HEIGHT = 1.38345; // characters/arianna/character.json
 export const ARIANNA: CharacterProfile = {id: 'arianna', url: 'assets/characters/arianna/arianna.glb', displayHeight: ARIANNA_HEIGHT, restHeight: 1.20309758, protected: true,
-  expect: {triangles: 14694, joints: 28, maps: {map: 2048, normalMap: 2048}}};
+  expect: {triangles: 15822, joints: 28, maps: {map: 2048, normalMap: 2048}}}; // 14,694 original + armpit panels
 /** Lilah is 0.625 of Arianna's height (PlayCanvas Lilah.ts); owner-approved 1024 metallic/roughness map. */
 export const LILAH: CharacterProfile = {id: 'lilah', url: 'assets/characters/lilah/lilah.glb', displayHeight: ARIANNA_HEIGHT * .625, restHeight: 1.03, protected: true,
   expect: {triangles: 11271, joints: 25, maps: {map: 2048, roughnessMap: 1024}}};
