@@ -1,6 +1,6 @@
 # P0 progress — 2026-09-29
 
-P0 is complete and committed. The owner approved the first commit and the public `Marcsarno/dumpling-three` repo on 2026-09-29.
+P0 is complete and committed. The owner approved the first commit and the public `Marcsarno/dumpling-2.0` repo on 2026-09-29.
 
 ## Done and verified
 
