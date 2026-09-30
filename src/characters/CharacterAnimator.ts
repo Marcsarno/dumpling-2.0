@@ -1,4 +1,4 @@
-import {AnimationMixer, LoopRepeat, type AnimationAction, type AnimationClip, type Object3D} from 'three';
+import {AnimationMixer, LoopOnce, LoopRepeat, type AnimationAction, type AnimationClip, type Object3D} from 'three';
 import {RUN_SPEED, WALK_SPEED} from '../game/movement';
 
 const GAITS = new Set(['Walk', 'Run', 'CarryWalk', 'CarryRun']);
@@ -40,7 +40,33 @@ export class CharacterAnimator {
     this.current = next; this.state = name;
   }
 
+  private action: {name: string; events: {time: number; event: string; fired?: boolean}[]; onEvent?: (event: string) => void; done?: () => void} | null = null;
+  get busy() { return this.action !== null; }
+
+  /**
+   * Play a one-shot action (0.08 s blend in). Events fire on the clip's own clock, the way
+   * gameplay expects (e.g. 'mouth-contact' at 0.65 s of MealBite), then locomotion resumes.
+   */
+  playAction(name: string, handlers: {onEvent?: (event: string) => void; done?: () => void} = {}) {
+    const clip = this.actions.get(name)?.getClip();
+    if (!clip) throw Error(`Unknown action ${name}`);
+    const events = ((clip.userData?.events ?? []) as {time: number; event: string}[]).map(e => ({...e}));
+    this.action = {name, events, ...handlers};
+    const a = this.actions.get(name)!;
+    a.setLoop(clip.userData?.loop ? LoopRepeat : LoopOnce, Infinity); a.clampWhenFinished = true;
+    this.transition(name, .08);
+    a.timeScale = 1;
+  }
+  cancelAction() { this.action = null; }
+
   update(dt: number, velocity: {x: number; z: number}) {
+    if (this.action) {
+      const a = this.actions.get(this.action.name)!, clip = a.getClip();
+      this.mixer.update(dt);
+      for (const e of this.action.events) if (!e.fired && a.time >= e.time) { e.fired = true; this.action.onEvent?.(e.event); }
+      if (!clip.userData?.loop && a.time >= clip.duration - 1e-4) { const done = this.action.done; this.action = null; done?.(); }
+      return;
+    }
     const speed = Math.hypot(velocity.x, velocity.z), moving = speed > .03;
     if (moving) {
       const target = Math.atan2(velocity.x, velocity.z);
@@ -50,7 +76,7 @@ export class CharacterAnimator {
     }
     const run = speed > (this.state.includes('Run') ? 1.05 : 1.3);
     const gait = this.carrying ? (run ? 'CarryRun' : 'CarryWalk') : run ? 'Run' : 'Walk';
-    const desired = moving ? gait : 'Idle';
+    const desired = moving ? gait : this.carrying ? 'CarryIdle' : 'Idle';
     if (desired !== this.state) this.transition(desired, .14);
     const travel = TRAVEL[desired];
     if (this.current) this.current.timeScale = travel ? Math.min(1, speed / travel) : 1;
@@ -58,7 +84,7 @@ export class CharacterAnimator {
   }
 
   snapshot() {
-    return {state: this.state, yaw: this.yaw * 180 / Math.PI, clipTime: this.current?.time ?? 0, playbackRate: this.current?.timeScale ?? 1};
+    return {state: this.state, action: this.action?.name ?? null, yaw: this.yaw * 180 / Math.PI, clipTime: this.current?.time ?? 0, playbackRate: this.current?.timeScale ?? 1};
   }
 }
 

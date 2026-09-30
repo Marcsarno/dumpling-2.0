@@ -5,7 +5,7 @@ import {AnimationMixer, CircleGeometry, Color, Mesh, MeshStandardMaterial, Ortho
 import {createRenderer, watchViewport} from '../engine/renderer';
 import {Daylight} from '../engine/lighting';
 import type {SceneSettings} from '../world/format';
-import {loadArianna, ariannaQuality} from '../characters/Arianna';
+import {ARIANNA, LILAH, loadCharacter, characterQuality} from '../characters/Arianna';
 import {buildClipLibrary} from '../characters/clips';
 
 const params = new URLSearchParams(location.search);
@@ -18,9 +18,11 @@ const daylight = new Daylight(scene, settings);
 const floor = new Mesh(new CircleGeometry(1.6, 64).rotateX(-Math.PI / 2), new MeshStandardMaterial({color: new Color('#e9d6bd'), roughness: .8}));
 floor.receiveShadow = true; scene.add(floor);
 
-const character = await loadArianna(renderer, base);
+const profile = params.get('character') === 'lilah' ? LILAH : ARIANNA;
+const character = await loadCharacter(profile, renderer, base);
 scene.add(character.root);
-const library = buildClipLibrary(character);
+// Lilah plays her own authored clips as supplied; Arianna's library adds the generated motions.
+const library = profile === ARIANNA ? buildClipLibrary(character) : {clips: character.clips, notes: {} as Record<string, string>};
 const mixer = new AnimationMixer(character.model);
 const actions = new Map<string, AnimationAction>(library.clips.map(c => [c.name, mixer.clipAction(c)]));
 
@@ -29,7 +31,7 @@ const camera = new OrthographicCamera(-1, 1, 1, -1, .1, 40);
 const VIEWS: Record<string, [number, number, number]> = {front: [0, .72, 6], left: [6, .72, 0], right: [-6, .72, 0], back: [0, .72, -6], 'three-quarter': [4.2, 1.2, 4.2], game: [6, 14, 18.9]};
 let view = params.get('view') ?? 'front', aspect = 1;
 function applyCamera() {
-  const h = .95, eye = VIEWS[view] ?? VIEWS.front, target = new Vector3(0, .7, 0);
+  const h = .95 * profile.displayHeight / ARIANNA.displayHeight, eye = VIEWS[view] ?? VIEWS.front, target = new Vector3(0, .7 * profile.displayHeight / ARIANNA.displayHeight, 0);
   camera.left = -h * aspect; camera.right = h * aspect; camera.top = h; camera.bottom = -h;
   camera.position.set(...eye).sub(view === 'game' ? new Vector3(0, .8, .9) : new Vector3()).normalize().multiplyScalar(12).add(target);
   camera.lookAt(target); camera.updateProjectionMatrix(); camera.updateMatrixWorld();
@@ -71,7 +73,7 @@ Object.defineProperty(window, '__lab', {configurable: true, value: {
   clips: () => library.clips.map(c => ({name: c.name, duration: c.duration})),
   notes: () => library.notes,
   pose: (name: string, t: number, v?: string) => { if (v) view = v; pose(name, t); },
-  quality: () => ariannaQuality(character, renderer),
+  quality: () => characterQuality(character, renderer),
   bone: (name: string) => { const b = character.bones.get(name)!; return {position: b.getWorldPosition(new Vector3()).toArray(), quaternion: b.getWorldQuaternion(b.quaternion.clone()).toArray()}; },
 }});
 pose(clip.name, time);

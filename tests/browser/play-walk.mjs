@@ -46,6 +46,13 @@ try{
  const wall=await snap();await page.screenshot({path:resolve(out,'03-wall.png')});
  const inside=await page.evaluate(p=>!window.__player.session().movement.blocked(p[0],p[2]),wall.position);
  assert.ok(inside,`she ends in a free spot ${wall.position}`);
+ // Actions: events fire on the clip clock at the gameplay times, then locomotion resumes.
+ const action=await page.evaluate(()=>new Promise(resolve=>{const t0=performance.now(),events=[];
+  window.__player.session().animator.playAction('MealBite',{onEvent:e=>events.push([e,Math.round(performance.now()-t0)]),done:()=>resolve({events,ms:Math.round(performance.now()-t0)})});}));
+ assert.deepEqual(action.events.map(e=>e[0]),['mouth-contact']);
+ assert.ok(Math.abs(action.events[0][1]-650)<120,`contact at ${action.events[0][1]} ms`);
+ assert.ok(Math.abs(action.ms-1250)<150,`finished at ${action.ms} ms`);
+ await page.waitForTimeout(300);assert.equal((await snap()).animation.state,'Idle');
  assert.deepEqual(errors,[]);
  console.log('PASS play:',JSON.stringify({start:start.position.map(v=>+v.toFixed(2)),afterRun:moved.position.map(v=>+v.toFixed(2)),walk:walking.animation,wall:wall.position.map(v=>+v.toFixed(2))}));
 }finally{await browser.close();await server?.close();}

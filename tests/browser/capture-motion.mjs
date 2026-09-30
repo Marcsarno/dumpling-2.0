@@ -15,10 +15,11 @@ const browser=await chromium.launch({channel:'msedge',headless:true});
 try{
  const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:3});
  const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
- await page.goto(server.resolvedUrls.local[0]+'lab.html?capture=1');
+ const who=process.env.MOTION_CHARACTER??'arianna';
+ await page.goto(server.resolvedUrls.local[0]+'lab.html?capture=1&character='+who);
  await page.waitForFunction(()=>document.body.dataset.ready==='true',undefined,{timeout:120000});
  const quality=await page.evaluate(()=>window.__lab.quality());
- await writeFile(resolve(out,'quality.json'),JSON.stringify(quality,null,1)+'\n');
+ await writeFile(resolve(out,`quality-${who}.json`),JSON.stringify(quality,null,1)+'\n');
  console.log('Quality',JSON.stringify({...quality,clips:quality.clips.length}));
  const clips=(await page.evaluate(()=>window.__lab.clips())).filter(c=>!clipsWanted||clipsWanted.includes(c.name));
  for(const clip of clips)for(const view of views){
@@ -26,8 +27,8 @@ try{
   for(let i=0;i<count;i++){
    const t=clip.duration*i/count;
    await page.evaluate(({n,t,v})=>window.__lab.pose(n,t,v),{n:clip.name,t,v:view});
-   const file=resolve(out,`${clip.name}-${view}-${String(i).padStart(2,'0')}.png`);
-   await page.screenshot({path:file});frames.push(await page.screenshot({clip:{x:70,y:70,width:250,height:640}}));
+   const file=resolve(out,`${who==='arianna'?'':who+'-'}${clip.name}-${view}-${String(i).padStart(2,'0')}.png`);
+   await page.screenshot({path:file});frames.push(await page.screenshot({clip:{x:55,y:70,width:280,height:640}}));
   }
   // Strip: frames side by side, cropped to the figure, for reviewing the whole motion at once.
   const strip=await page.evaluate(async list=>{
@@ -35,7 +36,7 @@ try{
    const w=images[0].width,h=images[0].height,c=new OffscreenCanvas(w*images.length,h),x=c.getContext('2d');images.forEach((img,i)=>x.drawImage(img,i*w,0));
    const bytes=new Uint8Array(await (await c.convertToBlob({type:'image/png'})).arrayBuffer());let s='';for(const b of bytes)s+=String.fromCharCode(b);return btoa(s);
   },frames.map(f=>f.toString('base64')));
-  await writeFile(resolve(out,`${clip.name}-${view}-strip.png`),Buffer.from(strip,'base64'));
+  await writeFile(resolve(out,`${who==='arianna'?'':who+'-'}${clip.name}-${view}-strip.png`),Buffer.from(strip,'base64'));
   console.log('captured',clip.name,view,count,'frames');
  }
  console.log('Errors:',errors.length?errors:'none');

@@ -2,6 +2,8 @@ import {AnimationClip, type KeyframeTrack} from 'three';
 import type {LoadedCharacter} from './Arianna';
 import {Poser} from './pose';
 import {balancedRun} from './run';
+import {ActionBaker} from './actions';
+import {ACTIONS} from './actionSpecs';
 
 /**
  * Arianna's motion library. Authored clips come from her untouched GLB; derived clips
@@ -36,6 +38,8 @@ export function buildClipLibrary(character: LoadedCharacter): ClipLibrary {
   const run = balancedRun(poser, clips.find(c => c.name === 'RunAuthored')!);
   clips.splice(2, 0, run);
   notes.Run = `PlayCanvas balanced run body; both wrists share rest roll and a softened, lagging bend (max ${(run.userData.maxWristBendDegrees as number).toFixed(1)} deg).`;
+  const baker = new ActionBaker(poser, character.root, clips.find(c => c.name === 'CarryWalk')!, clips.find(c => c.name === 'Idle')!);
+  for (const spec of ACTIONS) clips.push(baker.bake(spec));
   poser.dispose();
   return {clips, notes};
 }
