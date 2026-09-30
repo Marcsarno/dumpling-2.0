@@ -77,3 +77,29 @@ Browser tests keep the PlayCanvas ids (`#action-button`, `#joystick`) and the `_
 - **Tests:**
   - `tests/node/day-loop.test.mjs`: rebuild saves read back unchanged by the PlayCanvas validators; pause and 2 s cap; receipts pay once; reload; the unreadable-save backup; reward retry; sleep → day 2.
   - `tests/browser/day-hud.mjs`: HUD text; the clock runs, then pauses in the journal and in shops; a chore updates the wallet and count; a reload resumes the day; no `arianna.*` keys.
+
+### Slice 2 — interactions, carry, prompts and markers (2026-09-29)
+
+- **`src/game/Chores.ts`**: the gameplay half of PlayCanvas `CleanupGame`.
+  - Press → walk up → perform, driven by the vendored `InteractionSystem` (nearest available target within range, with 0.1 m hysteresis) and `MissionSystem`.
+  - PickUp and PutDown commit on the clip's attach/release events at 0.4 s, and she turns toward the target while they play.
+  - Tap work (crayons, 450 ms) and hold work (vacuum, 1150 ms). Releasing early, or walking out of range, cancels the work and the mess grows back.
+  - A timed round finishes with a celebration and the results dialog, and pays once by receipt through `DayLoop.credit`.
+  - Modes so far: `day` and `bedroom` (60 s, five tasks, $1 each + $2 all-clean bonus).
+- **`cleanupProps.ts`** (replaces the temporary type shim):
+  - Teddy, shirt, book, vacuum, crayons and their cup, and the dust pile, built from primitives exactly as PlayCanvas builds them.
+  - Drop-off spots come from the Editor's `semantics.interactions` (for example, the moved bookshelf).
+  - **`RoundMesses.ts`** scatters each round to free, reachable spots, as PlayCanvas does.
+- **`CarrySystem.ts`**: re-parents the item to the hand socket at its grip or bounds centre. The vacuum is carried at 0.75 scale and at the steady carry pace (1.65 × 1.5 m/s, CarryWalk).
+- **`movement.ts` `approachProp`**: the PlayCanvas walk-up (rings 0.32–1.8 m, within 2.2 m, clear line, prefer close to the prop). Stick or key input cancels it.
+- **`CleanupFeedback.ts` + `cleanup.css`**: glowing floor rings, icon labels (nearby, destination, off-screen arrow) and the +$1 pop, ported to three.js.
+- **HUD:**
+  - The action button shows the PlayCanvas titles ("Pick up", "Put away", "Tidy up", "Hold to clean", "Moving closer…") and fills with hold progress.
+  - The round timer card appears in timed rounds.
+  - The menu has "Choose an activity" (Daily life, Bedroom · 5).
+  - The day clock pauses during rounds, as in PlayCanvas.
+- **Test:** `tests/browser/chores-bedroom.mjs` plays the whole round with real key presses:
+  - the carry socket, and pickups refused while her hands are full;
+  - put-away positions, the crayon tap, and the early-release vacuum reset;
+  - $7 with the bonus, the wallet, receipt idempotence, and replay.
+- **Not yet:** the Vacuum and Wipe work clips (she holds the vacuum in CarryIdle while cleaning) and chore audio. These land with slice 4.

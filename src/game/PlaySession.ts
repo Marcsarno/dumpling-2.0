@@ -9,6 +9,7 @@ import {DayLoop} from './DayLoop';
 import {AdventureHUD, type HudState} from '../ui/AdventureHUD';
 import {ActionButton} from '../ui/ActionButton';
 import {STORES} from '../data/hunt';
+import {Chores, type ChoreMode} from './Chores';
 import {PlayerMovement, type MovementArea, type Walkable} from './movement';
 import {MoveInput} from '../input/Input';
 import {HOUSE_ROOMS} from '../data/house';
@@ -43,6 +44,7 @@ export class PlaySession {
   /** The household day: clock, chores, wallet and saves. */
   readonly day: DayLoop;
   hud!: AdventureHUD;
+  chores!: Chores;
   action!: ActionButton;
   private readonly completed = new Set<string>();
   private region: LoadedRegion;
@@ -58,16 +60,18 @@ export class PlaySession {
     this.day = new DayLoop(localStorage);
   }
 
-  static async start(scene: Scene, renderer: WebGLRenderer, camera: IsometricCamera, region: LoadedRegion, draw: () => void, extraMenu?: HTMLElement) {
+  static async start(scene: Scene, renderer: WebGLRenderer, camera: IsometricCamera, region: LoadedRegion, draw: () => void, extraMenu: HTMLElement[] = []) {
     const session = new PlaySession(scene, renderer, camera, region, draw);
-    session.action = new ActionButton(document.querySelector<HTMLButtonElement>('#action-button')!, () => {}, () => {});
-    session.hud = new AdventureHUD(() => { session.input.reset(); session.action.reset(); }, extraMenu);
+    session.action = new ActionButton(document.querySelector<HTMLButtonElement>('#action-button')!, () => session.chores?.press(), () => session.chores?.cancelHold());
+    session.hud = new AdventureHUD(() => { session.input.reset(); session.action.reset(); }, [session.activityPicker(), ...extraMenu]);
     session.character = await loadArianna(renderer);
     const library = buildClipLibrary(session.character);
     session.player.add(session.character.root);
     session.animator = new CharacterAnimator(session.character.root, session.character.model, library.clips);
     const hand = (n: string) => session.character.bones.get(n)!;
     session.socket = new CarrySocket(session.character.root, [hand('LeftHand'), hand('RightHand')]);
+    session.chores = new Chores(scene, camera.camera, region.data.semantics, session.movement, session.animator, session.socket, session.day, movementArea(region));
+    session.chores.onFinished = (receipt, amount) => session.day.credit(receipt, amount);
     // The family lives in the house; they load alongside Arianna and wait out shop visits.
     // (The session starts in the house, so its region carries their chair and routes.)
     const area = movementArea(region);
@@ -105,9 +109,15 @@ export class PlaySession {
     // Long stalls (tab switches) never teleport her; per-frame dt is capped like PlayCanvas.
     const dt = Math.min(.04, Math.max(0, (now - this.last) / 1000)); this.last = now;
     const home = this.region.region === 'house';
-    // The day runs only at home while Arianna is free (PlayCanvas GameLoop pause rules).
-    this.day.update(dt, home && !this.hud.modalOpen && !document.hidden && !this.animator.busy);
-    this.movement.update(dt, this.hud.modalOpen ? {x: 0, y: 0} : this.input.read());
+    // The day runs only at home in everyday life while Arianna is free (PlayCanvas GameLoop pause rules).
+    const chores = this.chores;
+    this.day.update(dt, home && chores.mode === 'day' && !this.hud.modalOpen && !document.hidden && !this.animator.busy && !chores.working && !this.movement.approaching);
+    const input = this.hud.modalOpen ? {x: 0, y: 0} : this.input.read();
+    this.movement.enabled = !chores.movementLocked && chores.mission.state !== 'finished';
+    this.movement.update(dt, input);
+    this.action.enabled = home;
+    chores.props.root.visible = home;
+    if (home) chores.update(now, this.action.held, Math.hypot(input.x, input.y) > .2); else chores.feedback.hide();
     this.animator.update(dt, this.movement.velocity);
     this.socket.update();
     this.sync(dt);
@@ -131,12 +141,31 @@ export class PlaySession {
   }
 
   private hudState(): HudState {
-    const s = this.day.state, tasks = this.day.clock.tasks;
-    this.completed.clear(); for (const id of s.done) this.completed.add(id);
+    const s = this.day.state, m = this.chores.mission, home = this.region.region === 'house', seconds = Math.ceil(m.remaining / 1000);
+    const everyday = this.chores.mode === 'day';
+    this.completed.clear(); for (const id of everyday ? s.done : m.completed) this.completed.add(id);
     return {location: this.location, day: s.day, time: this.day.clock.label, phase: s.phase, balance: this.day.balance,
-      tasks, completed: this.completed, hint: this.day.hint, timed: false, remaining: '', urgent: false,
-      clockNote: this.region.region === 'house' ? 'Your day continues while you browse.' : '',
-      action: {ready: false, title: 'Action', detail: 'Come closer'}, message: this.day.message || this.day.problem};
+      tasks: everyday ? this.day.clock.tasks : m.tasks, completed: this.completed, hint: everyday ? this.day.hint : this.chores.hint,
+      timed: home && m.timed, remaining: `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`, urgent: seconds <= 10 && m.state === 'running',
+      clockNote: !home ? '' : m.timed && m.state === 'running' ? 'Your round timer keeps running while you browse.' : everyday ? 'Your day continues while you browse.' : '',
+      action: home ? this.chores.action : {ready: false, title: 'Action', detail: 'Come closer'}, message: this.day.message || this.day.problem};
+  }
+
+  /** "Choose an activity" in the menu (PlayCanvas mission picker; more rounds land in slice 4). */
+  private activityPicker() {
+    const box = document.createElement('details'); box.className = 'adventure-activities';
+    box.innerHTML = '<summary>Choose an activity</summary><p>Everyday life, or a quick one-minute tidy.</p><div id="mission-picker" aria-label="Choose an activity"><button id="mission-day" type="button">Daily life</button><button id="mission-bedroom" type="button">Bedroom · 5</button></div>';
+    for (const [id, mode] of [['#mission-day', 'day'], ['#mission-bedroom', 'bedroom']] as [string, ChoreMode][])
+      box.querySelector(id)!.addEventListener('click', () => { this.chores.configure(mode); this.hud.close(); });
+    const sync = () => {
+      for (const b of box.querySelectorAll<HTMLButtonElement>('button')) {
+        b.setAttribute('aria-pressed', String(b.id === 'mission-' + this.chores?.mode));
+        b.disabled = !!this.chores && this.chores.mission.state === 'running' && this.chores.mission.timed;
+      }
+    };
+    box.addEventListener('toggle', sync);
+    this.hud?.menu.addEventListener('toggle', sync);
+    return box;
   }
 
   snapshot() {
@@ -144,7 +173,7 @@ export class PlaySession {
       input: [this.input.value.x, this.input.value.y], animation: this.animator.snapshot(), quality: ariannaQuality(this.character, this.renderer),
       socket: this.socket.getWorldPosition(this.socket.position.clone()).toArray(), lilah: this.lilah?.snapshot(this.renderer),
       marc: this.marc?.snapshot(this.renderer), pup: this.pup?.snapshot(this.renderer),
-      day: this.day.snapshot(), location: this.location};
+      day: this.day.snapshot(), location: this.location, cleanup: this.chores.snapshot()};
   }
-  stop() { this.running = false; this.input.destroy(); this.action.destroy(); this.hud.destroy(); this.player.removeFromParent(); this.lilah?.dispose(); this.marc?.dispose(); this.pup?.dispose(); }
+  stop() { this.running = false; this.input.destroy(); this.action.destroy(); this.hud.destroy(); this.chores.dispose(); this.player.removeFromParent(); this.lilah?.dispose(); this.marc?.dispose(); this.pup?.dispose(); }
 }

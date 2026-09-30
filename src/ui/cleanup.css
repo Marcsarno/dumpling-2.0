@@ -1,0 +1,32 @@
+/* Chore markers, reward popups and round results (PlayCanvas src/ui/cleanup.css). */
+#cleanup-effects { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.cleanup-marker { position: absolute; left: 0; top: 0; border-radius: 9px; min-width: 22px; padding: 3px 5px; background: #fffaf2db; border: 1px solid #fffc; box-shadow: 0 2px 5px #62507722; font-size: 13px; line-height: 16px; color: #775672; will-change: transform; white-space: nowrap; }
+.cleanup-marker[hidden] { display: none; }
+.cleanup-marker.destination { font-size:16px !important; border-radius:50%; padding:7px !important; box-shadow:0 0 14px #fff2a8a0; }
+.cleanup-marker.offscreen::after { content:'➤'; position:absolute; left:50%; top:50%; color:#fff1aa; font-size:17px; text-shadow:0 1px 3px #504760; transform:translate(-50%,-50%) rotate(var(--guide-angle)) translateX(26px); }
+.cleanup-marker.tool { font-size: 10px; }
+.cleanup-marker.nearby { background: #fff0b9; border-color: #fff; box-shadow: 0 0 10px #fff3a4bb; }
+.cleanup-marker.destination { background: #f5ffe7ed; color: #547457; font-size: 10px; font-weight: 800; padding: 5px 7px; border: 2px solid #fff9; }
+.coin-popup { position: absolute; color: #63845d; font-size: 22px; font-weight: 800; z-index: 2; transform: translate(-50%,-100%); animation: reward-rise .95s ease-out forwards; text-shadow: 0 2px 0 #fff; }
+.coin-popup strong { display: block; padding: 3px 8px; background: #fff9e4ed; border-radius: 12px; }
+.coin-popup > span { position: absolute; left: 50%; top: 50%; color: #e9bd61; font-size: 17px; animation: sparkle .75s ease-out forwards; }
+@keyframes reward-rise { 0% { opacity: 0; margin-top: 0; } 20% { opacity: 1; } 75% { opacity: 1; } 100% { opacity: 0; margin-top: -40px; } }
+@keyframes sparkle { from { transform: translate(-50%,-50%) scale(.3); opacity: 1; } to { transform: translate(var(--spark-x),var(--spark-y)) scale(.7); opacity: 0; } }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; clip-path: inset(50%); overflow: hidden; white-space: nowrap; }
+#results { border: 2px solid #fff; border-radius: 28px; padding: 26px 22px 22px; width: min(350px,calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow: auto; background: #faf5fb; color: #51466a; text-align: center; box-shadow: 0 16px 60px #55436140; }
+#results::backdrop { background: #52416666; backdrop-filter: blur(4px); }
+.results-flower { font-size: 43px; line-height: 1; color: #af94cb; margin-bottom: 16px; }
+#results .eyebrow { font-size: 7px; letter-spacing: 1.6px; }
+#results h2 { margin: 12px 0 8px; font-size: 30px; letter-spacing: -1px; }
+#results-summary { font-size: 12px; line-height: 1.6; color: #927d9e; }
+.results-totals { display: flex; justify-content: space-evenly; padding: 14px 0; margin: 12px 0 0; background: #eee5f5; border-radius: 17px; }
+.results-totals strong { display: block; font-size: 28px; }
+.results-totals span { font-size: 10px; color: #8e789f; }
+#results-money { color: #708b6b; }
+#results-bonus { font-size: 11px; color: #788f6c; }
+#results-list { list-style: none; padding: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 12px; margin: 18px 0; font-size: 10px; color: #a58eb1; }
+#results-list .done { color: #638269; }
+#replay { width: 100%; border: 2px solid #fff8; border-radius: 17px; padding: 15px; background: #b3cea9; color: #3b613f; font: 800 16px "Trebuchet MS",system-ui,sans-serif; box-shadow: 0 4px 0 #8caa8555; cursor: pointer; touch-action: manipulation; }
+#replay span { margin-left: 7px; font-size: 21px; }
+@media(orientation:landscape) and (max-height:600px) { .task-list { flex-wrap: wrap; height: auto; justify-content: flex-start; max-width: 175px; gap: 5px 10px; } #results { padding: 12px 18px; } .results-flower { display: none; } #results h2 { font-size: 24px; margin: 7px 0; } .results-totals { padding: 7px 0; } #results-list { margin: 10px 0; } }
+@media(prefers-reduced-motion:reduce) { .coin-popup { animation: none; } .coin-popup > span { display: none; } }

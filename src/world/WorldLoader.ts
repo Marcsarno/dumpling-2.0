@@ -1,28 +1,12 @@
 import {
-  Box3, BoxGeometry, CapsuleGeometry, ConeGeometry, CylinderGeometry, Group, Mesh, Object3D, PlaneGeometry, SphereGeometry,
-  type BufferGeometry, type Material,
+  Box3, Group, Mesh, Object3D, type Material,
 } from 'three';
 import {GLTFLoader, type GLTF} from 'three/addons/loaders/GLTFLoader.js';
 import type {RegionFile, WorldNode} from './format';
 import {MaterialLibrary} from './materials';
+import {primitive} from './primitives';
 import {batchStatic} from './staticBatch';
 import type {GroundSurface} from '../characters/CharacterAnimator';
-
-/** PlayCanvas procedural primitives at their default dimensions (unit size, same segment counts). */
-const PRIMITIVES: Record<string, () => BufferGeometry> = {
-  box: () => new BoxGeometry(1, 1, 1),
-  sphere: () => new SphereGeometry(.5, 16, 16),
-  cylinder: () => new CylinderGeometry(.5, .5, 1, 20, 5),
-  cone: () => new ConeGeometry(.5, 1, 18, 5),
-  plane: () => new PlaneGeometry(1, 1).rotateX(-Math.PI / 2),
-  capsule: () => new CapsuleGeometry(.5, 1, 8, 20),
-};
-const primitiveGeometry = new Map<string, BufferGeometry>();
-const primitive = (type: string) => {
-  let g = primitiveGeometry.get(type);
-  if (!g) { g = PRIMITIVES[type](); primitiveGeometry.set(type, g); }
-  return g;
-};
 
 /** Shared, reference-counted GLB cache: regions acquire models on load and release them on dispose. */
 const gltfLoader = new GLTFLoader();

@@ -31,6 +31,8 @@ export class CharacterAnimator {
   state = '';
   yaw: number;
   carrying = false;
+  /** 'walk' keeps a bulky carry (the vacuum) at CarryWalk even at run speeds. */
+  carryPace: 'walk' | 'run' = 'run';
   /** Clip held while standing still (Marc switches to SitIdle in his chair). */
   idleClip = 'Idle';
   turnRate = 22;
@@ -58,14 +60,15 @@ export class CharacterAnimator {
     this.current = next; this.state = name;
   }
 
-  private action: {name: string; events: {time: number; event: string; fired?: boolean}[]; onEvent?: (event: string) => void; done?: () => void} | null = null;
+  private action: {name: string; events: {time: number; event: string; fired?: boolean}[]; onEvent?: (event: string) => void; done?: () => void; face?: {x: number; z: number}} | null = null;
+  get actionName() { return this.action?.name ?? null; }
   get busy() { return this.action !== null; }
 
   /**
    * Play a one-shot action (0.08 s blend in). Events fire on the clip's own clock, the way
    * gameplay expects (e.g. 'mouth-contact' at 0.65 s of MealBite), then locomotion resumes.
    */
-  playAction(name: string, handlers: {onEvent?: (event: string) => void; done?: () => void} = {}, rate = this.actionRate[name] ?? 1) {
+  playAction(name: string, handlers: {onEvent?: (event: string) => void; done?: () => void; face?: {x: number; z: number}} = {}, rate = this.actionRate[name] ?? 1) {
     const clip = this.actions.get(name)?.getClip();
     if (!clip) throw Error(`Unknown action ${name}`);
     const events = ((clip.userData?.events ?? []) as {time: number; event: string}[]).map(e => ({...e}));
@@ -80,6 +83,8 @@ export class CharacterAnimator {
   update(dt: number, velocity: {x: number; z: number}) {
     if (this.action) {
       const a = this.actions.get(this.action.name)!, clip = a.getClip();
+      // Turn to face what she is handling while the action plays (PlayCanvas: 1 - e^(-18 dt)).
+      if (this.action.face) this.turnToward(this.action.face.x, this.action.face.z, dt, 18);
       this.mixer.update(dt);
       for (const e of this.action.events) if (!e.fired && a.time >= e.time) { e.fired = true; this.action.onEvent?.(e.event); }
       if (!clip.userData?.loop && a.time >= clip.duration - 1e-4) { const done = this.action.done; this.action = null; done?.(); }
@@ -93,7 +98,7 @@ export class CharacterAnimator {
       this.pivot.rotation.y = this.yaw;
     }
     const run = this.canRun && speed > (this.state.includes('Run') ? 1.05 : 1.3);
-    const gait = this.carrying ? (run ? 'CarryRun' : 'CarryWalk') : run ? 'Run' : 'Walk';
+    const gait = this.carrying ? (run && this.carryPace === 'run' ? 'CarryRun' : 'CarryWalk') : run ? 'Run' : 'Walk';
     const desired = moving ? gait : this.carrying ? 'CarryIdle' : this.idleClip;
     if (desired !== this.state) this.transition(desired, .14);
     const travel = this.travel[desired];

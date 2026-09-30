@@ -19,7 +19,7 @@ export interface HudState {
   location: string; day: number; time: string; phase: string; balance: number;
   tasks: readonly {id: string; name: string; room?: string}[]; completed: ReadonlySet<string>;
   hint: string; timed: boolean; remaining: string; urgent: boolean; clockNote: string;
-  action: {ready: boolean; title: string; detail: string};
+  action: {ready: boolean; title: string; detail: string; target?: string; progress?: number};
   message: string;
 }
 const ROOMS: Record<string, string> = {teeth: 'Bathroom', outfit: 'Bedroom', breakfast: 'Kitchen', read: 'Bedroom'};
@@ -41,7 +41,7 @@ export class AdventureHUD {
   private hasModal = false;
   private readonly observer: MutationObserver;
 
-  constructor(private readonly resetInput: () => void, extraMenu?: HTMLElement) {
+  constructor(private readonly resetInput: () => void, extraMenu: HTMLElement[] = []) {
     this.game.classList.add('adventure-ui');
     this.game.dataset.input = matchMedia('(pointer:coarse)').matches ? 'touch' : 'pointer';
     this.root.id = 'adventure-hud';
@@ -50,7 +50,7 @@ export class AdventureHUD {
     this.menu.innerHTML = `<header class="adventure-panel-head"><div><span class="adventure-overline">A LITTLE TIME FOR YOU</span><h2 id="adventure-menu-title">Arianna<span class="brand-petal">${hudIcon('flower')}</span></h2></div><button class="adventure-close" aria-label="Close menu">${hudIcon('close')}</button></header><div class="adventure-panel-body"><button class="adventure-resume">Back to the adventure ${hudIcon('arrow')}</button><nav class="adventure-destinations" aria-label="Game menu"><button data-journal>${hudIcon('book')}<span><strong>Today's journal</strong><small>Your little things to do</small></span>${hudIcon('arrow')}</button></nav><details class="adventure-help"><summary>How to play</summary><p>Drag the movement stick, or use WASD / arrow keys. Walk close to something, then use the large action button or E / Space. Hold the action button when it says “Hold to clean.”</p><p data-help></p></details><div data-extra></div><p class="adventure-clock-note"></p><div class="adventure-menu-foot"><a href="./asset-credits.html" target="_blank" rel="noopener">Art credits</a></div></div>`;
     this.journal.id = 'adventure-journal'; this.journal.className = 'adventure-panel'; this.journal.setAttribute('aria-labelledby', 'adventure-journal-title');
     this.journal.innerHTML = `<header class="adventure-panel-head"><div><span class="adventure-overline" data-journal-day></span><h2 id="adventure-journal-title">A lovely little day.</h2></div><button class="adventure-close" aria-label="Close journal">${hudIcon('close')}</button></header><div class="adventure-panel-body"><div class="journal-summary">${hudIcon('book')}<span data-summary></span></div><ol class="journal-tasks"></ol><div class="journal-hint"><span class="adventure-overline">A LITTLE NUDGE</span><p data-hint></p></div><p class="adventure-clock-note"></p><button class="adventure-resume">Let's go ${hudIcon('arrow')}</button></div>`;
-    if (extraMenu) this.menu.querySelector('[data-extra]')!.append(extraMenu);
+    this.menu.querySelector('[data-extra]')!.append(...extraMenu);
     this.game.append(this.root, this.menu, this.journal);
     const signal = this.abort.signal;
     this.root.querySelector('#adventure-menu-open')!.addEventListener('click', () => this.open(this.menu), {signal});
@@ -126,6 +126,9 @@ export class AdventureHUD {
     const action = document.querySelector<HTMLButtonElement>('#action-button');
     if (action) {
       action.disabled = !state.action.ready;
+      action.dataset.target = state.action.target ?? '';
+      const progress = state.action.progress ?? 0;
+      action.style.setProperty('--hold-progress', `${progress * 360}deg`); action.classList.toggle('holding', progress > 0);
       this.text(action, '#action-title', state.action.title); this.text(action, '#action-detail', state.action.detail);
     }
     this.game.dataset.action = state.action.ready ? 'ready' : 'idle';

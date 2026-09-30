@@ -35,15 +35,52 @@ export class PlayerMovement {
       minZ: c[2] - h[2] - this.radius, maxZ: c[2] + h[2] + this.radius}));
   }
 
-  place(x: number, z: number) { this.position.x = x; this.position.z = z; this.velocity.x = this.velocity.z = 0; }
+  place(x: number, z: number) { this.position.x = x; this.position.z = z; this.velocity.x = this.velocity.z = 0; this.approach = null; }
+
+  private approach: {x: number; z: number; arrived: () => void; cancelled: () => void} | null = null;
+  get approaching() { return this.approach !== null; }
+  /**
+   * Walk up to a prop (PlayCanvas PlayerController.approachProp): the best reachable standing
+   * spot on rings 0.32-1.8 m around it, within 2.2 m, on free floor with a clear straight
+   * line, preferring spots close to the prop. Any stick or key input cancels the walk-up.
+   */
+  approachProp(point: {x: number; z: number}, arrived: () => void, cancelled: () => void) {
+    const start = {x: this.position.x, z: this.position.z}, candidates: {x: number; z: number; score: number}[] = [];
+    const clear = (x: number, z: number) => {
+      const n = Math.ceil(Math.hypot(x - start.x, z - start.z) / .06);
+      for (let i = 1; i <= n; i++) if (this.blocked(start.x + (x - start.x) * i / n, start.z + (z - start.z) * i / n)) return false;
+      return true;
+    };
+    for (let radius = .32; radius <= 1.8; radius += .06) for (let a = 0; a < Math.PI * 2; a += Math.PI / 24) {
+      const x = point.x + Math.sin(a) * radius, z = point.z + Math.cos(a) * radius, d = Math.hypot(x - start.x, z - start.z);
+      if (d < 2.2 && !this.blocked(x, z) && clear(x, z)) candidates.push({x, z, score: Math.hypot(x - point.x, z - point.z) * 3 + d});
+    }
+    candidates.sort((a, b) => a.score - b.score);
+    if (!candidates.length) { cancelled(); return; }
+    this.approach = {x: candidates[0].x, z: candidates[0].z, arrived, cancelled};
+  }
+  cancelApproach() { const a = this.approach; this.approach = null; a?.cancelled(); }
 
   /** input: stick/keyboard vector, |input| ≤ 1, x right and y up the screen. */
   update(dt: number, input: {x: number; y: number}) {
-    const ix = this.enabled ? this.right.x * input.x + this.forward.x * input.y : 0;
-    const iz = this.enabled ? this.right.z * input.x + this.forward.z * input.y : 0;
+    let ix = this.enabled ? this.right.x * input.x + this.forward.x * input.y : 0;
+    let iz = this.enabled ? this.right.z * input.x + this.forward.z * input.y : 0;
     const k = 1 - Math.exp(-this.response * dt);
-    this.velocity.x += (ix * this.speed - this.velocity.x) * k;
-    this.velocity.z += (iz * this.speed - this.velocity.z) * k;
+    if (this.approach) {
+      if (input.x * input.x + input.y * input.y > .04 || document.hidden) this.cancelApproach();
+      else {
+        const dx = this.approach.x - this.position.x, dz = this.approach.z - this.position.z, d = Math.hypot(dx, dz);
+        if (d < .045) { const a = this.approach; this.approach = null; this.velocity.x = this.velocity.z = 0; a.arrived(); return; }
+        // Steer straight to the spot at full speed, easing into the last step (no input easing).
+        const m = Math.min(1, d / (this.speed * Math.max(dt, 1e-3)));
+        ix = dx / d * m; iz = dz / d * m;
+        this.velocity.x = ix * this.speed; this.velocity.z = iz * this.speed;
+      }
+    }
+    if (!this.approach) {
+      this.velocity.x += (ix * this.speed - this.velocity.x) * k;
+      this.velocity.z += (iz * this.speed - this.velocity.z) * k;
+    }
     if (Math.hypot(this.velocity.x, this.velocity.z) < .01 && !ix && !iz) { this.velocity.x = this.velocity.z = 0; return; }
     const dx = this.velocity.x * dt, dz = this.velocity.z * dt, p = this.position;
     const startX = p.x, startZ = p.z, {halfWidth, halfDepth} = this.area, r = this.radius;
