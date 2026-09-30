@@ -1,0 +1,16 @@
+# Text is stored and checked out as LF on every machine, so vendored files and
+# the protected-character verifiers stay byte-identical to their sources.
+* text=auto eol=lf
+
+# Binary game assets are never converted or diffed.
+*.glb binary
+*.bin binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.mp3 binary
+*.ogg binary
+*.wav binary
+*.blend binary
+*.ico binary

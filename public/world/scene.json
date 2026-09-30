@@ -1,0 +1,62 @@
+{
+ "format": "dumpling-world/1",
+ "camera": {
+  "position": [
+   6,
+   14,
+   18.9
+  ],
+  "rotation": [
+   -34.84,
+   18.435,
+   0
+  ],
+  "forward": [
+   -0.259545,
+   -0.571287,
+   -0.778632
+  ],
+  "orthoHeight": 7,
+  "near": 0.1,
+  "far": 60,
+  "clearColor": [
+   0.9294117647,
+   0.9019607843,
+   0.9568627451
+  ]
+ },
+ "sun": {
+  "rotation": [
+   48,
+   -30,
+   0
+  ],
+  "direction": [
+   0.371572,
+   -0.669131,
+   -0.643582
+  ],
+  "color": [
+   1,
+   0.92,
+   0.83
+  ],
+  "intensity": 1.2,
+  "castShadows": true,
+  "shadowResolution": 1024,
+  "shadowDistance": 35,
+  "numCascades": 1,
+  "shadowBias": 0.2,
+  "normalOffsetBias": 0.04,
+  "shadowType": 0,
+  "mask": 9
+ },
+ "ambient": [
+  0.72,
+  0.68,
+  0.77
+ ],
+ "gammaCorrection": 1,
+ "toneMapping": 0,
+ "exposure": 1
+}

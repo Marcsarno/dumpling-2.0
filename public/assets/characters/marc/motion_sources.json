@@ -1,0 +1,15 @@
+{
+  "library": "Quaternius Universal Animation Library CC0 snapshot 2025-06-10",
+  "source_url": "https://quaternius.itch.io/universal-animation-library",
+  "archive_url": "https://github.com/J-Ponzo/gltf-universal-animation-library",
+  "source_clips": {
+    "Walk_Basic": "Walk_Loop",
+    "Run_Alternative": "Jog_Fwd_Loop",
+    "SitDown": "Sitting_Enter",
+    "SitIdle": "Sitting_Idle_Loop",
+    "StandUp": "Sitting_Exit"
+  },
+  "target_leg_ratio": 0.7139987394122115,
+  "idle": "Marc rest pose, arms rotated inward 0.22 radians, original elbow flex retained",
+  "original_run": "Running preserved unchanged; backup also retained"
+}

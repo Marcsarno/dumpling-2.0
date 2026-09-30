@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {DeveloperSaves} from '../src/dev/DeveloperSaves.ts';
+import {saveKey} from '../src/systems/SaveNamespace.ts';
+const storage=new Map(),keys=[saveKey('progress.v1'),saveKey('daily.v1'),saveKey('lilah.v1')];let failOnce='';
+globalThis.localStorage={getItem:k=>storage.get(k)??null,setItem:(k,v)=>{if(k===failOnce){failOnce='';throw Error('Storage full');}storage.set(k,v);},removeItem:k=>storage.delete(k)};
+const saves=new DeveloperSaves();storage.set('unrelated.setting','keep');keys.forEach((k,i)=>storage.set(k,'original'+i));
+assert.equal(saves.read(),null);const original=saves.ensure();keys.forEach(k=>storage.set(k,'changed'));
+assert.deepEqual(saves.ensure(),original,'Repeated cheats preserve first checkpoint');
+failOnce=keys[1];assert.throws(()=>saves.restore(),/Storage full/);keys.forEach(k=>assert.equal(storage.get(k),'changed','Partial restore rolls back'));
+saves.restore();keys.forEach((k,i)=>assert.equal(storage.get(k),'original'+i));
+saves.reset();keys.forEach(k=>assert.equal(storage.has(k),false));assert.equal(storage.get('unrelated.setting'),'keep');assert.deepEqual(saves.read(),original);
+saves.restore();keys.forEach((k,i)=>assert.equal(storage.get(k),'original'+i));
+storage.set(saveKey('developer.checkpoint.v1'),'broken');assert.throws(()=>saves.ensure());assert.equal(storage.get(saveKey('developer.checkpoint.v1')),'broken');
+console.log('PASS automatic checkpoint, repeat preservation, restore rollback, fresh save, unrelated keys, corrupt checkpoint protection');

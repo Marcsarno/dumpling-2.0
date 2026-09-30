@@ -1,0 +1,55 @@
+[
+  {
+    "file": "sunny-pup.glb",
+    "title": "Sunny Pup with quadruped rig",
+    "author": "User-provided Meshy model; Mesh2Motion rig and source animations",
+    "source": "https://github.com/Mesh2Motion/mesh2motion-app/blob/3ce7f9d97d25e608b4779ce797da343775ded62b/static/animations/fox-animations.glb",
+    "license": "CC0-1.0 for the source rig and animations only; mesh/textures supplied by user",
+    "modifications": "Fitted skeleton, custom skin weights, retargeted Idle/Walk, baked grounding and loop closure. Uniform runtime height 0.48, matching the old pug. See SUNNY_PUP.md."
+  },
+  {
+    "file": "pug.glb",
+    "title": "Pug",
+    "author": "Quaternius",
+    "source": "https://poly.pizza/m/1gXKv15ik8",
+    "license": "CC0-1.0",
+    "download": "https://static.poly.pizza/094335c0-632a-45f5-8583-27d5cab53b54.glb",
+    "modifications": "Original GLB preserved; runtime scale, orientation, placement and gameplay effects only."
+  },
+  {
+    "file": "poop.glb",
+    "title": "Dog Poop",
+    "author": "J-Toastie",
+    "source": "https://poly.pizza/m/NwQhRNwk62",
+    "license": "CC-BY-3.0",
+    "download": "https://static.poly.pizza/eed080f6-6986-4e25-b585-1afeed059fb4.glb",
+    "modifications": "Original GLB preserved; runtime scale, orientation, placement and gameplay effects only."
+  },
+  {
+    "file": "shovel.glb",
+    "title": "Shovel",
+    "author": "Kenney",
+    "source": "https://poly.pizza/m/Tf39YoBe7V",
+    "license": "CC0-1.0",
+    "download": "https://static.poly.pizza/12c5dd8b-ab7f-4319-bf55-e79c5a91e79d.glb",
+    "modifications": "Original GLB preserved; runtime scale, orientation, placement and gameplay effects only."
+  },
+  {
+    "file": "paper.glb",
+    "title": "Bathroom Toilet Paper",
+    "author": "Quaternius",
+    "source": "https://poly.pizza/m/pZojeda7ye",
+    "license": "CC0-1.0",
+    "download": "https://static.poly.pizza/1a9ccc8f-c1b8-4974-adaa-1685f28c155d.glb",
+    "modifications": "Original GLB preserved; runtime scale, orientation, placement and gameplay effects only."
+  },
+  {
+    "file": "soap.glb",
+    "title": "Hand Wash Bottle",
+    "author": "MiniPoly",
+    "source": "https://poly.pizza/m/d4b5btUs1F",
+    "license": "CC0-1.0",
+    "download": "https://static.poly.pizza/764254f2-4cd6-4a5e-a89b-a40fbc07574a.glb",
+    "modifications": "Original GLB preserved; runtime scale, orientation, placement and gameplay effects only."
+  }
+]

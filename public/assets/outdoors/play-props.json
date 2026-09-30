@@ -1,0 +1,80 @@
+{
+  "author": "Original Maple Lane props, made in Blender",
+  "assets": [
+    {
+      "id": "goal",
+      "polygons": 640,
+      "bytes": 66964
+    },
+    {
+      "id": "bowling",
+      "polygons": 3270,
+      "bytes": 178096
+    },
+    {
+      "id": "cans",
+      "polygons": 1298,
+      "bytes": 93980
+    },
+    {
+      "id": "cart",
+      "polygons": 944,
+      "bytes": 95024
+    },
+    {
+      "id": "boat",
+      "polygons": 640,
+      "bytes": 77280
+    },
+    {
+      "id": "duck",
+      "polygons": 4586,
+      "bytes": 258104
+    },
+    {
+      "id": "bubbles",
+      "polygons": 3510,
+      "bytes": 185828
+    },
+    {
+      "id": "flower",
+      "polygons": 4324,
+      "bytes": 235492
+    },
+    {
+      "id": "pinwheel",
+      "polygons": 210,
+      "bytes": 23548
+    },
+    {
+      "id": "jack",
+      "polygons": 2532,
+      "bytes": 154196
+    },
+    {
+      "id": "puddles",
+      "polygons": 1608,
+      "bytes": 106204
+    },
+    {
+      "id": "leaves",
+      "polygons": 1186,
+      "bytes": 88816
+    },
+    {
+      "id": "plane",
+      "polygons": 631,
+      "bytes": 47812
+    },
+    {
+      "id": "flamingo",
+      "polygons": 1734,
+      "bytes": 130564
+    },
+    {
+      "id": "picnic",
+      "polygons": 3448,
+      "bytes": 214780
+    }
+  ]
+}

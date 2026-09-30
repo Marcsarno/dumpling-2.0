@@ -1,0 +1,42 @@
+{
+  "name": "Arianna",
+  "revision": "meshy-carry-v1",
+  "triangles": 14694,
+  "joints": 28,
+  "embedded_images": 2,
+  "bytes": 6226316,
+  "sha256": "35cfde9dba8d20d53019d654728972c04f7455ccc533040d00818f86d3f82989",
+  "source": "Dumpling Collector/experiments/meshy/revisions/carry_v1/arianna/arianna.glb",
+  "clips": [
+    {
+      "name": "Casual_Walk",
+      "duration_seconds": 4.2,
+      "loop": true
+    },
+    {
+      "name": "Running",
+      "duration_seconds": 0.6333333333333333,
+      "loop": true
+    },
+    {
+      "name": "Walking",
+      "duration_seconds": 0.9666666666666668,
+      "loop": true
+    },
+    {
+      "name": "CarryWalk",
+      "duration_seconds": 0.9666666666666668,
+      "loop": true
+    },
+    {
+      "name": "CarryRun",
+      "duration_seconds": 0.6333333333333333,
+      "loop": true
+    },
+    {
+      "name": "Idle",
+      "duration_seconds": 2,
+      "loop": true
+    }
+  ]
+}

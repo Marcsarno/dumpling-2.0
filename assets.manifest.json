@@ -1,0 +1,2229 @@
+{
+ "note": "Byte-identical copies of PlayCanvas public/ files at the pinned commit. Verify with `node tools/asset-manifest.mjs --verify`. Do not edit by hand; rerun `pnpm assets:sync`.",
+ "source": {
+  "repo": "Marcsarno/Dumpling",
+  "commit": "9a40b4ed1dcedd7659d7c78c96c28cb1104c87e5",
+  "folder": "public/"
+ },
+ "totals": {
+  "files": 269,
+  "bytes": 95493950,
+  "protected": 2
+ },
+ "files": [
+  {
+   "path": "asset-credits.html",
+   "bytes": 8657,
+   "sha256": "213f55ae873017d1835b6d7f4e0f036c570bc4c7d8fd057897db4b7b916c198b",
+   "gitBlob": "cce8c23cf03ec5b5acbbd68c5c4172e07033c07e",
+   "protected": false,
+   "licence": "project page"
+  },
+  {
+   "path": "assets/animations/chores/asset_manifest.json",
+   "bytes": 3228,
+   "sha256": "edf0a54324e4eb7f7d3e13b451375ea73598e31962dc549ff6629cc2daa135bf",
+   "gitBlob": "721f31b847e6ec670a1eaef36b955ff732fa3cf6",
+   "protected": false,
+   "licence": "CMU Graphics Lab Motion Capture: use allowed, resale of the motion data forbidden, acknowledgment requested"
+  },
+  {
+   "path": "assets/animations/chores/cmu-trajectories.json",
+   "bytes": 8957,
+   "sha256": "4813f5285398d87b360026f0b8a9531abd00441469b1dccbb2fb40a7e71aaade",
+   "gitBlob": "ee5c74c4bfc48cda1f50b0a85ee68a11306f22c4",
+   "protected": false,
+   "licence": "CMU Graphics Lab Motion Capture: use allowed, resale of the motion data forbidden, acknowledgment requested"
+  },
+  {
+   "path": "assets/animations/rest/SOURCES.md",
+   "bytes": 1439,
+   "sha256": "0f7ce9dd3f4915676dcaafaa6179c79ad963dac182ce7a151cb80a559f5cc149",
+   "gitBlob": "93d3e4abbac9e7f7897796e8c4f0a67600141b29",
+   "protected": false,
+   "licence": "CMU Graphics Lab Motion Capture: use allowed, resale of the motion data forbidden, acknowledgment requested"
+  },
+  {
+   "path": "assets/animations/rest/sleep.json",
+   "bytes": 183,
+   "sha256": "c563f5a81f520171ccbd67776e7a06f605ec569b0530f5708272869109d0a4c3",
+   "gitBlob": "ab247511d163134282d3a61c9df996c865c26c62",
+   "protected": false,
+   "licence": "CMU Graphics Lab Motion Capture: use allowed, resale of the motion data forbidden, acknowledgment requested"
+  },
+  {
+   "path": "assets/audio/SOURCES.md",
+   "bytes": 4014,
+   "sha256": "8730b5d668e77291326703abea41dcc847978b9d2da7bfbb84e15e9a456c08f1",
+   "gitBlob": "f814a6d22fa7204786fba70895c3e275c4989e73",
+   "protected": false,
+   "licence": "CC0 music — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/Squishy Home clean v2.mp3",
+   "bytes": 2444489,
+   "sha256": "48e7d00f2eefc94e5309080f5eff5d23eda1a4ace7e965b4156368cacde26602",
+   "gitBlob": "09586e7a315711841e77dd8746b89db928568f6c",
+   "protected": false,
+   "licence": "owner-supplied music (Suno-generated); rights depend on the owner plan — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/Squishy home clean.mp3",
+   "bytes": 2939251,
+   "sha256": "f2aaa281945d969aaa4a9f17c42eeb7b3e7fedc7feb08d717c615fff08c0672c",
+   "gitBlob": "cb800b6724fe6bc999edb7bb1c0d21dece64b818",
+   "protected": false,
+   "licence": "owner-supplied music (Suno-generated); rights depend on the owner plan — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/Squishy school trading.mp3",
+   "bytes": 1667659,
+   "sha256": "9887b25e80cb6ff4cad01c2bd160d0bad2548f38c482110ae74037432b54de58",
+   "gitBlob": "c357e3828017f88e6dbc59bf0df080feace8a790",
+   "protected": false,
+   "licence": "owner-supplied music (Suno-generated); rights depend on the owner plan — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/Squishy shopping v2.mp3",
+   "bytes": 2835741,
+   "sha256": "9253a1705b4ed607ec9505767ab0c9ee7f425fd64e76ef33b18d1ee16d877e4b",
+   "gitBlob": "c53a144f777eac2ce2699254c90cfbf5165561ae",
+   "protected": false,
+   "licence": "owner-supplied music (Suno-generated); rights depend on the owner plan — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/Squishy shopping.mp3",
+   "bytes": 3034430,
+   "sha256": "454bd5e76f305034c317dfde2b4c97217036e85971cad2a7e6f1a44d80e31933",
+   "gitBlob": "b2dad7a1e62fff64c16ee9c8242ca7ce19f42d1c",
+   "protected": false,
+   "licence": "owner-supplied music (Suno-generated); rights depend on the owner plan — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/Squishy unlock.mp3",
+   "bytes": 248902,
+   "sha256": "faee34f9f4e92736049f0047f1ee959c01a25282d0da60f0d0ce81707e08a859",
+   "gitBlob": "cfeb40a50d817889bbd00a108a513e0d15a19ff8",
+   "protected": false,
+   "licence": "owner-supplied music (Suno-generated); rights depend on the owner plan — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/cozy-house.mp3",
+   "bytes": 633971,
+   "sha256": "fe6e3dbc41a326a556f05f3ac5b5be3a686aa0477e7c318f1c206224866d9b00",
+   "gitBlob": "72c6f33b733da1f2cdf28943972267cf741da6ee",
+   "protected": false,
+   "licence": "CC0 music — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/evening-house.mp3",
+   "bytes": 1438397,
+   "sha256": "644dfe92588294d86ec7f463dde41270d61a2748e0c2b2735167dd9f08cbadd9",
+   "gitBlob": "577512cb2979b98b263abe7c495ee50fa844683a",
+   "protected": false,
+   "licence": "CC0 music — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/foley/handle.mp3",
+   "bytes": 1245,
+   "sha256": "f1f4d4eefa1dff291b1a2fad101e69a099d4068ec4630e9bafe16c1082bce071",
+   "gitBlob": "3eca342af37413c0da72978de287533417d15a44",
+   "protected": false,
+   "licence": "CC0 foley — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/foley/munch.mp3",
+   "bytes": 37485,
+   "sha256": "8372350989a8981225a5e496cd10c73eda05e6167ef578a65aad58135519525e",
+   "gitBlob": "967efaee714af23f6322ad041da77917b3d090ce",
+   "protected": false,
+   "licence": "CC0 foley — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/foley/step-carpet-0.mp3",
+   "bytes": 1533,
+   "sha256": "bcf3e5dbb470f9c5dff88105b6140f28d2a74b1544d34367c3eb97329b410998",
+   "gitBlob": "e16e8f8171dfe9607485ac3ab9204d45419a14db",
+   "protected": false,
+   "licence": "CC0 foley — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/foley/step-carpet-1.mp3",
+   "bytes": 1389,
+   "sha256": "822f96b5debb3fc7d049b8e27c693f735c3704299a19439851225a8eeb6af8ce",
+   "gitBlob": "746f68af5449757d2d9cefa6042a0cc2c6ec290c",
+   "protected": false,
+   "licence": "CC0 foley — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/foley/step-carpet-2.mp3",
+   "bytes": 1389,
+   "sha256": "822f96b5debb3fc7d049b8e27c693f735c3704299a19439851225a8eeb6af8ce",
+   "gitBlob": "746f68af5449757d2d9cefa6042a0cc2c6ec290c",
+   "protected": false,
+   "licence": "CC0 foley — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/foley/step-concrete-0.mp3",
+   "bytes": 1245,
+   "sha256": "87f1c4f0f143e6c4b978d82a626deae5b00ac682fb0488901c0cfdd9da8ef8a7",
+   "gitBlob": "3e9fce0febdf13ce43a405015b954db373b9d9a2",
+   "protected": false,
+   "licence": "CC0 foley — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/foley/step-concrete-1.mp3",
+   "bytes": 1245,
+   "sha256": "5f95b6618974d63dab09d48a870547af8eedf7e4a2776ada1b6851f02ee116c5",
+   "gitBlob": "f641b75fb078270c7db7abc47085fb6695fe7b13",
+   "protected": false,
+   "licence": "CC0 foley — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/foley/step-concrete-2.mp3",
+   "bytes": 1245,
+   "sha256": "0a186e132eae537f1f814847e60239b47e3c94f8807ba899cdaca1ed4ba63731",
+   "gitBlob": "c19dd2fcd83f757b11fc0642b961bccfbfbc43e2",
+   "protected": false,
+   "licence": "CC0 foley — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/foley/step-wood-0.mp3",
+   "bytes": 2253,
+   "sha256": "0be26690899cc2ba8bd89b7ffa841d182639c04afd1b5150c8150cf870cd938d",
+   "gitBlob": "621c037114d62160138d493f529165425c58b6f7",
+   "protected": false,
+   "licence": "CC0 foley — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/foley/step-wood-1.mp3",
+   "bytes": 2109,
+   "sha256": "8bf23784478953975948c36d22c6db0e04f44443c1b7853ec1a64f819bd15eb0",
+   "gitBlob": "1f1f8536a10ec086973decfd1f7e3dc8163bd4fd",
+   "protected": false,
+   "licence": "CC0 foley — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/foley/step-wood-2.mp3",
+   "bytes": 2109,
+   "sha256": "3d047be9f53caee920ecfca8e4f6a3299a1a544d290d3e59833c4ea75315a042",
+   "gitBlob": "413ad522798af2d1686a15474dd530ea63664c09",
+   "protected": false,
+   "licence": "CC0 foley — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/foley/vacuum.mp3",
+   "bytes": 48621,
+   "sha256": "00baa137ce113f717512f32c1684dd966ad3c3e7b071b83fc7ee22e3931df4e2",
+   "gitBlob": "7dd560348110ffe811e5c320534d983a90c4ab19",
+   "protected": false,
+   "licence": "CC0 foley — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/foley/water.mp3",
+   "bytes": 48621,
+   "sha256": "ada84cefe16a33789299c70a060ced7ce153c2186e6892650850be588304d8f5",
+   "gitBlob": "9584291fc5676fd6094f7a3d87df3650ebb7e855",
+   "protected": false,
+   "licence": "CC0 foley — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/foley/wipe.mp3",
+   "bytes": 45357,
+   "sha256": "acc7422574e13fbac763dfa00f134b623b45ecdb08ad0e3881f2f6cf4813df60",
+   "gitBlob": "1698118ed7cd2d5550cf23f63d8b22c93f9bb86f",
+   "protected": false,
+   "licence": "CC0 foley — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/audio/sunny-house.mp3",
+   "bytes": 2218914,
+   "sha256": "a1bcac8c88fc5075dc5c6e2130445dd506be851ae4ab59d87259c79559e97f66",
+   "gitBlob": "1b23539ba451ac38f5067ac6f9f1558473c4e71e",
+   "protected": false,
+   "licence": "CC0 music — audio/SOURCES.md"
+  },
+  {
+   "path": "assets/backgrounds/squishy-bedroom.png",
+   "bytes": 2069615,
+   "sha256": "98d601c819695e837e97936d3bbc85fe72a20916a06b45d92f54e28c77bffc29",
+   "gitBlob": "7f87a3dcb8c5148222653646ede67caa991b929e",
+   "protected": false,
+   "licence": "owner-supplied bedroom art"
+  },
+  {
+   "path": "assets/characters/arianna/PLAYCANVAS_HANDOFF.md",
+   "bytes": 966,
+   "sha256": "6142f55b5ca8324f72bdc84787376cafa1d88c68d17d477754c66bb5d4129885",
+   "gitBlob": "143b439d979f58f5b7a81b84f5811cfc5db529bc",
+   "protected": false,
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+  },
+  {
+   "path": "assets/characters/arianna/README.md",
+   "bytes": 1667,
+   "sha256": "88fea467f234dbadd924b69acffa3e22f8bb5cd84e3bc2c455c2c9a35d6e03bd",
+   "gitBlob": "7cf0d6985712e9a796e55485ffdb91ce46c4fd18",
+   "protected": false,
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+  },
+  {
+   "path": "assets/characters/arianna/arianna.glb",
+   "bytes": 6226316,
+   "sha256": "35cfde9dba8d20d53019d654728972c04f7455ccc533040d00818f86d3f82989",
+   "gitBlob": "df2eab7e6085ce8934eb3ad3e5a48555b67b1209",
+   "protected": true,
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+  },
+  {
+   "path": "assets/characters/arianna/asset_manifest.json",
+   "bytes": 916,
+   "sha256": "7a47df922eb550c770b728f4593089a15a354b64a22172529b113289922e9e19",
+   "gitBlob": "eb63aff225feb1db427c4bc16e5b8f37b8b0c67c",
+   "protected": false,
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+  },
+  {
+   "path": "assets/characters/arianna/character.json",
+   "bytes": 109,
+   "sha256": "3809ae8e697e7bd650a36164c30d56a14a431a19e9532c2de4149157c57e5709",
+   "gitBlob": "1598cb7d0a05be8b04ea9b7ecfee54d8d8b70105",
+   "protected": false,
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+  },
+  {
+   "path": "assets/characters/arianna/gltf_validation.json",
+   "bytes": 1449,
+   "sha256": "a8fe4165ffb2e575a1aace1d78e029ce258d44976c603d39cd079b51f3baa5c1",
+   "gitBlob": "3bced970d05636bd53c3560e71a89c96e824c967",
+   "protected": false,
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+  },
+  {
+   "path": "assets/characters/arianna/preservation_check.json",
+   "bytes": 945,
+   "sha256": "96892fd190d32c0819beb0914d8f22e1262eed010928f3e1bbd85638e49bc169",
+   "gitBlob": "b2ba67566467d17dd490c9bff700c208a59192f6",
+   "protected": false,
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+  },
+  {
+   "path": "assets/characters/classmates/License.txt",
+   "bytes": 691,
+   "sha256": "5562d2047baf1dc90022ebf89863c32e5aca4f67d5bc2a9dd448fa2f6219402c",
+   "gitBlob": "2e68c102a5b198113c0a9e5a0074a413d0365443",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney Mini Characters — characters/classmates/SOURCES.md"
+  },
+  {
+   "path": "assets/characters/classmates/SOURCES.md",
+   "bytes": 481,
+   "sha256": "01c3a681c168425280670c7c59c6dfbabe41ea80900ec96cc5589ecbe01183fe",
+   "gitBlob": "08071a8c6eb199f4d692a0e4b69205c2193b7a84",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney Mini Characters — characters/classmates/SOURCES.md"
+  },
+  {
+   "path": "assets/characters/classmates/Textures/colormap.png",
+   "bytes": 8706,
+   "sha256": "0d4947d34ff32acf4a359c7f22ca784e057e7e72f622170a9a77b6fc88fdb70e",
+   "gitBlob": "166a545e0e6fda582acc5b6475643acba1288bd7",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney Mini Characters — characters/classmates/SOURCES.md"
+  },
+  {
+   "path": "assets/characters/classmates/character-female-b.glb",
+   "bytes": 252140,
+   "sha256": "2288438e7baf9acc91a870c82dc00d66710bb486592cfc3474ef8ed93a03863a",
+   "gitBlob": "9df43f7eba2f2d244d8051baf868de065621547e",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney Mini Characters — characters/classmates/SOURCES.md"
+  },
+  {
+   "path": "assets/characters/classmates/character-female-f.glb",
+   "bytes": 259488,
+   "sha256": "2ff4311897bfaf99be80d2fa13918db30f506607da0291640b2609d82b70e0ca",
+   "gitBlob": "e6585446ecf379b690c133e4719abb242901f69d",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney Mini Characters — characters/classmates/SOURCES.md"
+  },
+  {
+   "path": "assets/characters/classmates/character-male-a.glb",
+   "bytes": 246916,
+   "sha256": "77572792bfe2773b715b8cd8e18644b52b3e1f155fe10450254b50f9c364382a",
+   "gitBlob": "18ff63f798686ed629654a7d13cc793f1da5db98",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney Mini Characters — characters/classmates/SOURCES.md"
+  },
+  {
+   "path": "assets/characters/lilah/README.md",
+   "bytes": 1515,
+   "sha256": "389bcb2347b125908eeb7376dbc27cd24499742324b28db5b658979cc85b3a31",
+   "gitBlob": "3d9d9cc6c4843e7b239865bb67c0805c714d5594",
+   "protected": false,
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+  },
+  {
+   "path": "assets/characters/lilah/asset_manifest.json",
+   "bytes": 449,
+   "sha256": "e696ada75b2f38779658178fdfb89912ecfa549239bb15758025a4a58796e94d",
+   "gitBlob": "08896a8211abe5ab5eb9e942156e4bb5802fdd93",
+   "protected": false,
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+  },
+  {
+   "path": "assets/characters/lilah/lilah.glb",
+   "bytes": 6864000,
+   "sha256": "9070bb9846d6ef53d46a0af0296ab6e8eadffb2c25139267323b2574d6b68a6e",
+   "gitBlob": "22060d5cd8118bbe830fece7c35d19ee1596f086",
+   "protected": true,
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+  },
+  {
+   "path": "assets/characters/marc/LICENSE_ANIMATIONS_CC0.txt",
+   "bytes": 7048,
+   "sha256": "a2010f343487d3f7618affe54f789f5487602331c0a8d03f49e9a7c547cf0499",
+   "gitBlob": "0e259d42c996742e9e3cba14c677129b2c1b6311",
+   "protected": false,
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+  },
+  {
+   "path": "assets/characters/marc/README.md",
+   "bytes": 1326,
+   "sha256": "7cc569c7c37c41a2e2bc12e46cfdbd84e172aeb1635a584bdaa64e5a1084b231",
+   "gitBlob": "b860a2d86373f7f970f911c1557d47c16f31f437",
+   "protected": false,
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+  },
+  {
+   "path": "assets/characters/marc/REJECTED_ANIMATION.txt",
+   "bytes": 338,
+   "sha256": "473cdb9d323cb230f41d20545f685e456e8a74c8548182fff715b39931045bf0",
+   "gitBlob": "1f76209ac8c263009780f40c6ff32d441455b57c",
+   "protected": false,
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+  },
+  {
+   "path": "assets/characters/marc/SOURCE_README.md",
+   "bytes": 2772,
+   "sha256": "41e1894e2f549c9d73eca88f59d10d09534cc632b7ba9817c208080db2f27089",
+   "gitBlob": "fe67cd40faff41574c619d66a24204ce545a7400",
+   "protected": false,
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+  },
+  {
+   "path": "assets/characters/marc/marc.glb",
+   "bytes": 2696916,
+   "sha256": "cc65a162e4e60aa5322ae95a299e34c033faf977ca70d3c3729adea308a49288",
+   "gitBlob": "712cbbacd10a62dd82a1c2b0c7f45d24731b20db",
+   "protected": false,
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+  },
+  {
+   "path": "assets/characters/marc/motion_sources.json",
+   "bytes": 633,
+   "sha256": "d285b0ffd5b37ac23e1340505e53695457ef43574a317a171181148589b372a7",
+   "gitBlob": "4a1ac3461b73b4e55e453a0db8a0fe23a79ff82c",
+   "protected": false,
+   "licence": "owner-supplied character (Meshy); no redistribution licence recorded — see the folder README"
+  },
+  {
+   "path": "assets/environment/kenney/building/License.txt",
+   "bytes": 688,
+   "sha256": "e700d3b5df39da19114d66d9bbcc27832e5eafb0189f441d98c39fdeba4e134a",
+   "gitBlob": "d33844247c137bcb3d6c7aae997cc5f88eccff93",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/building/Textures/colormap.png",
+   "bytes": 10051,
+   "sha256": "01741a46a279bef667de3143ee653d0073ed7cae925d88341281391d9220092b",
+   "gitBlob": "084b4b3650474e1c73f528ad69c70e04b5e73155",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/building/door-rotate-round-a.glb",
+   "bytes": 23288,
+   "sha256": "515022ca7d40003b1b15e72707f4c325ba866dc83f15c28cb67eb310a99d150e",
+   "gitBlob": "e839e550d59a82b6bec92948b2837ebc5a2641af",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/building/floor.glb",
+   "bytes": 2832,
+   "sha256": "fbe8e907e502381db5d9f87676ef9e34522e35fc95a401a754d3e4984819338b",
+   "gitBlob": "2edcdc4f6723a43eb0f744cec33c700417981138",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/building/wall-doorway-round.glb",
+   "bytes": 11052,
+   "sha256": "4ab09a9817ec7400a5b3b3724c0612f3935a2aeb925f2cbdffdd7e403814d413",
+   "gitBlob": "e467a6edfd594a2f43929a6bad98e5ff552162db",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/building/wall-window-wide-round.glb",
+   "bytes": 15384,
+   "sha256": "7c52c3a489a380b71ca53f6832e1fcb7e242b6e9fb0600389c3f5cbb64bcd4e2",
+   "gitBlob": "e37b79ac7d88d570db4586383c8a2d512bf84d70",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/License.txt",
+   "bytes": 614,
+   "sha256": "bc0de1a0742cb490f9ed4bae0bd284286ebb27e23149b9917c7d8c0d590b8b29",
+   "gitBlob": "f374e2fbe47f68afd9c53ed26fcdcc65dc5f4775",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/bathroomMirror.glb",
+   "bytes": 6792,
+   "sha256": "940b986894101ea59b50541554b6dc608a22b133057975849259009012984175",
+   "gitBlob": "8e3604f44c3c640aca9c08e7e598058f9af88aa9",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/bathroomSink.glb",
+   "bytes": 22536,
+   "sha256": "39d4f19608cab7e0fed52303b2c689f5f51fae1bad9b6913cb53d838875e797e",
+   "gitBlob": "a35d3c119e0d0348199c313da693849123a2eaf8",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/bathtub.glb",
+   "bytes": 35500,
+   "sha256": "54c405c7035aab63dc41e709dc3c50fc5bcfbc4cddc91ffc54188075a6d25d01",
+   "gitBlob": "ece65b92558f10698d754018fc4b41531d198456",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/bear.glb",
+   "bytes": 11884,
+   "sha256": "fd87c08f81dcd652b1f7f61afae9d1f040fa1322ac4ddda6f543ed423b954aed",
+   "gitBlob": "fb268bf7ee28e3c657f4563a00aeb52a87b3c04e",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/bedDouble.glb",
+   "bytes": 23368,
+   "sha256": "c49b33e7d797d2ba1111895587dba7ff63b17a712eb9b4ceeb40a598f73e476c",
+   "gitBlob": "1b0efacc4dda050a6abc34974cb692010d29b81c",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/benchCushion.glb",
+   "bytes": 12500,
+   "sha256": "5186ad938f8b9eff255361fd1fdc48a81f08c318161cde27c93753ab95a2d354",
+   "gitBlob": "56380ad9d2f78b45ddacf1163d00fe2c48c11a5e",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/bookcaseClosedDoors.glb",
+   "bytes": 22644,
+   "sha256": "ff33f535acdb1825c0e958a293642b39665adcae0b1317b650e83d2bb687f4e2",
+   "gitBlob": "3c80bf981b1018d91a3263a0b7554adc4fc1da5c",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/bookcaseOpen.glb",
+   "bytes": 18020,
+   "sha256": "750702218d68c062b15dfef6ab06a4014d1cfa8bd05f02e57c53b7e13bec157c",
+   "gitBlob": "9a0cce7691e94277f3409719e9e68c910c25aa2c",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/bookcaseOpenLow.glb",
+   "bytes": 11520,
+   "sha256": "6d4d625faf977a2dbf155f1313cd32c6310e463114a1cd4c08cb9f80a5fb1d75",
+   "gitBlob": "3daa396e11c843a5da87ab6547a279731e6eba58",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/books.glb",
+   "bytes": 6864,
+   "sha256": "b8dc56e5d29f6fc1f4727fccb1b9642627fee9942c48060a00034e98df02701c",
+   "gitBlob": "615aaa9632cf1b262c257f2cb7c208a6f199ab84",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/cabinetBed.glb",
+   "bytes": 7496,
+   "sha256": "b651fafb9e2c8e4adcb8cad3d10dc94404b46fe039b26e66b2c9020df4e5301d",
+   "gitBlob": "df64c6689d28cac0b08f7be9a58c7cec68219a6c",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/cabinetBedDrawer.glb",
+   "bytes": 16088,
+   "sha256": "e3dfd2e120af3d4d29b66509e317452cd15bd3f57ac8945575462c582adc6de8",
+   "gitBlob": "3159b358756a150d874f82b0d06af0395554687e",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/cabinetBedDrawerTable.glb",
+   "bytes": 12200,
+   "sha256": "fec6271639df5aff9f8ac75d6679385eab2abb7c8d2f51abeba3ed689ddb6f0d",
+   "gitBlob": "96221245be060add35f10930aa38169d36912e8b",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/cabinetTelevision.glb",
+   "bytes": 10524,
+   "sha256": "811719593d676ff76f7b5904d52c845ce0396af2bc9a6a2636c4818ead320b99",
+   "gitBlob": "eb73b4c130f066eefdf8e586b543449bf4e7cf10",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/chairCushion.glb",
+   "bytes": 12588,
+   "sha256": "33544228984857f2cb502b58452fed72157335f9b1caf29e96da5c9094c53fdc",
+   "gitBlob": "bffa780b8f8a3efef7756025b2d00a3e01377a41",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/chairDesk.glb",
+   "bytes": 39016,
+   "sha256": "46406619186034cbe92b19b79a5f1a8e3f442a17a70a7524ef2c0ad0f35095c6",
+   "gitBlob": "131101f3dbc72f41ca624ddd77ce53d8bafea9ed",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/chairModernFrameCushion.glb",
+   "bytes": 18592,
+   "sha256": "fd3351b077cafbd54224e20fa7a3a1b4a4304019cf44c25a6e7709ad71b852b8",
+   "gitBlob": "b46a0fd4ef015dcc93eff76375b257e5d4315e61",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/coatRackStanding.glb",
+   "bytes": 13288,
+   "sha256": "d8231c22dab63ceb9fc8678f6c8ceafc62afa8726b51a73b4ce349043d3cdc91",
+   "gitBlob": "1ea916e1dbe4964c77ecaad7d7893e5231546bc3",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/desk.glb",
+   "bytes": 15048,
+   "sha256": "0164fe828f028b321730fb8c74502e353583f751be74da1682d42fff7d3c5a42",
+   "gitBlob": "8ca187070cd666239ab1d93dda2e98105f7de776",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/dryer.glb",
+   "bytes": 17760,
+   "sha256": "d8b727612fdfc141c0b56360f75b897f1b71d3420c8c0942b5ec626bd3c8303c",
+   "gitBlob": "ad3e0ab80d348f8c152e9e267d980dfbe24bb1aa",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/hoodModern.glb",
+   "bytes": 3968,
+   "sha256": "f5ac7dbadd1d98813c48315e56fa6ab2e8783870b1fb7be30825177bbf2b2afe",
+   "gitBlob": "457d7013d282f6886adca0bbb36baab5e232c522",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/kitchenCabinetDrawer.glb",
+   "bytes": 15384,
+   "sha256": "6f784807e3cadb15b4d2d3db726d93357ea5e6c4f2b6e4c9c064048a2d1d9cfc",
+   "gitBlob": "f614bbf253f79a4a29283a90a5da3b060a0d92a0",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/kitchenCabinetUpperDouble.glb",
+   "bytes": 18184,
+   "sha256": "7b2abd976f2e8f1727d6ba23490aaf5fe18db9c5ac66e729ef6fe8de835c039e",
+   "gitBlob": "925b83263e05352b944d06cfc62e14968edf58eb",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/kitchenCoffeeMachine.glb",
+   "bytes": 13332,
+   "sha256": "063f582c6fa0f00a9f24e3393dac2295491c4becdaf5513c893ab1a2826b6ec3",
+   "gitBlob": "f10641b44f34270570796a6115e524b53a4ecb71",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/kitchenFridge.glb",
+   "bytes": 20116,
+   "sha256": "8af4f4bbb1b5525ad8226e97926a5af60fa8fb20a3cb74dbda5328a9d320dbab",
+   "gitBlob": "936da186152577e3336f81e150fcc5eb2c2a7117",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/kitchenMicrowave.glb",
+   "bytes": 11248,
+   "sha256": "dd6a6c919f4bebc6e2080fe419262cf97a0d6461ead3f3998aa3c9edf4d2bd27",
+   "gitBlob": "1ef2100740f1935324f9ea7d3875d00b9f0659c0",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/kitchenSink.glb",
+   "bytes": 23480,
+   "sha256": "7b9610277d71f00dcf1bba49cf4d98d77ce5177e84bf76c7da2f8893e542f743",
+   "gitBlob": "58daf66a6e2ffdc16e24b886cbcd53f3a0973e5d",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/kitchenStove.glb",
+   "bytes": 54324,
+   "sha256": "3239edb36295dfca9530a9b9a6ad0aff98ce62e7cf8d13ca2a5a1a6b2a904656",
+   "gitBlob": "264166d92140a5b967f97ec3f5c23a7afcf742e1",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/lampRoundFloor.glb",
+   "bytes": 6600,
+   "sha256": "50fe1b5b588edf15bfa9cc880f71a02a4fda6036350b24733d0ef4de5cc5e908",
+   "gitBlob": "69f7c9df4fb9e2fb327c59f3b20e8669faf7df0d",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/lampRoundTable.glb",
+   "bytes": 6604,
+   "sha256": "75bb644caaa3da003b4fcad7a931722dd61cd2858aab70cf660021d5061fa1b2",
+   "gitBlob": "53776bc3e72a8bd09d96a227adb959153e00debe",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/lampSquareTable.glb",
+   "bytes": 5624,
+   "sha256": "70ec9211af336b1ef3b4da32590b8737b4facf219348c22e6533a1e898cdb13d",
+   "gitBlob": "983d42a136d357969e75bbce1e0bd37fc4a4fa36",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/laptop.glb",
+   "bytes": 5540,
+   "sha256": "5fa8a1f4a71ab8d82ef64da77a6973ffd350c6d4557516069a4ffd4bb8d808af",
+   "gitBlob": "5a30fe5caac134e2c14aa9ee50a258bc11e456ba",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/loungeChairRelax.glb",
+   "bytes": 13904,
+   "sha256": "def698179e44de6cd17f4cfc2730273da54dd25458a29b079fbf4468abe5d98e",
+   "gitBlob": "42e0a707ca2fcc1d7433983b8e46a9b13cd0d5db",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/loungeChairUpright.glb",
+   "bytes": 9484,
+   "sha256": "74e060d958167bdce93ca9fe588251fa83542a9ca655254530350020e77ad599",
+   "gitBlob": "8ccf1657df2d082fce47d907e2bc044c39c382ef",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/loungeDesignChair.glb",
+   "bytes": 9136,
+   "sha256": "f0766a7d5698974b711adac18a2108f0e74e3a036fa4e4e0ccf91195b0ee5abf",
+   "gitBlob": "50526dab735dd80c2dde5a08582bf621939cfbcb",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/loungeSofa.glb",
+   "bytes": 9644,
+   "sha256": "1886b811c0d3ad0d8525a4fd43adf4112c497c8e0ed906f06877ca3517f4c7dd",
+   "gitBlob": "7761b15cc9d53b9cd5e28d5a5dc5eaea72a648a7",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/pillow.glb",
+   "bytes": 5044,
+   "sha256": "6fae7c190d0b676ef3efd35e5178cef21dffb5c80e1257d8b537ad424da0e5f6",
+   "gitBlob": "fdd1e10ba99257f89202549431a7617c848589fe",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/pillowLong.glb",
+   "bytes": 5072,
+   "sha256": "d8490ae920413fd04c85a2164ef384d67a1ca257f761dec1cc7f06fa2c027283",
+   "gitBlob": "012dfe6f0503ca346cfb8efc9e378b971ba57c83",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/plantSmall1.glb",
+   "bytes": 8224,
+   "sha256": "2b9c022feb47be857b2c4fdc29f36522766ba9b70c578c31d7c05d71b4377d15",
+   "gitBlob": "6c64ddaef49e831446cf673d9d8c6c37e446928b",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/plantSmall2.glb",
+   "bytes": 12996,
+   "sha256": "d7c8ff42c66dd4f9238a73570549813d1ca6c5f6f661d7af9cb764c4fce314b9",
+   "gitBlob": "2e6b8c7d1e1a6ce83d732344e1cc1a219a87adb4",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/pottedPlant.glb",
+   "bytes": 7576,
+   "sha256": "5b760eda2766f75fda36b2c5df652a1662f82981ef64cd8fa7fe7bcd386b3a15",
+   "gitBlob": "774d659a2d2be3f9af3fea78e13b2f250fdbb262",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/radio.glb",
+   "bytes": 25020,
+   "sha256": "1ba93d6ba6f049750853b4652b92f286f2898e527695a0705b75cc7615897fed",
+   "gitBlob": "6a810e8a7fcbd0386a46bbf82a05213ff223ff29",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/sideTable.glb",
+   "bytes": 8800,
+   "sha256": "8227810584f7d37582e4e9ec821c56f1dc54b99c88a8dc74242ea3b7402bc472",
+   "gitBlob": "061724e768063fae18b226fdee0e31ca0a133969",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/sideTableDrawers.glb",
+   "bytes": 19072,
+   "sha256": "911145653c11b103b2c2e84f3d019205d1886186015c3b52aceddc3801ae8fdf",
+   "gitBlob": "a801b290f9cd51a0dec7d5e0777ad839a727969d",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/tableCoffee.glb",
+   "bytes": 8256,
+   "sha256": "e38bea760fbd514efbb75528d09b4752c91af44677bbb97e6d4386c263525179",
+   "gitBlob": "945caf455a089fcdd2dbe909db6f78326b9b4cc3",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/tableCoffeeGlassSquare.glb",
+   "bytes": 9448,
+   "sha256": "e4a7ebef6ad0dbafee629df78b0edd88433a1059c4dd5fb3d70304ba2f71b945",
+   "gitBlob": "f592c008cfc567e940b086b4057fbfdd751aea7b",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/tableRound.glb",
+   "bytes": 6444,
+   "sha256": "f8daea9124a542a00b7bdacfddac82dc468573d43e44d7b54dd6316e9695754b",
+   "gitBlob": "885fdcd356eff8cc379e306d7b3b1ef3c5ca7475",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/televisionModern.glb",
+   "bytes": 6368,
+   "sha256": "d89519ad0a5f28b5b0dccb0d83209dccf610cda959578238dd21bbf9e219cfc6",
+   "gitBlob": "f047576f3d77a469e59059b1ae0aa1cdbbae7d0f",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/toaster.glb",
+   "bytes": 14924,
+   "sha256": "38c1fb7b122be9997758c8ee855d87f28014cf282f24d66d39f4e8d8b236d2af",
+   "gitBlob": "0ee1a061f1921f5e6327d2629fce0a902411a72b",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/toilet.glb",
+   "bytes": 18112,
+   "sha256": "16165cfd03c56c2cb443b800570810a22ef770f65e7a468f6761d9dc14eaaeae",
+   "gitBlob": "81589c8b63063ff52533a95d92b09e14cd77ecea",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/trashcan.glb",
+   "bytes": 6452,
+   "sha256": "e0ccc1fe50cbd05386477fdff527171d1cf7c0de2ba7ff3233f8d9561feb2561",
+   "gitBlob": "7c7d381cd693c9ffcc37a520750f5eb6de56f462",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/furniture/washer.glb",
+   "bytes": 48104,
+   "sha256": "0c9704df1817d2699b72305b96cde097c9558bacabaef2fd5ab1ff4c03b81abf",
+   "gitBlob": "1a5922b09c142c82a0219e7267f447b9a72df094",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/market/License.txt",
+   "bytes": 740,
+   "sha256": "1850413d3c79fdb9296e643212bc5b594591f4fa549443ba4e35f4e6ac767ddd",
+   "gitBlob": "54606852ef8b5a6b50a185eaedbe7c4960ca6118",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/market/Textures/colormap.png",
+   "bytes": 8706,
+   "sha256": "0d4947d34ff32acf4a359c7f22ca784e057e7e72f622170a9a77b6fc88fdb70e",
+   "gitBlob": "166a545e0e6fda582acc5b6475643acba1288bd7",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/market/cash-register.glb",
+   "bytes": 20332,
+   "sha256": "155f2eb666dea3a931d133a4953379898c8adb4b827ab60b86cae07235b9b598",
+   "gitBlob": "364c8d7cfa85cff42d90a1e8359ca2deb072b942",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/market/shelf-bags.glb",
+   "bytes": 78444,
+   "sha256": "17725a5f680aff17dbc6ac3398ef0339d78b5b76bbfaa29292a5084479c4bd69",
+   "gitBlob": "394fba6757a2da251942a1ade72c697e26899d49",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/market/shelf-boxes.glb",
+   "bytes": 56780,
+   "sha256": "3f340fe9207a4b85739d8d11104cf5b4cad3a130afcbfc1fadb47c17d6a9e210",
+   "gitBlob": "e558685a7e4f309a1069d1a7ebdd4512e7b0afc0",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/market/shelf-end.glb",
+   "bytes": 44560,
+   "sha256": "9a6f4528ae127689d538de0fa45c07f58538c8572a1b858cc5e40caceb7d2c69",
+   "gitBlob": "304ba31a9ea7d1d5372d30b0b398bbf32d3169b0",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/market/shopping-basket.glb",
+   "bytes": 25864,
+   "sha256": "a7704926cb56c5a9ab74488230fc7c4d7b914387c59e9c1b6f62376965c0ea7d",
+   "gitBlob": "6e05cde6cfae11387ef02df9ad56e1b32771e333",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/market/shopping-cart.glb",
+   "bytes": 34832,
+   "sha256": "8933fdece5c43b619ea6902fa03a5fea9f490486048ae7543cc8b03ee98c98dd",
+   "gitBlob": "2755b26f65c6dc169482716b3bcd917f8a7525c9",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/nature/License.txt",
+   "bytes": 611,
+   "sha256": "cb96b75e3560ac78d7a53ce6f083f4cdb5c53faea6141b62d63458dcfe1e4b9d",
+   "gitBlob": "f4c0bb6a1f398882e6a0b4417f69e5fc84ba53bc",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/nature/fence_planksDouble.glb",
+   "bytes": 11160,
+   "sha256": "0bbc8fe43f7a1d20de8ff2d687b5b08675beacb431e43ebbb0b1705b9c684f55",
+   "gitBlob": "4630efdac296258ba2444441ad55be01062510d2",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/nature/flower_purpleA.glb",
+   "bytes": 7112,
+   "sha256": "f6fc34c96a03420a74fe36d4c2d0ec88f15204fcad99cd1416c3c4ecb22e48c4",
+   "gitBlob": "9a102fdd587ba2c4c345e20ae1721e4753b556eb",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/nature/flower_yellowC.glb",
+   "bytes": 7616,
+   "sha256": "4115c017390b3e157466a8719e9e2af6c5385505135e7012982b9410760ba9f3",
+   "gitBlob": "669f0ef3ace0f99c1fc86af38ac59b55588d82e2",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/nature/grass_large.glb",
+   "bytes": 18504,
+   "sha256": "af49a595624abca7249824eeefb944d4baf974abeeb5b16110d175da3563d6cd",
+   "gitBlob": "c7c7557cea4e5877f03ccba676c5340d9bde6ced",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/nature/plant_bushDetailed.glb",
+   "bytes": 10172,
+   "sha256": "2e0487020d68ccf664435db9d829c78ae00e6d2785ee3ec10b9f89cc70a10406",
+   "gitBlob": "e5279fa53adb3037ae93bbed23a0716322cae79a",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/nature/tree_detailed.glb",
+   "bytes": 31412,
+   "sha256": "c041daf2f0fb1d49e4325227cbcd58667adbe51e9b55e8c1f0a94b74cc521b3b",
+   "gitBlob": "8d59ea41e280a5ea9234ec1e503fb871c55021de",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/nature/tree_oak.glb",
+   "bytes": 14644,
+   "sha256": "d7fd8773674928c50c11b66d12c636d49bdcc15a8b1c7fbb98e6f63a3439a3f3",
+   "gitBlob": "b136723ada4b5574b71f727120ab21fa579bf2fb",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/kenney/sources.json",
+   "bytes": 2093,
+   "sha256": "bd19356bf8706ab9cf42dbc5b117c93664299c55180016f6e926d0f4dddd0a44",
+   "gitBlob": "7a6454b1b1c8ed2b37972e5f1dd8375a832a1167",
+   "protected": false,
+   "licence": "CC0-1.0 Kenney kits — ASSET_SOURCES.md"
+  },
+  {
+   "path": "assets/environment/nursery/README.md",
+   "bytes": 492,
+   "sha256": "7b75e023644cb13450472cc28cd613cdfbd38e2f80d59309590e2b7fb4c71bc1",
+   "gitBlob": "c15ef56477aea5ccd02e97b216cb643abc9590ed",
+   "protected": false,
+   "licence": "CC-BY-3.0 Crib (Poly by Google) — environment/nursery/README.md; attribution required"
+  },
+  {
+   "path": "assets/environment/nursery/crib.glb",
+   "bytes": 180356,
+   "sha256": "18678ce4d9f7b9657f5807f78850b9ed9804b1d0d8f7b8f500292cc2773f3927",
+   "gitBlob": "f747c12edbc226bed90e6dccd926ae655a7f6551",
+   "protected": false,
+   "licence": "CC-BY-3.0 Crib (Poly by Google) — environment/nursery/README.md; attribution required"
+  },
+  {
+   "path": "assets/environment/school/blackboard.glb",
+   "bytes": 28336,
+   "sha256": "2b85acfd343049aaa4727b0e99a1336c29d86b272d9b37325d23e7897f330676",
+   "gitBlob": "ef0bc26c4b04d388f78d486fb2ac0108e5691efd",
+   "protected": false,
+   "licence": "CC-BY-3.0 Blackboard and Bulletin board (Poly by Google) — environment/school/sources.json; attribution required"
+  },
+  {
+   "path": "assets/environment/school/bulletin-board.glb",
+   "bytes": 29208,
+   "sha256": "5e1c3b92a933a3354f95ea2985590de6476e66d9d2179edb75b984c2511c39c7",
+   "gitBlob": "c94cc4ec071bd0ea0eaa5bc583d368392a9821c3",
+   "protected": false,
+   "licence": "CC-BY-3.0 Blackboard and Bulletin board (Poly by Google) — environment/school/sources.json; attribution required"
+  },
+  {
+   "path": "assets/environment/school/sources.json",
+   "bytes": 765,
+   "sha256": "9c9f32d653eac51accb3dade498118fba61d04f87462efdbe3fa0d88b4360e21",
+   "gitBlob": "ec5ede23d1c8b2ed4120b8089088fc0fb9c59476",
+   "protected": false,
+   "licence": "CC-BY-3.0 Blackboard and Bulletin board (Poly by Google) — environment/school/sources.json; attribution required"
+  },
+  {
+   "path": "assets/food/SOURCES.md",
+   "bytes": 288,
+   "sha256": "062ca68170c0388dadbb197b1da5b1436d3fa4ee35786bd1c1172a1c22d1e0a7",
+   "gitBlob": "3a1a7624b87c08f7af144995f57514735f803086",
+   "protected": false,
+   "licence": "see food/SOURCES.md"
+  },
+  {
+   "path": "assets/food/pizza.glb",
+   "bytes": 117324,
+   "sha256": "bde451f93a14a7198515a27deb7794362fa828f3db8356271d766146870ac9d6",
+   "gitBlob": "cf87bac5e90acfea4470be1b5afbbaf6de8322fc",
+   "protected": false,
+   "licence": "see food/SOURCES.md"
+  },
+  {
+   "path": "assets/food/taco.glb",
+   "bytes": 28212,
+   "sha256": "2aca873cda80115b36f7135f0620c3978f6f8140ec06b31a1014c37ed3ae3f9a",
+   "gitBlob": "5b336a5073bfad07bfa519bdb4429c2ee62a47e1",
+   "protected": false,
+   "licence": "see food/SOURCES.md"
+  },
+  {
+   "path": "assets/food/turkey.glb",
+   "bytes": 47864,
+   "sha256": "5e8ad4cdde7d664775fe68ef973ab8108832885a65d815c44f8eb6df39436bf7",
+   "gitBlob": "6341e793faf4bd371189028e94b9e5b9367e9fda",
+   "protected": false,
+   "licence": "see food/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/Bush_Common.glb",
+   "bytes": 115580,
+   "sha256": "7039240cddb1f5eefe83f30ae92636a5dc13e9e5e28ae0851372cc449af4520a",
+   "gitBlob": "323b1e4a8abad84e624d84bd41050a062714a60d",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/Bush_Common_Flowers.glb",
+   "bytes": 380800,
+   "sha256": "a57ac2abcf1c20a42bb9b88341f03d4df7d988340bb9936d653a59680e4068a7",
+   "gitBlob": "f7befaf9664ff771281baf31b79d4131b424b09d",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/CommonTree_1.glb",
+   "bytes": 1179500,
+   "sha256": "718127fc466c05dd3ed047c6b063a3b58bad323e4d34c75fbe814bcf51d7a7d6",
+   "gitBlob": "37b63cb04f82d9bd71f78b8b7d56f43cb1fe695e",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/CommonTree_3.glb",
+   "bytes": 995692,
+   "sha256": "fd345c5eb2e73a4766772f54b25839b2c6203d4472a3635b8bf27cd50d835da9",
+   "gitBlob": "435594acb47505ba2495a9382587358d0b137ac1",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/KayKit-CC0.txt",
+   "bytes": 1485,
+   "sha256": "f66e44d7483e82379750f90a453cffbb6efed3f72743cf339784f0c9b4ec38dc",
+   "gitBlob": "1860d891e0a833bfbfaeecaaeacbfeae08117d96",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/Plant_1.glb",
+   "bytes": 255164,
+   "sha256": "0ab744cc7a244e01516bdba45a46214bd8632f7367a58202f1bd71c40cdc641f",
+   "gitBlob": "0e49d06d06221250a125a0e15627e2ecf39ab7e6",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/Quaternius-CC0.txt",
+   "bytes": 828,
+   "sha256": "5de0412f4f694f3d8cfa2b334a3ddb7ebbdc3ac5b1e9c262ff4870d0564341db",
+   "gitBlob": "18e116b12c8839ef107813eaa34e85de80adb6ba",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/Rock_Medium_1.glb",
+   "bytes": 374216,
+   "sha256": "d675c03a06719816044364dbad3760a0f5dcea6defc995c955931e07de41cfea",
+   "gitBlob": "7119f4fcd915a184ae26ee3e813c95759591821b",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/Rock_Medium_3.glb",
+   "bytes": 381056,
+   "sha256": "5e37f44ed180c19ecb88e4df1bb268c7df4927ec874b98790ad8f44ceaee7fa7",
+   "gitBlob": "575570670295b547505e967739b235751d7bc609",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/SOURCES.md",
+   "bytes": 3320,
+   "sha256": "8e9f2092d911dc4f9da4932788c4ecd252da4244dcd07aab86f2b4a3d5ab00f0",
+   "gitBlob": "0744a8046c4177afb8ab66749f2830d7f4b29394",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/armoredcatfish.glb",
+   "bytes": 151200,
+   "sha256": "c001219fa477083bf2d7a8837b1157018bb2d7c725f8c3044d280aab6e6774ca",
+   "gitBlob": "f23f6a1a3932e090c799da6a6432c1f2d723d54e",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/betta.glb",
+   "bytes": 149704,
+   "sha256": "b2905da0becaec29e40278dfd1373b4e57015102c954468f6bafd7f1e1131679",
+   "gitBlob": "393560de932212030e805051732ff567e8f8a155",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/family-car.glb",
+   "bytes": 121348,
+   "sha256": "21bda07dc3e42bd03896c89193456eeacbb8e10c153675345d5a51e2b567c0b1",
+   "gitBlob": "61e59ed77625f12c433018b0ba4571a1496829e9",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/fishing-motion.json",
+   "bytes": 222392,
+   "sha256": "6d07f1fa82897d41850dbb57a32bf733f56fd289119aa936dcfce4032e192a26",
+   "gitBlob": "6d406d0be29db8e48cdfc55ae571bc351b7e73b3",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/fishingrod_lvl1.glb",
+   "bytes": 17092,
+   "sha256": "1d841be8995ea7a46a3b68d083988ec40bf162aa6fa7cd05ad1680bef10d949a",
+   "gitBlob": "b58ea948d47ed7d16f38ac39c6b41a3eb1dc39a9",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/goldfish.glb",
+   "bytes": 173364,
+   "sha256": "ec5615090e3cdb8c219b7acd1ccae4c6915064c73f69c38e3a4139b54277a2aa",
+   "gitBlob": "48e2ee60a909390f4792d1274b977126836d7714",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/journey-motion.json",
+   "bytes": 39224,
+   "sha256": "df983bbb3cb92dcdeec97c9c1433e884af6980f48a56de373588a8c915e75023",
+   "gitBlob": "f77cfd937a1d788da39c6ac7a11ac219b43aaaa7",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/maple-scooter.glb",
+   "bytes": 292464,
+   "sha256": "4c99034fff63d9436f6c19686b287d8cb0db3beb0637997378316d904b31f1c8",
+   "gitBlob": "34a08e093d32d87b57cb5463847af37f5f70aca1",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/play-boat.glb",
+   "bytes": 77280,
+   "sha256": "321306d86e25c1eb172d62208160df63824d3dd4e88f74233472285107725688",
+   "gitBlob": "a1a89a664c91e2c0d77fbfde8ac19aa2fb14b7ae",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/play-bowling.glb",
+   "bytes": 178096,
+   "sha256": "66662d62bd2e17a1ab6ecdd2926857bb9d1e85afbc10276203be75f3b61aa405",
+   "gitBlob": "8cb91d101af1ec50ce24c1e9fb31ac24fd14122e",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/play-bubbles.glb",
+   "bytes": 185828,
+   "sha256": "70ac3589925e137e2b764c1c915cb176b95a09a272b8e63c357dad79431df470",
+   "gitBlob": "ec98ee44bad069846db034646dd4b5bfdf967405",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/play-cans.glb",
+   "bytes": 93980,
+   "sha256": "e83820947179d01c2d8baf43f54d92b1301a03e3255a0843f1ad6c34af06b904",
+   "gitBlob": "9acc08fcaf5730fcf1c73c0971a6a10b2c22b4d7",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/play-cart.glb",
+   "bytes": 95024,
+   "sha256": "1081aa2797eb1f16a397fe0f65d05a1a6feb6918c849a525483c604272201918",
+   "gitBlob": "c53bf71d1e0e9e7e8a9753249ad27be7eb514484",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/play-duck.glb",
+   "bytes": 258104,
+   "sha256": "af5efa9437710c7b8575e863839b5ea0034b2ecdbcd9f95c61d44795d6a54081",
+   "gitBlob": "ee896478c6ec8dd040703bee197751b2edd37946",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/play-flamingo.glb",
+   "bytes": 130564,
+   "sha256": "85fee4587db81710304ec67a39f820a821ad7bc2b5c2e8523fc5b333b465e456",
+   "gitBlob": "e30b144c057264918d63ebff3ab60cf0cc4529ab",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/play-flower.glb",
+   "bytes": 235492,
+   "sha256": "5edfb98174c438d3a6580dfd4e5d42090f5b6b0cfbc110d102d54d2f2282631e",
+   "gitBlob": "3aa717b7e5437e07f324d7badea4035baa7d4d07",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/play-goal.glb",
+   "bytes": 66964,
+   "sha256": "a7aee2e4771f344bc2f72bb62517c252bb2d8d9fe4ebadcc5afbdc402fc25b47",
+   "gitBlob": "0d3ee5c5e5aec0758ce4e3643ccecc964c5ad7cd",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/play-jack.glb",
+   "bytes": 154196,
+   "sha256": "3f45f2f76be080b37cec1f4d1697b81571f35576e9d47aedb12d5dc3f4e4b795",
+   "gitBlob": "e437cfc3a1b25a9f6547c8ae3db023de6295a533",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/play-leaves.glb",
+   "bytes": 88816,
+   "sha256": "6190605783a3b07ad550d0e4bac4fa510fac688ffd13057fef1fa93a4bc85787",
+   "gitBlob": "c698497e48b8f82f4a5dca58ee787c80de57a064",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/play-motion.json",
+   "bytes": 403286,
+   "sha256": "ce6ff0752bf6f1c62d162a54910557519a14296447a3cc88840c92b29806a6d0",
+   "gitBlob": "61b1e007bf53e7de922ee1de35c3c885c476780d",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/play-picnic.glb",
+   "bytes": 214780,
+   "sha256": "67251322058c7f9cab6fbe47a15204337bb493e1e60f312e25b1da43adcb9e7d",
+   "gitBlob": "0eae36f36b2b05d874f9bd6b450fc51cedcc5652",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/play-pinwheel.glb",
+   "bytes": 23548,
+   "sha256": "0ab431a35278d38be1677dd05c2011162f2e1f59e2267a44e6b05a7e05c3448c",
+   "gitBlob": "5e233447082163020096bdbe19c47deef3fee781",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/play-plane.glb",
+   "bytes": 47812,
+   "sha256": "f46a5308761bc2b1c645219395310ca8093be4847cdc187ca6804e479c0e8ed4",
+   "gitBlob": "aca89c549e5746dc71a5ed6bd6b92378a1519961",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/play-props.json",
+   "bytes": 1275,
+   "sha256": "3af2fd3685985b2f89766c3842c2b5fd16f18e91d3b7071dd3f514d4a6e3ad0a",
+   "gitBlob": "2c6b26ddee007df20032477ca2ca6770fcac071e",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/play-puddles.glb",
+   "bytes": 106204,
+   "sha256": "dc4db9819d990b25f22e81931a38b182a8d8be80849e862cca40d6ce28f1974d",
+   "gitBlob": "981e32ec3d97b83ac7327a6fcab133701c4e4edf",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/pond-splash.mp3",
+   "bytes": 5421,
+   "sha256": "112144f5a9e6d5f54b6c4acf7be929b425240c24f1c196fb0205e54cf0d2b326",
+   "gitBlob": "4f3f7189e01cd25deef734c2f63ad4baa4337e91",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/puffer.glb",
+   "bytes": 235684,
+   "sha256": "d110cab5e9b735884a88283ddb697aab2a4c08306b1fb603827d1df8c4c226f0",
+   "gitBlob": "8766d016d438b6047a653db9342b4bf548a61fc2",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/shop-clover.glb",
+   "bytes": 545868,
+   "sha256": "7e39ba2db7eb656bf3623f193d93fafc2560755f4d24eca2e0545e19d1a3d81b",
+   "gitBlob": "4c5c2fc5e63847be2e846f0157f19cc0f93d690d",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/shop-moonbeam.glb",
+   "bytes": 549984,
+   "sha256": "414c566d97c16fc9d632afb12fd0aedd5915a4566d4cd25f75271437109baf39",
+   "gitBlob": "1cb8c9bdc792fcb1193bc745c6b8859bd938b1d0",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/outdoors/shop-peachy.glb",
+   "bytes": 609984,
+   "sha256": "b8e4a87b7eb302d17362ca91a3629b7512a68ade9594493c337f19aa49a80836",
+   "gitBlob": "192980af999aa44b5ec72c81fda99ef5bc187e97",
+   "protected": false,
+   "licence": "CC0 KayKit / Quaternius and project-authored — outdoors/SOURCES.md"
+  },
+  {
+   "path": "assets/people/Quaternius-CC0.txt",
+   "bytes": 358,
+   "sha256": "93a19344d02398d937e22a922c97967c42ea61cfd7e8a0454d0589735720f828",
+   "gitBlob": "b9ff93f8398c4739b486a1b34e15783040ae2b02",
+   "protected": false,
+   "licence": "CC0 Quaternius base characters with project edits — people/SOURCES.md"
+  },
+  {
+   "path": "assets/people/SOURCES.md",
+   "bytes": 3206,
+   "sha256": "2818a4ed081c204b0f5dbd418b92712849bf07599ab2a8712acc40457007de26",
+   "gitBlob": "d0a0ab44c0138aa2d67d75eb8ed8261dfbc4167a",
+   "protected": false,
+   "licence": "CC0 Quaternius base characters with project edits — people/SOURCES.md"
+  },
+  {
+   "path": "assets/people/crossing-guard.glb",
+   "bytes": 394880,
+   "sha256": "b704d979ec90f20ad83ed681c146d3cb6d4aa26f866079a52315440a6695083f",
+   "gitBlob": "9ecd8024f04a75cf2b8ee0e60e7b07cfab9bfd8c",
+   "protected": false,
+   "licence": "CC0 Quaternius base characters with project edits — people/SOURCES.md"
+  },
+  {
+   "path": "assets/people/jules.glb",
+   "bytes": 385264,
+   "sha256": "1e5d2a99a7465fd223bd845ac9cc47d3c39bf54e9b4614fe4fab491bde82f3ae",
+   "gitBlob": "8c300753613affa3771efc3f661c5e7a7eea7c3e",
+   "protected": false,
+   "licence": "CC0 Quaternius base characters with project edits — people/SOURCES.md"
+  },
+  {
+   "path": "assets/people/poppy.glb",
+   "bytes": 390080,
+   "sha256": "c7f593f4f630960a8525bea9c348f36c3c86ed1075fb71a1797fcf0c84f37f0e",
+   "gitBlob": "a7c4e91d851898493fae328617116c80bb6c706a",
+   "protected": false,
+   "licence": "CC0 Quaternius base characters with project edits — people/SOURCES.md"
+  },
+  {
+   "path": "assets/people/remy.glb",
+   "bytes": 377732,
+   "sha256": "c5057424cc08db7d20524ac10ad679a69e1a45d04a67bd07333f66644b502119",
+   "gitBlob": "73828508fa62eda644bf88c3896562e603c19b7d",
+   "protected": false,
+   "licence": "CC0 Quaternius base characters with project edits — people/SOURCES.md"
+  },
+  {
+   "path": "assets/people/student-jules.glb",
+   "bytes": 1063688,
+   "sha256": "ed7140b1b458d5aad93afb45987b1b1de03434dd8b9b8ef873b405855d1ed804",
+   "gitBlob": "8b61003b7eadfc4d823cda76f3c7b10475b7237e",
+   "protected": false,
+   "licence": "CC0 Quaternius base characters with project edits — people/SOURCES.md"
+  },
+  {
+   "path": "assets/people/student-poppy-play.glb",
+   "bytes": 1226628,
+   "sha256": "3aae2c7914bbb9b5413f12852645f6b9549250a988511eeaf782c0e5ef0f0dd3",
+   "gitBlob": "9a73fa922ebd9c3e9f2ee14442c72cb7aa39769e",
+   "protected": false,
+   "licence": "CC0 Quaternius base characters with project edits — people/SOURCES.md"
+  },
+  {
+   "path": "assets/people/student-poppy.glb",
+   "bytes": 1144304,
+   "sha256": "0df695917578bdef6c8d73292760344b2a6bf7bf559ac01ef4f33032215c3371",
+   "gitBlob": "03733301f7eb4d784935af286774a86ee34cb05c",
+   "protected": false,
+   "licence": "CC0 Quaternius base characters with project edits — people/SOURCES.md"
+  },
+  {
+   "path": "assets/people/student-remy.glb",
+   "bytes": 1115944,
+   "sha256": "4605db2ac6c77a7a7f35b4bfef265326aef8215c32c229a95818da9f020347b1",
+   "gitBlob": "f6112566bddc132893e132504ae30e74f9bd188d",
+   "protected": false,
+   "licence": "CC0 Quaternius base characters with project edits — people/SOURCES.md"
+  },
+  {
+   "path": "assets/pets/LICENSES.md",
+   "bytes": 543,
+   "sha256": "4477cb8c30d9da0f5e3986703a113f39dca012662f228ca8f929a3aae93f160c",
+   "gitBlob": "00500fc4af75ebf78c3a7495b88c8ee0f891c7b7",
+   "protected": false,
+   "licence": "see pets/LICENSES.md and pets/sources.json"
+  },
+  {
+   "path": "assets/pets/SUNNY_PUP.md",
+   "bytes": 1900,
+   "sha256": "3d717550e2df68bc563fc1ef8345e48a5ff3aaf592dc77a26cff962173ad59ef",
+   "gitBlob": "07b50b6d7bec85b4a0b08430854f0524afcbdb78",
+   "protected": false,
+   "licence": "see pets/LICENSES.md and pets/sources.json"
+  },
+  {
+   "path": "assets/pets/paper.glb",
+   "bytes": 13428,
+   "sha256": "4e49e6b8e749142928123df1ac5b6069403fe3eed712137f76604f81c771a74f",
+   "gitBlob": "bfb024d2e0c514e07faf019adb4297721ffb0e89",
+   "protected": false,
+   "licence": "see pets/LICENSES.md and pets/sources.json"
+  },
+  {
+   "path": "assets/pets/poop.glb",
+   "bytes": 13080,
+   "sha256": "f1be80c35a8bbffbf0f228fd00c7db752c45ed51a3b685b8ce393d91d6ebaa64",
+   "gitBlob": "224cc7ee74cbc48a1400c2b6cdd7f312cae00995",
+   "protected": false,
+   "licence": "CC-BY-3.0 \"Dog Poop\" by J-Toastie (Poly by Google) — pets/LICENSES.md; attribution required"
+  },
+  {
+   "path": "assets/pets/shovel.glb",
+   "bytes": 11084,
+   "sha256": "6f9425d2074420c29b5f5fd7a0bf1679a49c6a7a9b511ddc343d8db39f765f50",
+   "gitBlob": "c0205bda76c2273274e385ce4732e3eb31471c70",
+   "protected": false,
+   "licence": "see pets/LICENSES.md and pets/sources.json"
+  },
+  {
+   "path": "assets/pets/soap.glb",
+   "bytes": 175632,
+   "sha256": "0aef3409fee6deece2b1dbbb3a3960903f44e8507906619153420a9f83afaa13",
+   "gitBlob": "dfbea4f4263ed8b0628493e54247f5c13dc651bb",
+   "protected": false,
+   "licence": "see pets/LICENSES.md and pets/sources.json"
+  },
+  {
+   "path": "assets/pets/sources.json",
+   "bytes": 2404,
+   "sha256": "d46c7058ce0f608ba3209f2267b9722d9d8c0212bdaf6a4789e261b7468bf6ea",
+   "gitBlob": "093294e18725e107429205f533f6bea65460c402",
+   "protected": false,
+   "licence": "see pets/LICENSES.md and pets/sources.json"
+  },
+  {
+   "path": "assets/pets/sunny-pup.glb",
+   "bytes": 3921448,
+   "sha256": "24498f09c2a4e75acf3dd38322e0157baf758472c91dda77cbcc8014bcf1f0bd",
+   "gitBlob": "fc6c9aa3a382a6c46d603421c3971650ef38fba6",
+   "protected": false,
+   "licence": "owner-supplied model (Meshy); CC0 rig and animations — pets/SUNNY_PUP.md"
+  },
+  {
+   "path": "assets/pop/ART_NOTES.md",
+   "bytes": 3327,
+   "sha256": "7169ef8cdeef9f24481088bec24bb33ebb3259140b58a6d003a92c56a87659ae",
+   "gitBlob": "9723f013aa4f14b1f0ab89d5cfedad81362cc4bd",
+   "protected": false,
+   "licence": "project-authored sprites and CC0 audio — pop/ART_NOTES.md, pop/audio/SOURCES.md"
+  },
+  {
+   "path": "assets/pop/CHARACTER_PROMPTS.json",
+   "bytes": 4778,
+   "sha256": "4f805c3aeaf16ba80057f8b2ce5ae11e4b8569215252656bb0da9c9fd28046c5",
+   "gitBlob": "4735915012d4e9a2748f19ab57a364e4c73d45c2",
+   "protected": false,
+   "licence": "project-authored sprites and CC0 audio — pop/ART_NOTES.md, pop/audio/SOURCES.md"
+  },
+  {
+   "path": "assets/pop/animals-cutout.png",
+   "bytes": 1742544,
+   "sha256": "30a86a2bd24b63f208ba5496c8dd3762f06063c86ff4b35a1f9b0df48ecf7300",
+   "gitBlob": "f2bc72cd8a1df99dd2e6f4e37fe363d5d4ce5a27",
+   "protected": false,
+   "licence": "project-authored sprites and CC0 audio — pop/ART_NOTES.md, pop/audio/SOURCES.md"
+  },
+  {
+   "path": "assets/pop/audio/Kenney-License.txt",
+   "bytes": 574,
+   "sha256": "f7966c773bbed0eca6a9c75081c44a178b38eae112724dbb5fdfbd4192d118a9",
+   "gitBlob": "1fc5acf8243a8ac899403e7297f8c5efdc4258f2",
+   "protected": false,
+   "licence": "project-authored sprites and CC0 audio — pop/ART_NOTES.md, pop/audio/SOURCES.md"
+  },
+  {
+   "path": "assets/pop/audio/SOURCES.md",
+   "bytes": 1037,
+   "sha256": "5d2cf49a894f859b6e3308420958ca86b440c800106d207463b71b17e9a8daef",
+   "gitBlob": "95f9def767c761ad0a5052f278423766c2c223c5",
+   "protected": false,
+   "licence": "project-authored sprites and CC0 audio — pop/ART_NOTES.md, pop/audio/SOURCES.md"
+  },
+  {
+   "path": "assets/pop/audio/click_001.wav",
+   "bytes": 9366,
+   "sha256": "664e320798f7c5cec1a25ce13e349e28fa1fa19dbbf2215d54e098bd4628c7ae",
+   "gitBlob": "682b4ffc6456abbbec62bfda9ff7cbc1b6310212",
+   "protected": false,
+   "licence": "project-authored sprites and CC0 audio — pop/ART_NOTES.md, pop/audio/SOURCES.md"
+  },
+  {
+   "path": "assets/pop/audio/confirmation_001.wav",
+   "bytes": 27868,
+   "sha256": "adc61a6b5540cc5b7bdb4ebb3690d971ce8ba2251e8db5440e59e966af6ef3a3",
+   "gitBlob": "f8f1eff0c5956327ef6cc2a89d0c4b59c3a40d01",
+   "protected": false,
+   "licence": "project-authored sprites and CC0 audio — pop/ART_NOTES.md, pop/audio/SOURCES.md"
+  },
+  {
+   "path": "assets/pop/audio/drop_001.wav",
+   "bytes": 10492,
+   "sha256": "e99667ce6707bf225a44eab3e6f9df42f1e9040a1263eef40b8d93c795b0edda",
+   "gitBlob": "a84869242de73c91b88f6f9bf4d26d8f3f4ab39d",
+   "protected": false,
+   "licence": "project-authored sprites and CC0 audio — pop/ART_NOTES.md, pop/audio/SOURCES.md"
+  },
+  {
+   "path": "assets/pop/audio/drop_002.wav",
+   "bytes": 18108,
+   "sha256": "066f321297b7ef4119bb6ef4928dfd6f17cceccf89ec06c693ca7f98abff9a42",
+   "gitBlob": "d9f6cccdcbad667bdfc8d9b37b83c6a524726bf1",
+   "protected": false,
+   "licence": "project-authored sprites and CC0 audio — pop/ART_NOTES.md, pop/audio/SOURCES.md"
+  },
+  {
+   "path": "assets/pop/audio/drop_003.wav",
+   "bytes": 18108,
+   "sha256": "bb02280fa538eacb61b8daf53c1ded49fa28c00ffc864dc9e5fce22a94813974",
+   "gitBlob": "01d1f6c1adf485dd3f2ab8c64857d63aa6db241a",
+   "protected": false,
+   "licence": "project-authored sprites and CC0 audio — pop/ART_NOTES.md, pop/audio/SOURCES.md"
+  },
+  {
+   "path": "assets/pop/audio/happy-adventure.mp3",
+   "bytes": 636925,
+   "sha256": "50aa6a32625fe8565403a0c8ceb772d7fb500b9267d0019eacfe0fc742b6c73d",
+   "gitBlob": "dd70458960889cc5c2c90a3c62216bdae051454f",
+   "protected": false,
+   "licence": "project-authored sprites and CC0 audio — pop/ART_NOTES.md, pop/audio/SOURCES.md"
+  },
+  {
+   "path": "assets/pop/audio/pluck_001.wav",
+   "bytes": 9598,
+   "sha256": "ad4eecb0a9ea870b87497097569cb4894a505b76394c203da17f091026caab65",
+   "gitBlob": "2e0246df6414846c1c6188791b4c3d8dd1eb8961",
+   "protected": false,
+   "licence": "project-authored sprites and CC0 audio — pop/ART_NOTES.md, pop/audio/SOURCES.md"
+  },
+  {
+   "path": "assets/pop/cosmic-cutout.png",
+   "bytes": 1760474,
+   "sha256": "ac1d69439034cada37dfac6060894fc46018df2c6ec00405f9f088c162635285",
+   "gitBlob": "0c8ecd3ca0aa93b61f9147226a4dd46fd88a598d",
+   "protected": false,
+   "licence": "project-authored sprites and CC0 audio — pop/ART_NOTES.md, pop/audio/SOURCES.md"
+  },
+  {
+   "path": "assets/pop/garden-atlas.png",
+   "bytes": 1173368,
+   "sha256": "b056100ef2481a8479e0d42a4fdc0938e6c92b680e2c510d8b9d568ba33a6657",
+   "gitBlob": "f1aed3dcd0fd4ab7aec1897ba5c28c706add36c4",
+   "protected": false,
+   "licence": "project-authored sprites and CC0 audio — pop/ART_NOTES.md, pop/audio/SOURCES.md"
+  },
+  {
+   "path": "assets/pop/power-atlas.png",
+   "bytes": 850338,
+   "sha256": "566523a12d1030c0d54bc7ed9476b3cc691e83f24b5a5f76ac0ef980d3315ad3",
+   "gitBlob": "6b79f9bf06856d7aa502d709d4f09b21d614524f",
+   "protected": false,
+   "licence": "project-authored sprites and CC0 audio — pop/ART_NOTES.md, pop/audio/SOURCES.md"
+  },
+  {
+   "path": "assets/pop/treats-cutout.png",
+   "bytes": 1882794,
+   "sha256": "b12829ca7532335aa5abd2765e4e051b57ff7ffa58f94aa809fa2c0740f3ed9b",
+   "gitBlob": "d47c4616864c93b082fee03521eb37357bda39f1",
+   "protected": false,
+   "licence": "project-authored sprites and CC0 audio — pop/ART_NOTES.md, pop/audio/SOURCES.md"
+  },
+  {
+   "path": "assets/school-kit/SOURCES.md",
+   "bytes": 1491,
+   "sha256": "08447887b22a8eb8fc0fbdcf0f02ede799dfc586b56f2bd83a9d6bff4668c151",
+   "gitBlob": "4fc0bfe638f75f20db82b55ae82414e7dcb5da0f",
+   "protected": false,
+   "licence": "project-authored — school-kit/SOURCES.md"
+  },
+  {
+   "path": "assets/school-kit/cafeteria-collision.json",
+   "bytes": 947,
+   "sha256": "ab256b46b58a43f5cd34aac0381a5f1025b849170b90b440752a58bcedb9ffd6",
+   "gitBlob": "4b90c35ba8bee38502e9c99131108d87cc1a347b",
+   "protected": false,
+   "licence": "project-authored — school-kit/SOURCES.md"
+  },
+  {
+   "path": "assets/school-kit/cafeteria.glb",
+   "bytes": 7733184,
+   "sha256": "326898382dbc296737adbba41fb482274413ab9fc1df77af15120fdee9aebc13",
+   "gitBlob": "037b84d573616070f98ab1cc9b6c225737da1182",
+   "protected": false,
+   "licence": "project-authored — school-kit/SOURCES.md"
+  },
+  {
+   "path": "assets/school-kit/classroom-collision.json",
+   "bytes": 1135,
+   "sha256": "cb59be6e2b7488c2e22346f818799064c8743dfcccb3b2eda3ba11201aab3efa",
+   "gitBlob": "dd78edc05682302654c698209e3908465de9a361",
+   "protected": false,
+   "licence": "project-authored — school-kit/SOURCES.md"
+  },
+  {
+   "path": "assets/school-kit/classroom.glb",
+   "bytes": 7319928,
+   "sha256": "077ceb20bd2eec561aa0b49699e8ad83041830add86db6fa32dcf5eb14190e59",
+   "gitBlob": "99e706518a214bb6ebc5bda0ffbb905541059ba5",
+   "protected": false,
+   "licence": "project-authored — school-kit/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/SOURCES.md",
+   "bytes": 4357,
+   "sha256": "d23d18b36dfaa2d4d5610e901cd4c72966822b24c9b97910af045ee687103ab0",
+   "gitBlob": "b62e83872572da4883f5d70c01c4eb2dfe7d884c",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/animal-bunny.glb",
+   "bytes": 1059460,
+   "sha256": "54ab1705b4e079a385570f62c5da2d34116a8bddfc7215257e24076e874a3d9f",
+   "gitBlob": "5026efc801c0960ce120b64d7dec5d58de25849c",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/animal-cat.glb",
+   "bytes": 1175828,
+   "sha256": "352f4975c7553fe2c8341793393d88cfd42fea25be9507d342cacf75350ffcb1",
+   "gitBlob": "29b4b937ef0627521111dc727c880ac99cb70d03",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/animal-frog.glb",
+   "bytes": 970100,
+   "sha256": "e5e84a9c063349ea75e615529db7f0d1d06ef6cf4fb7add449b88439d1809b9c",
+   "gitBlob": "6ad254372cac43dcd6edad0030b0ea562e25fe93",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/animal-panda.glb",
+   "bytes": 560732,
+   "sha256": "b183bf28108391d3c6ef0d48067b6bf90746037262d716722f9cb35cd8a604dc",
+   "gitBlob": "a7e4b08d6aecde92efd779e2326a78ae2a41c74b",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/bamboo-steamer-shelf.glb",
+   "bytes": 708820,
+   "sha256": "0ce6a9440e22883fc9181840e3865b1f1611b75321b11fad8732f80da29c8140",
+   "gitBlob": "848ee003fba33d9b22c2a4934053408ca13806f6",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/bamboo-steamer.glb",
+   "bytes": 2133112,
+   "sha256": "13ce0cb4d2c1742af17902f0c385011ffc504988d63d4d1aa8dd780d7bc79810",
+   "gitBlob": "eaa3855faa75a5406ad2872a6e02ca8e9b0933e9",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/bao-squishy.glb",
+   "bytes": 1905092,
+   "sha256": "183804a9fcf86919bb0cd7eb3c10650289f5842ceb868458153199176396ca5e",
+   "gitBlob": "709bdab6fe04a78de697e767c9e4bb1988d79254",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/materials/satin-color.png",
+   "bytes": 23462,
+   "sha256": "a1fd9e83f1fc3bb5b3ab6b5aa48bc72d5404cd48891d65b311a8078d90e7d487",
+   "gitBlob": "09c1822ab8ae0656c83018e054d8f574a9a319db",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/materials/satin-surface.png",
+   "bytes": 69581,
+   "sha256": "9d170b816c60cffa6c70fc40581cce8ef4f8c1a7e582fb643ae02fc82d244548",
+   "gitBlob": "6ccfee7ddde79b2c446a794c2e21bfb5d1242c54",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/aurora.webp",
+   "bytes": 4552,
+   "sha256": "0bc2b245624043b75ef840aa6297b3a3c777e270c8dc3047d9b6199239fd9776",
+   "gitBlob": "f68c35ff2fc32a9fbaca93eed8cf85b6d931349a",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/blueberry.webp",
+   "bytes": 5178,
+   "sha256": "d8cc00ea99c4afe7e8715103ddb32c45e952fb237c2e39687dfa5ab15ae83292",
+   "gitBlob": "7c8985faa2ac4d848e14aac4566d710ec67ae74e",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/bunny.webp",
+   "bytes": 4536,
+   "sha256": "5b2e3ed2038bc4ae47eb7963ff2702a2760c7b9e3a52835cb563bcd644b8767e",
+   "gitBlob": "55afa643ec74d9fc7b2bdb884e302b75ea3631d5",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/cocoa.webp",
+   "bytes": 5628,
+   "sha256": "37ed8edfcfacc615a3eca0c9b61fc9ce0842512a06ea0bba430e409259e293ad",
+   "gitBlob": "5797cde5ab720c7ae254baf10cd4dbe5d69a6aa4",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/comet.webp",
+   "bytes": 4610,
+   "sha256": "fed5a4c24465eeea488a1677570ce2b90fd8cd0a733ed9cdfb727d6606dc54ca",
+   "gitBlob": "32152eaddb1f4cd6534d7b89b95ffafadf6bbdb6",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/custard.webp",
+   "bytes": 4278,
+   "sha256": "fb0b9eb7b6305ad918fb52443e4adf0983b90eafa104c7bf36baa7ee7d8e5ad5",
+   "gitBlob": "77edda750c504d7d3e7f62ecdeea8de54132d2b8",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/dewdrop-unicorn.webp",
+   "bytes": 5788,
+   "sha256": "44eb3cc15cf80591932865e18ff962591945f78ee30c03c88d9e8261a75f0d4e",
+   "gitBlob": "93313ef1bf3847c6abfd9ddda2f77dfe1b2f0579",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/fox.webp",
+   "bytes": 5678,
+   "sha256": "7f38a32d67b8f50164977a8dc4d97405b758cda8b8e377e9cf44d906275f9f23",
+   "gitBlob": "23fd97675935a8b3b48cb8175b72cbd05f2821e5",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/goldenbear.webp",
+   "bytes": 6058,
+   "sha256": "a00dce5c3d38b4eff77f9b1aa8be6769aabe42bca10c0177d1024e68b02a95ac",
+   "gitBlob": "c52701e368aa129f8b8e3292a8c7952e6df102c1",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/kitten.webp",
+   "bytes": 4250,
+   "sha256": "4a22eecac3bfaf95920476b466956cfe0da927f1a83afb5504caf736a1b834c7",
+   "gitBlob": "9142de3fb9a7af8a4b1817f74ff7fb18396c716a",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/lavendream.webp",
+   "bytes": 4326,
+   "sha256": "88072f15ac411f8de0f254679cb69d8b84751bb3ab430507ac6eebaf9ed25895",
+   "gitBlob": "eb7c46940ab17bd9f261cfd94530b3ffaba1187a",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/macaron.webp",
+   "bytes": 4894,
+   "sha256": "5559aecf43afcb8b5a85763528bcb9d6e52d5e8210df6098c799377dcf9e587f",
+   "gitBlob": "613872e7fa1cd6aa30faa5ddc54e4048cc116b8d",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/minty.webp",
+   "bytes": 4206,
+   "sha256": "b41523dc08356ce6ea830492c663e09152ebc9a3bd94d34007925a03d0ad9530",
+   "gitBlob": "b5436e28312b4c4fc208f9ce25166efda01d38cc",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/mochi.webp",
+   "bytes": 4368,
+   "sha256": "27a7828d0f80e03ce1c4858de617da3173fc82614def2621f51e6a7a70bdc962",
+   "gitBlob": "81caec6130f646119f66e770dad6fbc4cce3c128",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/moonbean.webp",
+   "bytes": 3864,
+   "sha256": "99ef7f4b6026db8e415f07f5849c1f4f6cdad614755ad9f83debaccb40248165",
+   "gitBlob": "751371b0e596b103c4f4c3e01726e37891e9cf3d",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/moonwish-panda.webp",
+   "bytes": 6352,
+   "sha256": "0eab9aa8cdf44216236d60fd2046a5198fd18c9b8b1a638a0d19886a63d375ed",
+   "gitBlob": "0a8dea0ba8189ff994f9dcc3e6d3412ae5e4017e",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/nebula-dragon.webp",
+   "bytes": 5824,
+   "sha256": "9bba1074ab6a6a5f1dc2c659c0a528a772fe9d14d3415cc229505d1dac229740",
+   "gitBlob": "27a50eb10968ce82cde4fc7ae2b415c3c77bb515",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/nebula.webp",
+   "bytes": 5264,
+   "sha256": "c551462ae3c03e4cb1129c4e98789a5fd556adf166434f31c4a10bc115fafb0f",
+   "gitBlob": "36222c9e52922a896deb4a665885c7909894ecbd",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/opal-bunny.webp",
+   "bytes": 3910,
+   "sha256": "06e2eeb5b215db10440bc4727fd7ec2ffeab5c264bbc111be6f888294a26c04c",
+   "gitBlob": "edb6a4f910299add70f3a4e3c56a5c4e37f525fc",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/orbit.webp",
+   "bytes": 4534,
+   "sha256": "5d0a4e2dc21630b39337a6beef032908f8908a04ff93f715a6a4870c959b3bba",
+   "gitBlob": "5041234dac4523a8bbd832a7e95d9c2d83e76da0",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/panda.webp",
+   "bytes": 4120,
+   "sha256": "7e5bd2693b30a777873125782a8ca6431ed40a770af592e0951615ab56b59bf1",
+   "gitBlob": "90c1f8d6a42741753521a759285ad3dd2bfb30f0",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/peachy.webp",
+   "bytes": 5310,
+   "sha256": "9df7ab759b2bc85445d0240c530759172a2e3468dc5424903961e86c92e3c4ef",
+   "gitBlob": "858c012a4b0a7f24d6103937b6fc5b73c6355203",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/rosie.webp",
+   "bytes": 4482,
+   "sha256": "94c9ecc92d50f1839242b3d46df86afc69dc02b13b053be31f700b081c6491df",
+   "gitBlob": "318b731505d67812d7100363077530a57c7ec7e0",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/shortcake.webp",
+   "bytes": 4944,
+   "sha256": "8e27c28eb60d1e60d943f09e7617b84e20747fb452bc2dcbbdb7986f3f775867",
+   "gitBlob": "7435ea6cd15d5b162b8a6184a11c488cee545faa",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/sleepykoala.webp",
+   "bytes": 3880,
+   "sha256": "913bd62f79670c6d84d201780cbaf02cf0c0108984a21dfbc647cf9a849e4d78",
+   "gitBlob": "7a428c91a4a185e5ecb46ded68abe348a74e404c",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/solstice-dragon.webp",
+   "bytes": 5086,
+   "sha256": "aab5b30e9f1a1a8fd489723a669d881136f301e9154a94d6625a5be6ccd7f0da",
+   "gitBlob": "a52d871fef52144f6b2dd6db499ed02dc39a6f35",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/sorbet.webp",
+   "bytes": 4556,
+   "sha256": "0e6070b28eae559d3ab8c42eb5db84cdb9ad5978f10e7bec134f53f863de0100",
+   "gitBlob": "f5ab5468a67dc0fd8578d32ad053c116c9d49131",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/stardrop.webp",
+   "bytes": 5628,
+   "sha256": "e92d3a898d02b374b4aac3043e5751cb2055d2843c3db277b21064eda3918285",
+   "gitBlob": "3812a5aa9548bc4860d05077a6b2a9ecb011353b",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/starlight-panda.webp",
+   "bytes": 6058,
+   "sha256": "668d925f73b965ccdb8546748fef401f1960110279835b5b8fe42c9e6380d6f2",
+   "gitBlob": "883132716591f81c0bbee24d44d7da3c06e65d20",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/sugarplum-bunny.webp",
+   "bytes": 4358,
+   "sha256": "047528b6c8e1f6dec0ef7d93cd306449086b39c85d72cf2a04586274022f1be2",
+   "gitBlob": "1ebd58ff8d3b1b14459b6abeb5adb5258bda5d52",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/sugarstar.webp",
+   "bytes": 5540,
+   "sha256": "0fc101e28c3147616008a9db36247502f191b03918850fdd4069d33355bb0e8c",
+   "gitBlob": "2773d0c62ba9edd0de6875a65d493346df5e52a6",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/sunbeam-unicorn.webp",
+   "bytes": 5292,
+   "sha256": "6dc8e6ece614da9821e50c28ab3968cdf130e12007b454a0514ffb80d67601cb",
+   "gitBlob": "2a09055a83a12f9b774b5223c8525fb9059b20ea",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/sunny.webp",
+   "bytes": 5046,
+   "sha256": "22589af1c60ce00e98b427918e4ecc3e0826c6de87a52e951666d4d28d13e8d6",
+   "gitBlob": "c2aead25afc6df0c336c22821c4fec579c76ec03",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/squishies/portraits/supernova.webp",
+   "bytes": 5686,
+   "sha256": "d1ee68e8c589ea42643de01ff48b662a19840e2903b3b2e2979c1131fd10c89f",
+   "gitBlob": "95d84586c6c8ad2a1801fb6709fbc4cda8b2864c",
+   "protected": false,
+   "licence": "project-authored — squishies/SOURCES.md"
+  },
+  {
+   "path": "assets/store-kit/SOURCES.md",
+   "bytes": 1708,
+   "sha256": "6bee06120ce95c903cd5bbcb1f0785ac557739742c9dfe8bbdc686786f0b060b",
+   "gitBlob": "f607674ba7d4637f26441acf6a56d8804952ce0e",
+   "protected": false,
+   "licence": "project-authored; sign text uses Comic Sans Bold glyph outlines — store-kit/SOURCES.md"
+  },
+  {
+   "path": "assets/store-kit/arched-display-shelf.glb",
+   "bytes": 139760,
+   "sha256": "403344d8bec013e620db452a79b9f7235da1d419eeee44bd24e1461fccb85997",
+   "gitBlob": "17fda0471448cfd2540783a699148c44d8055858",
+   "protected": false,
+   "licence": "project-authored; sign text uses Comic Sans Bold glyph outlines — store-kit/SOURCES.md"
+  },
+  {
+   "path": "assets/store-kit/bamboo-steamer-shelf-display.glb",
+   "bytes": 358776,
+   "sha256": "d645dd836e583f8ea7d2c827b0429ff5b71535b6343680ea01cdb13271bc9892",
+   "gitBlob": "23e5254e654b2f98d4509a0c9a39fc6ee599437c",
+   "protected": false,
+   "licence": "project-authored; sign text uses Comic Sans Bold glyph outlines — store-kit/SOURCES.md"
+  },
+  {
+   "path": "assets/store-kit/bao-squishy-display.glb",
+   "bytes": 1009488,
+   "sha256": "910b2345d5f2d0290daa74c57ee998b42934f37326dfe47d2fbffcb2bfe4e22a",
+   "gitBlob": "ab073975621109f9124fae05ac9e5e7b2103798c",
+   "protected": false,
+   "licence": "project-authored; sign text uses Comic Sans Bold glyph outlines — store-kit/SOURCES.md"
+  },
+  {
+   "path": "assets/store-kit/sign-clover.glb",
+   "bytes": 1082724,
+   "sha256": "7a072290c41a96b43b722a9ba319755cc1bb0fad5f1485aa76fae629b61c9b8c",
+   "gitBlob": "a6898a93b21eb98df8ae1698cb5e751f4e1cb149",
+   "protected": false,
+   "licence": "project-authored; sign text uses Comic Sans Bold glyph outlines — store-kit/SOURCES.md"
+  },
+  {
+   "path": "assets/store-kit/sign-moonbeam.glb",
+   "bytes": 1148260,
+   "sha256": "90431a0c9a73da9a115d898f8fcbb2e53c7c764235f1c276233caa060bc2cc9d",
+   "gitBlob": "933b762fddd9b4dd603d7ad6d55edf0f3ea11f3a",
+   "protected": false,
+   "licence": "project-authored; sign text uses Comic Sans Bold glyph outlines — store-kit/SOURCES.md"
+  },
+  {
+   "path": "assets/store-kit/sign-peachy.glb",
+   "bytes": 1321480,
+   "sha256": "f2623271e2ee938864d290bbbc7f0e8388fc1f5e35fe507c24b61569ec317a24",
+   "gitBlob": "b5bc1d8d151ad55ec73dcbc56c09c803d299e780",
+   "protected": false,
+   "licence": "project-authored; sign text uses Comic Sans Bold glyph outlines — store-kit/SOURCES.md"
+  },
+  {
+   "path": "assets/store-kit/sign-smiles.glb",
+   "bytes": 1071640,
+   "sha256": "695cf57388e59a5d88c039820b962d1ce50d132b543e00614f5b9236999d80c0",
+   "gitBlob": "4549eb3d869eb8561f6b2367e9391b5085b4531a",
+   "protected": false,
+   "licence": "project-authored; sign text uses Comic Sans Bold glyph outlines — store-kit/SOURCES.md"
+  },
+  {
+   "path": "favicon.svg",
+   "bytes": 352,
+   "sha256": "d95c292306db57ca6f290ad259d82017533de1877b07c7840373bb5619c63798",
+   "gitBlob": "acae970ca1a043da47adb40988404a08f26c1d9b",
+   "protected": false,
+   "licence": "project page"
+  }
+ ],
+ "excluded": [
+  {
+   "path": "PLAYCANVAS-LICENSE.txt",
+   "why": "not an asset (PlayCanvas-only file)"
+  },
+  {
+   "path": "assets/audio/cozy-house.ogg",
+   "why": "never shipped; the .mp3 variant is the shipped copy"
+  },
+  {
+   "path": "assets/dumplings/.gitkeep",
+   "why": "empty directory marker"
+  },
+  {
+   "path": "assets/pets/Meshy_AI_Sunny_Pup_0919020946_texture.glb",
+   "why": "unrigged Meshy source for Sunny Pup (15.7 MiB); runtime uses pets/sunny-pup.glb"
+  },
+  {
+   "path": "assets/pets/pug.glb",
+   "why": "unused backup pet"
+  },
+  {
+   "path": "assets/pop/audio/click_001.ogg",
+   "why": "never shipped; Squishy Pop uses the .wav set"
+  },
+  {
+   "path": "assets/pop/audio/confirmation_001.ogg",
+   "why": "never shipped; Squishy Pop uses the .wav set"
+  },
+  {
+   "path": "assets/pop/audio/drop_001.ogg",
+   "why": "never shipped; Squishy Pop uses the .wav set"
+  },
+  {
+   "path": "assets/pop/audio/drop_002.ogg",
+   "why": "never shipped; Squishy Pop uses the .wav set"
+  },
+  {
+   "path": "assets/pop/audio/drop_003.ogg",
+   "why": "never shipped; Squishy Pop uses the .wav set"
+  },
+  {
+   "path": "assets/pop/audio/pluck_001.ogg",
+   "why": "never shipped; Squishy Pop uses the .wav set"
+  },
+  {
+   "path": "assets/props/.gitkeep",
+   "why": "empty directory marker"
+  },
+  {
+   "path": "assets/rooms/.gitkeep",
+   "why": "empty directory marker"
+  },
+  {
+   "path": "assets/squishies/concepts/animal-friends-approved.png",
+   "why": "concept art, not loaded"
+  },
+  {
+   "path": "assets/store-kit/store-kit.blend",
+   "why": "Blender working source for the store kit"
+  }
+ ]
+}

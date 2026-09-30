@@ -1,0 +1,4907 @@
+{
+ "captured": "2026-09-29T19:41:47.585Z",
+ "source": {
+  "commit": "9a40b4ed1dcedd7659d7c78c96c28cb1104c87e5",
+  "runtimeHash": "9193f79319fb999c",
+  "scene": 2600724,
+  "served": "PlayCanvas dist/ from 127.0.0.1 (same bytes as the live release)"
+ },
+ "viewport": {
+  "width": 390,
+  "height": 844,
+  "deviceScaleFactor": 3
+ },
+ "note": "Headless desktop Edge in a disposable context. Not phone evidence.",
+ "environment": {
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+  "gpu": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x00001638) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "devicePixelRatio": 3,
+  "canvas": [
+   1170,
+   2532
+  ],
+  "maxPixelRatio": 3
+ },
+ "views": {
+  "house-overview": {
+   "as-played": {
+    "camera": {
+     "position": [
+      9.850000381469727,
+      14,
+      24.350000381469727
+     ],
+     "euler": [
+      -34.8399978658306,
+      18.435000660412488,
+      2.402607246652724e-7
+     ],
+     "orthoHeight": 14
+    },
+    "drawCallsPerFrame": 709,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 709,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.885,
+     "vb": 19.892,
+     "ib": 3.72,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   },
+   "authored": {
+    "camera": {
+     "position": [
+      9.850000381469727,
+      14,
+      24.350000381469727
+     ],
+     "euler": [
+      -34.8399978658306,
+      18.435000660412488,
+      2.402607246652724e-7
+     ],
+     "orthoHeight": 14
+    },
+    "drawCallsPerFrame": 375,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 375,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.879,
+     "vb": 19.892,
+     "ib": 3.72,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   }
+  },
+  "house-bedroom": {
+   "as-played": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      18
+     ],
+     "euler": [
+      -34.83999773034908,
+      18.435000660412488,
+      4.912192471829047e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 590,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 590,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.885,
+     "vb": 19.892,
+     "ib": 3.72,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   },
+   "authored": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      18
+     ],
+     "euler": [
+      -34.83999773034908,
+      18.435000660412488,
+      4.912192471829047e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 292,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 292,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.879,
+     "vb": 19.892,
+     "ib": 3.72,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   }
+  },
+  "house-landing-bathroom": {
+   "as-played": {
+    "camera": {
+     "position": [
+      10.899999618530273,
+      14,
+      18.399999618530273
+     ],
+     "euler": [
+      -34.84000062678472,
+      18.43499904049138,
+      -3.833713091967871e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 510,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 510,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.885,
+     "vb": 19.892,
+     "ib": 3.72,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   },
+   "authored": {
+    "camera": {
+     "position": [
+      10.899999618530273,
+      14,
+      18.399999618530273
+     ],
+     "euler": [
+      -34.84000062678472,
+      18.43499904049138,
+      -3.833713091967871e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 301,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 301,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.879,
+     "vb": 19.892,
+     "ib": 3.72,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   }
+  },
+  "house-living": {
+   "as-played": {
+    "camera": {
+     "position": [
+      7.599999904632568,
+      14,
+      24.5
+     ],
+     "euler": [
+      -34.83999773034908,
+      18.435000660412488,
+      5.217445492689063e-8
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 609,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 609,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.885,
+     "vb": 19.892,
+     "ib": 3.72,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   },
+   "authored": {
+    "camera": {
+     "position": [
+      7.599999904632568,
+      14,
+      24.5
+     ],
+     "euler": [
+      -34.83999773034908,
+      18.435000660412488,
+      5.217445492689063e-8
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 302,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 302,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.879,
+     "vb": 19.892,
+     "ib": 3.72,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   }
+  },
+  "house-kitchen": {
+   "as-played": {
+    "camera": {
+     "position": [
+      5.699999809265137,
+      14,
+      30.899999618530273
+     ],
+     "euler": [
+      -34.840000554463906,
+      18.435000660412488,
+      -2.1221028506060187e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 527,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 527,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.885,
+     "vb": 19.892,
+     "ib": 3.72,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   },
+   "authored": {
+    "camera": {
+     "position": [
+      5.699999809265137,
+      14,
+      30.899999618530273
+     ],
+     "euler": [
+      -34.840000554463906,
+      18.435000660412488,
+      -2.1221028506060187e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 288,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 288,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.879,
+     "vb": 19.892,
+     "ib": 3.72,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   }
+  },
+  "house-utility": {
+   "as-played": {
+    "camera": {
+     "position": [
+      10.5,
+      14,
+      29.299999237060547
+     ],
+     "euler": [
+      -34.840000554463906,
+      18.435000660412488,
+      -2.1221028506060187e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 578,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 578,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.885,
+     "vb": 19.892,
+     "ib": 3.72,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   },
+   "authored": {
+    "camera": {
+     "position": [
+      10.5,
+      14,
+      29.299999237060547
+     ],
+     "euler": [
+      -34.840000554463906,
+      18.435000660412488,
+      -2.1221028506060187e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 280,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 280,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.879,
+     "vb": 19.892,
+     "ib": 3.72,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   }
+  },
+  "house-nursery": {
+   "as-played": {
+    "camera": {
+     "position": [
+      14.75,
+      14,
+      18
+     ],
+     "euler": [
+      -34.83999773034908,
+      18.435000660412488,
+      4.912192471829047e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 457,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 457,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.885,
+     "vb": 19.892,
+     "ib": 3.72,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   },
+   "authored": {
+    "camera": {
+     "position": [
+      14.75,
+      14,
+      18
+     ],
+     "euler": [
+      -34.83999773034908,
+      18.435000660412488,
+      4.912192471829047e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 269,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 269,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.879,
+     "vb": 19.892,
+     "ib": 3.72,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   }
+  },
+  "house-marc": {
+   "as-played": {
+    "camera": {
+     "position": [
+      14.75,
+      14,
+      26.399999618530273
+     ],
+     "euler": [
+      -34.83999765802827,
+      18.435000660412488,
+      2.1107852777117335e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 492,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 492,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.885,
+     "vb": 19.892,
+     "ib": 3.72,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   },
+   "authored": {
+    "camera": {
+     "position": [
+      14.75,
+      14,
+      26.399999618530273
+     ],
+     "euler": [
+      -34.83999765802827,
+      18.435000660412488,
+      2.1107852777117335e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 296,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 296,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.879,
+     "vb": 19.892,
+     "ib": 3.72,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   }
+  },
+  "store-corner-overview": {
+   "as-played": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      18
+     ],
+     "euler": [
+      -34.83999773034908,
+      18.435000660412488,
+      4.912192471829047e-7
+     ],
+     "orthoHeight": 11
+    },
+    "drawCallsPerFrame": 143,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 143,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.88,
+     "vb": 19.679,
+     "ib": 4.419,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   },
+   "authored": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      18
+     ],
+     "euler": [
+      -34.83999773034908,
+      18.435000660412488,
+      4.912192471829047e-7
+     ],
+     "orthoHeight": 11
+    },
+    "drawCallsPerFrame": 122,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 122,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.879,
+     "vb": 19.679,
+     "ib": 4.419,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   }
+  },
+  "store-corner-entry": {
+   "as-played": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      24.149999618530273
+     ],
+     "euler": [
+      -34.83999765802827,
+      18.435000660412488,
+      2.1107852777117335e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 122,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 122,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.88,
+     "vb": 19.679,
+     "ib": 4.419,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   },
+   "authored": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      24.149999618530273
+     ],
+     "euler": [
+      -34.83999765802827,
+      18.435000660412488,
+      2.1107852777117335e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 104,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 104,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.879,
+     "vb": 19.679,
+     "ib": 4.419,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   }
+  },
+  "store-corner-back": {
+   "as-played": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      14.397500038146973
+     ],
+     "euler": [
+      -34.83999773034908,
+      18.435000660412488,
+      4.912192471829047e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 135,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 135,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.88,
+     "vb": 19.679,
+     "ib": 4.419,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   },
+   "authored": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      14.397500038146973
+     ],
+     "euler": [
+      -34.83999773034908,
+      18.435000660412488,
+      4.912192471829047e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 117,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 117,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.879,
+     "vb": 19.679,
+     "ib": 4.419,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   }
+  },
+  "store-toys-overview": {
+   "as-played": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      18
+     ],
+     "euler": [
+      -34.83999773034908,
+      18.435000660412488,
+      4.912192471829047e-7
+     ],
+     "orthoHeight": 11
+    },
+    "drawCallsPerFrame": 154,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 154,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.88,
+     "vb": 20.321,
+     "ib": 4.607,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   },
+   "authored": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      18
+     ],
+     "euler": [
+      -34.83999773034908,
+      18.435000660412488,
+      4.912192471829047e-7
+     ],
+     "orthoHeight": 11
+    },
+    "drawCallsPerFrame": 121,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 121,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.879,
+     "vb": 20.321,
+     "ib": 4.607,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   }
+  },
+  "store-toys-entry": {
+   "as-played": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      25.94999885559082
+     ],
+     "euler": [
+      -34.840002711188504,
+      18.435000660412488,
+      -1.779112562106473e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 126,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 126,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.88,
+     "vb": 20.321,
+     "ib": 4.607,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   },
+   "authored": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      25.94999885559082
+     ],
+     "euler": [
+      -34.840002711188504,
+      18.435000660412488,
+      -1.779112562106473e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 102,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 102,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.879,
+     "vb": 20.321,
+     "ib": 4.607,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   }
+  },
+  "store-toys-back": {
+   "as-played": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      13.407499313354492
+     ],
+     "euler": [
+      -34.840000554463906,
+      18.435000660412488,
+      -2.1221028506060187e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 137,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 137,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.88,
+     "vb": 20.321,
+     "ib": 4.607,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   },
+   "authored": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      13.407499313354492
+     ],
+     "euler": [
+      -34.840000554463906,
+      18.435000660412488,
+      -2.1221028506060187e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 109,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 109,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.879,
+     "vb": 20.321,
+     "ib": 4.607,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   }
+  },
+  "store-collector-overview": {
+   "as-played": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      18
+     ],
+     "euler": [
+      -34.83999773034908,
+      18.435000660412488,
+      4.912192471829047e-7
+     ],
+     "orthoHeight": 11
+    },
+    "drawCallsPerFrame": 143,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 143,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.88,
+     "vb": 19.243,
+     "ib": 4.251,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   },
+   "authored": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      18
+     ],
+     "euler": [
+      -34.83999773034908,
+      18.435000660412488,
+      4.912192471829047e-7
+     ],
+     "orthoHeight": 11
+    },
+    "drawCallsPerFrame": 116,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 116,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.879,
+     "vb": 19.243,
+     "ib": 4.251,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   }
+  },
+  "store-collector-entry": {
+   "as-played": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      25.350000381469727
+     ],
+     "euler": [
+      -34.83999773034908,
+      18.435000660412488,
+      5.217445492689063e-8
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 122,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 122,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.88,
+     "vb": 19.243,
+     "ib": 4.251,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   },
+   "authored": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      25.350000381469727
+     ],
+     "euler": [
+      -34.83999773034908,
+      18.435000660412488,
+      5.217445492689063e-8
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 104,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 104,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.879,
+     "vb": 19.243,
+     "ib": 4.251,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   }
+  },
+  "store-collector-back": {
+   "as-played": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      13.737499237060547
+     ],
+     "euler": [
+      -34.840000554463906,
+      18.435000660412488,
+      -2.1221028506060187e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 132,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 132,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.88,
+     "vb": 19.243,
+     "ib": 4.251,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   },
+   "authored": {
+    "camera": {
+     "position": [
+      6,
+      14,
+      13.737499237060547
+     ],
+     "euler": [
+      -34.840000554463906,
+      18.435000660412488,
+      -2.1221028506060187e-7
+     ],
+     "orthoHeight": 5.734871794871795
+    },
+    "drawCallsPerFrame": 110,
+    "drawCalls": {
+     "forward": 0,
+     "depth": 0,
+     "shadow": 0,
+     "immediate": 0,
+     "misc": 0,
+     "total": 110,
+     "skinned": 0,
+     "instanced": 0,
+     "removedByInstancing": 0
+    },
+    "frame": {
+     "triangles": 0,
+     "otherPrimitives": 0,
+     "shaders": 0,
+     "materials": 0,
+     "shadowMapUpdates": 0,
+     "lightClusters": 0
+    },
+    "vramMiB": {
+     "tex": 151.879,
+     "vb": 19.243,
+     "ib": 4.251,
+     "ub": 0.003,
+     "sb": 0
+    },
+    "lighting": {
+     "ambient": [
+      0.72,
+      0.68,
+      0.77
+     ]
+    }
+   }
+  }
+ },
+ "perf": {
+  "house-start": {
+   "durationMs": 2508,
+   "fps": 106.45933014354067,
+   "meanUpdateMs": 3.635580522737253,
+   "p95UpdateMs": 4.700000047683716,
+   "drawsPerFrame": 595
+  },
+  "house-home": {
+   "durationMs": 2510,
+   "fps": 121.91235059760956,
+   "meanUpdateMs": 3.228104568774404,
+   "p95UpdateMs": 4.200000047683716,
+   "drawsPerFrame": 487.16993464052285
+  },
+  "store-corner": {
+   "durationMs": 2506,
+   "fps": 137.2705506783719,
+   "meanUpdateMs": 2.8622093048206594,
+   "p95UpdateMs": 3.5,
+   "drawsPerFrame": 128
+  },
+  "store-toys": {
+   "durationMs": 2502.7000000476837,
+   "fps": 143.84464777765652,
+   "meanUpdateMs": 2.516111112965478,
+   "p95UpdateMs": 3.3999998569488525,
+   "drawsPerFrame": 131
+  },
+  "store-collector": {
+   "durationMs": 2504.7999999523163,
+   "fps": 144.1232832988152,
+   "meanUpdateMs": 2.3080332424501964,
+   "p95UpdateMs": 2.799999952316284,
+   "drawsPerFrame": 124
+  }
+ },
+ "collision": {
+  "house": {
+   "obstacles": [
+    {
+     "center": [
+      -2.049999952316284,
+      0.699999988079071,
+      -1.7000000476837158
+     ],
+     "half": [
+      0.8799999952316284,
+      1.399999976158142,
+      1.475000023841858
+     ]
+    },
+    {
+     "center": [
+      1.5499999523162842,
+      0.699999988079071,
+      -2.549999952316284
+     ],
+     "half": [
+      0.824999988079071,
+      1.399999976158142,
+      0.36500000953674316
+     ]
+    },
+    {
+     "center": [
+      -0.5299999713897705,
+      0.699999988079071,
+      -2.799999952316284
+     ],
+     "half": [
+      0.41499999165534973,
+      1.399999976158142,
+      0.375
+     ]
+    },
+    {
+     "center": [
+      2.4800000190734863,
+      0.699999988079071,
+      -1.5499999523162842
+     ],
+     "half": [
+      0.574999988079071,
+      1.399999976158142,
+      0.6800000071525574
+     ]
+    },
+    {
+     "center": [
+      2.3299999237060547,
+      0.699999988079071,
+      1.2400000095367432
+     ],
+     "half": [
+      0.7699999809265137,
+      1.399999976158142,
+      0.5249999761581421
+     ]
+    },
+    {
+     "center": [
+      2.049999952316284,
+      0.699999988079071,
+      2.1500000953674316
+     ],
+     "half": [
+      0.3449999988079071,
+      1.399999976158142,
+      0.3449999988079071
+     ]
+    },
+    {
+     "center": [
+      -2.6600000858306885,
+      0.699999988079071,
+      2.450000047683716
+     ],
+     "half": [
+      0.30000001192092896,
+      1.399999976158142,
+      0.30000001192092896
+     ]
+    },
+    {
+     "center": [
+      3.299999952316284,
+      0.699999988079071,
+      -0.7875000238418579
+     ],
+     "half": [
+      0.07000000029802322,
+      1.399999976158142,
+      2.8125
+     ]
+    },
+    {
+     "center": [
+      3.299999952316284,
+      0.699999988079071,
+      3.487499952316284
+     ],
+     "half": [
+      0.07000000029802322,
+      1.399999976158142,
+      0.11249999701976776
+     ]
+    },
+    {
+     "center": [
+      3.6875,
+      0.699999988079071,
+      0.4000000059604645
+     ],
+     "half": [
+      0.38749998807907104,
+      1.399999976158142,
+      0.07000000029802322
+     ]
+    },
+    {
+     "center": [
+      6.012499809265137,
+      0.699999988079071,
+      0.4000000059604645
+     ],
+     "half": [
+      0.48750001192092896,
+      1.399999976158142,
+      0.07000000029802322
+     ]
+    },
+    {
+     "center": [
+      -1.975000023841858,
+      0.699999988079071,
+      3.5999999046325684
+     ],
+     "half": [
+      1.3250000476837158,
+      1.399999976158142,
+      0.07000000029802322
+     ]
+    },
+    {
+     "center": [
+      2.549999952316284,
+      0.699999988079071,
+      3.5999999046325684
+     ],
+     "half": [
+      1.399999976158142,
+      1.399999976158142,
+      0.07000000029802322
+     ]
+    },
+    {
+     "center": [
+      6.074999809265137,
+      0.699999988079071,
+      3.5999999046325684
+     ],
+     "half": [
+      0.42500001192092896,
+      1.399999976158142,
+      0.07000000029802322
+     ]
+    },
+    {
+     "center": [
+      -2.049999952316284,
+      0.699999988079071,
+      9.5
+     ],
+     "half": [
+      1.25,
+      1.399999976158142,
+      0.07000000029802322
+     ]
+    },
+    {
+     "center": [
+      2.625,
+      0.699999988079071,
+      9.5
+     ],
+     "half": [
+      1.3250000476837158,
+      1.399999976158142,
+      0.07000000029802322
+     ]
+    },
+    {
+     "center": [
+      6.074999809265137,
+      0.699999988079071,
+      9.5
+     ],
+     "half": [
+      0.42500001192092896,
+      1.399999976158142,
+      0.07000000029802322
+     ]
+    },
+    {
+     "center": [
+      2.5999999046325684,
+      0.699999988079071,
+      10.125
+     ],
+     "half": [
+      0.07000000029802322,
+      1.399999976158142,
+      0.625
+     ]
+    },
+    {
+     "center": [
+      2.5999999046325684,
+      0.699999988079071,
+      12.725000381469727
+     ],
+     "half": [
+      0.07000000029802322,
+      1.399999976158142,
+      0.4749999940395355
+     ]
+    },
+    {
+     "center": [
+      4.550000190734863,
+      0.699999988079071,
+      13.199999809265137
+     ],
+     "half": [
+      1.9500000476837158,
+      1.399999976158142,
+      0.07000000029802322
+     ]
+    },
+    {
+     "center": [
+      -0.3499999940395355,
+      0.699999988079071,
+      16.299999237060547
+     ],
+     "half": [
+      2.950000047683716,
+      1.399999976158142,
+      0.07000000029802322
+     ]
+    },
+    {
+     "center": [
+      2.5999999046325684,
+      0.699999988079071,
+      14.75
+     ],
+     "half": [
+      0.07000000029802322,
+      1.399999976158142,
+      1.5499999523162842
+     ]
+    },
+    {
+     "center": [
+      6.5,
+      0.699999988079071,
+      -1.149999976158142
+     ],
+     "half": [
+      0.07000000029802322,
+      1.399999976158142,
+      2.450000047683716
+     ]
+    },
+    {
+     "center": [
+      6.5,
+      0.699999988079071,
+      4.050000190734863
+     ],
+     "half": [
+      0.07000000029802322,
+      1.399999976158142,
+      1.25
+     ]
+    },
+    {
+     "center": [
+      6.5,
+      0.699999988079071,
+      10.050000190734863
+     ],
+     "half": [
+      0.07000000029802322,
+      1.399999976158142,
+      3.1500000953674316
+     ]
+    },
+    {
+     "center": [
+      8.75,
+      0.699999988079071,
+      -3.5999999046325684
+     ],
+     "half": [
+      2.25,
+      1.399999976158142,
+      0.07000000029802322
+     ]
+    },
+    {
+     "center": [
+      6.737500190734863,
+      0.699999988079071,
+      3.5999999046325684
+     ],
+     "half": [
+      0.23749999701976776,
+      1.399999976158142,
+      0.07000000029802322
+     ]
+    },
+    {
+     "center": [
+      9.712499618530273,
+      0.699999988079071,
+      3.5999999046325684
+     ],
+     "half": [
+      1.287500023841858,
+      1.399999976158142,
+      0.07000000029802322
+     ]
+    },
+    {
+     "center": [
+      11,
+      0.699999988079071,
+      4.800000190734863
+     ],
+     "half": [
+      0.07000000029802322,
+      1.399999976158142,
+      8.399999618530273
+     ]
+    },
+    {
+     "center": [
+      8.75,
+      0.699999988079071,
+      13.199999809265137
+     ],
+     "half": [
+      2.25,
+      1.399999976158142,
+      0.07000000029802322
+     ]
+    },
+    {
+     "center": [
+      4.900000095367432,
+      0.699999988079071,
+      -3.5999999046325684
+     ],
+     "half": [
+      1.600000023841858,
+      1.399999976158142,
+      0.07000000029802322
+     ]
+    },
+    {
+     "center": [
+      -3.299999952316284,
+      0.699999988079071,
+      12.899999618530273
+     ],
+     "half": [
+      0.07000000029802322,
+      1.399999976158142,
+      3.4000000953674316
+     ]
+    },
+    {
+     "center": [
+      -3.3499999046325684,
+      0.699999988079071,
+      0
+     ],
+     "half": [
+      0.07500000298023224,
+      1.399999976158142,
+      3.6500000953674316
+     ]
+    },
+    {
+     "center": [
+      0,
+      0.699999988079071,
+      -3.6500000953674316
+     ],
+     "half": [
+      3.4000000953674316,
+      1.399999976158142,
+      0.07500000298023224
+     ]
+    },
+    {
+     "center": [
+      6.019999980926514,
+      0.699999988079071,
+      3.049999952316284
+     ],
+     "half": [
+      0.25,
+      1.399999976158142,
+      0.4000000059604645
+     ]
+    },
+    {
+     "center": [
+      3.799999952316284,
+      0.699999988079071,
+      1
+     ],
+     "half": [
+      0.20000000298023224,
+      1.399999976158142,
+      0.20000000298023224
+     ]
+    },
+    {
+     "center": [
+      5.800000190734863,
+      0.699999988079071,
+      1.100000023841858
+     ],
+     "half": [
+      0.375,
+      1.399999976158142,
+      0.22499999403953552
+     ]
+    },
+    {
+     "center": [
+      6.099999904632568,
+      0.699999988079071,
+      3.2799999713897705
+     ],
+     "half": [
+      0.17499999701976776,
+      1.399999976158142,
+      0.17499999701976776
+     ]
+    },
+    {
+     "center": [
+      -2.299999952316284,
+      0.699999988079071,
+      6.050000190734863
+     ],
+     "half": [
+      0.6000000238418579,
+      1.399999976158142,
+      1.524999976158142
+     ]
+    },
+    {
+     "center": [
+      -0.47999998927116394,
+      0.699999988079071,
+      6.300000190734863
+     ],
+     "half": [
+      0.6499999761581421,
+      1.399999976158142,
+      0.375
+     ]
+    },
+    {
+     "center": [
+      2,
+      0.699999988079071,
+      4.199999809265137
+     ],
+     "half": [
+      0.8999999761581421,
+      1.399999976158142,
+      0.30000001192092896
+     ]
+    },
+    {
+     "center": [
+      4.5,
+      0.699999988079071,
+      7.349999904632568
+     ],
+     "half": [
+      0.550000011920929,
+      1.399999976158142,
+      0.550000011920929
+     ]
+    },
+    {
+     "center": [
+      5.650000095367432,
+      0.699999988079071,
+      7.699999809265137
+     ],
+     "half": [
+      0.17499999701976776,
+      1.399999976158142,
+      0.17499999701976776
+     ]
+    },
+    {
+     "center": [
+      5.650000095367432,
+      0.699999988079071,
+      6.599999904632568
+     ],
+     "half": [
+      0.25,
+      1.399999976158142,
+      0.25
+     ]
+    },
+    {
+     "center": [
+      5.900000095367432,
+      0.699999988079071,
+      8.75
+     ],
+     "half": [
+      0.25,
+      1.399999976158142,
+      0.25
+     ]
+    },
+    {
+     "center": [
+      1.9500000476837158,
+      0.699999988079071,
+      8.550000190734863
+     ],
+     "half": [
+      0.4099999964237213,
+      1.399999976158142,
+      0.30000001192092896
+     ]
+    },
+    {
+     "center": [
+      -2.7200000286102295,
+      0.699999988079071,
+      10.25
+     ],
+     "half": [
+      0.4749999940395355,
+      1.399999976158142,
+      0.550000011920929
+     ]
+    },
+    {
+     "center": [
+      -2.7200000286102295,
+      0.699999988079071,
+      11.449999809265137
+     ],
+     "half": [
+      0.4749999940395355,
+      1.399999976158142,
+      0.6000000238418579
+     ]
+    },
+    {
+     "center": [
+      -2.7200000286102295,
+      0.699999988079071,
+      12.649999618530273
+     ],
+     "half": [
+      0.4749999940395355,
+      1.399999976158142,
+      0.550000011920929
+     ]
+    },
+    {
+     "center": [
+      -2.6500000953674316,
+      0.699999988079071,
+      14.550000190734863
+     ],
+     "half": [
+      0.5249999761581421,
+      1.399999976158142,
+      0.5249999761581421
+     ]
+    },
+    {
+     "center": [
+      0.550000011920929,
+      0.699999988079071,
+      13.850000381469727
+     ],
+     "half": [
+      0.824999988079071,
+      1.399999976158142,
+      0.824999988079071
+     ]
+    },
+    {
+     "center": [
+      0.550000011920929,
+      0.699999988079071,
+      12.550000190734863
+     ],
+     "half": [
+      0.2750000059604645,
+      1.399999976158142,
+      0.2750000059604645
+     ]
+    },
+    {
+     "center": [
+      0.550000011920929,
+      0.699999988079071,
+      15.050000190734863
+     ],
+     "half": [
+      0.2750000059604645,
+      1.399999976158142,
+      0.2750000059604645
+     ]
+    },
+    {
+     "center": [
+      1.7799999713897705,
+      0.699999988079071,
+      13.850000381469727
+     ],
+     "half": [
+      0.2750000059604645,
+      1.399999976158142,
+      0.2750000059604645
+     ]
+    },
+    {
+     "center": [
+      -0.699999988079071,
+      0.699999988079071,
+      13.850000381469727
+     ],
+     "half": [
+      0.2750000059604645,
+      1.399999976158142,
+      0.2750000059604645
+     ]
+    },
+    {
+     "center": [
+      1.9500000476837158,
+      0.699999988079071,
+      10.300000190734863
+     ],
+     "half": [
+      0.20000000298023224,
+      1.399999976158142,
+      0.20000000298023224
+     ]
+    },
+    {
+     "center": [
+      3.3499999046325684,
+      0.699999988079071,
+      10.199999809265137
+     ],
+     "half": [
+      0.5249999761581421,
+      1.399999976158142,
+      0.4749999940395355
+     ]
+    },
+    {
+     "center": [
+      3.25,
+      0.699999988079071,
+      12.399999618530273
+     ],
+     "half": [
+      0.5249999761581421,
+      1.399999976158142,
+      0.4749999940395355
+     ]
+    },
+    {
+     "center": [
+      5.78000020980835,
+      0.699999988079071,
+      12.630000114440918
+     ],
+     "half": [
+      0.5249999761581421,
+      1.399999976158142,
+      0.44999998807907104
+     ]
+    },
+    {
+     "center": [
+      5.849999904632568,
+      0.699999988079071,
+      10.5
+     ],
+     "half": [
+      0.32499998807907104,
+      1.399999976158142,
+      0.30000001192092896
+     ]
+    },
+    {
+     "center": [
+      6.099999904632568,
+      0.699999988079071,
+      11.449999809265137
+     ],
+     "half": [
+      0.17499999701976776,
+      1.399999976158142,
+      0.17499999701976776
+     ]
+    },
+    {
+     "center": [
+      4.119999885559082,
+      0.699999988079071,
+      -3.0799999237060547
+     ],
+     "half": [
+      0.5,
+      1.399999976158142,
+      0.3499999940395355
+     ]
+    },
+    {
+     "center": [
+      5.75,
+      0.699999988079071,
+      -2.119999885559082
+     ],
+     "half": [
+      0.4699999988079071,
+      1.399999976158142,
+      1.0750000476837158
+     ]
+    },
+    {
+     "center": [
+      5.980000019073486,
+      0.699999988079071,
+      -0.3199999928474426
+     ],
+     "half": [
+      0.4000000059604645,
+      1.399999976158142,
+      0.28999999165534973
+     ]
+    },
+    {
+     "center": [
+      3.619999885559082,
+      0.699999988079071,
+      -0.5249999761581421
+     ],
+     "half": [
+      0.07999999821186066,
+      1.399999976158142,
+      0.4000000059604645
+     ]
+    },
+    {
+     "center": [
+      9.800000190734863,
+      0.699999988079071,
+      -1.7000000476837158
+     ],
+     "half": [
+      0.800000011920929,
+      1.399999976158142,
+      1
+     ]
+    },
+    {
+     "center": [
+      7.300000190734863,
+      0.699999988079071,
+      -2.8499999046325684
+     ],
+     "half": [
+      0.44999998807907104,
+      1.399999976158142,
+      0.3499999940395355
+     ]
+    },
+    {
+     "center": [
+      10.550000190734863,
+      0.699999988079071,
+      1.5499999523162842
+     ],
+     "half": [
+      0.30000001192092896,
+      1.399999976158142,
+      0.75
+     ]
+    },
+    {
+     "center": [
+      7.150000095367432,
+      0.699999988079071,
+      -0.10000000149011612
+     ],
+     "half": [
+      0.42500001192092896,
+      1.399999976158142,
+      0.42500001192092896
+     ]
+    },
+    {
+     "center": [
+      7.099999904632568,
+      0.699999988079071,
+      -1.149999976158142
+     ],
+     "half": [
+      0.15000000596046448,
+      1.399999976158142,
+      0.15000000596046448
+     ]
+    },
+    {
+     "center": [
+      9.449999809265137,
+      0.699999988079071,
+      2.799999952316284
+     ],
+     "half": [
+      0.30000001192092896,
+      1.399999976158142,
+      0.2750000059604645
+     ]
+    },
+    {
+     "center": [
+      9.300000190734863,
+      0.699999988079071,
+      5.150000095367432
+     ],
+     "half": [
+      0.9750000238418579,
+      1.399999976158142,
+      1.2000000476837158
+     ]
+    },
+    {
+     "center": [
+      8,
+      0.699999988079071,
+      4.5
+     ],
+     "half": [
+      0.2750000059604645,
+      1.399999976158142,
+      0.25
+     ]
+    },
+    {
+     "center": [
+      10.600000381469727,
+      0.699999988079071,
+      4.5
+     ],
+     "half": [
+      0.2750000059604645,
+      1.399999976158142,
+      0.25
+     ]
+    },
+    {
+     "center": [
+      7.019999980926514,
+      0.699999988079071,
+      8.449999809265137
+     ],
+     "half": [
+      0.375,
+      1.399999976158142,
+      0.7749999761581421
+     ]
+    },
+    {
+     "center": [
+      8.449999809265137,
+      0.699999988079071,
+      12.649999618530273
+     ],
+     "half": [
+      0.8999999761581421,
+      1.399999976158142,
+      0.375
+     ]
+    },
+    {
+     "center": [
+      8.449999809265137,
+      0.699999988079071,
+      11.550000190734863
+     ],
+     "half": [
+      0.32499998807907104,
+      1.399999976158142,
+      0.32499998807907104
+     ]
+    },
+    {
+     "center": [
+      10.050000190734863,
+      0.699999988079071,
+      9.149999618530273
+     ],
+     "half": [
+      0.550000011920929,
+      1.399999976158142,
+      0.550000011920929
+     ]
+    },
+    {
+     "center": [
+      9.899999618530273,
+      0.699999988079071,
+      10.600000381469727
+     ],
+     "half": [
+      0.3100000023841858,
+      1.399999976158142,
+      0.3100000023841858
+     ]
+    },
+    {
+     "center": [
+      10.550000190734863,
+      0.699999988079071,
+      8
+     ],
+     "half": [
+      0.15000000596046448,
+      1.399999976158142,
+      0.15000000596046448
+     ]
+    },
+    {
+     "center": [
+      10.5,
+      0.699999988079071,
+      12.399999618530273
+     ],
+     "half": [
+      0.25,
+      1.399999976158142,
+      0.25
+     ]
+    },
+    {
+     "center": [
+      -2.7200000286102295,
+      0.699999988079071,
+      15.649999618530273
+     ],
+     "half": [
+      0.4749999940395355,
+      1.399999976158142,
+      0.44999998807907104
+     ]
+    },
+    {
+     "center": [
+      -2.549999952316284,
+      0,
+      1
+     ],
+     "half": [
+      0.3499999940395355,
+      1,
+      0.3499999940395355
+     ]
+    },
+    {
+     "center": [
+      -0.699999988079071,
+      0.5,
+      3.049999952316284
+     ],
+     "half": [
+      0.3499999940395355,
+      1,
+      0.3499999940395355
+     ]
+    },
+    {
+     "center": [
+      -3.3,
+      0.7,
+      5.6
+     ],
+     "half": [
+      0.07,
+      1.4,
+      1.9999999999999998
+     ]
+    },
+    {
+     "center": [
+      -3.3,
+      0.7,
+      9.225
+     ],
+     "half": [
+      0.07,
+      1.4,
+      0.27500000000000036
+     ]
+    },
+    {
+     "center": [
+      -8,
+      0.5,
+      -12
+     ],
+     "half": [
+      3.45,
+      2,
+      2.8
+     ]
+    },
+    {
+     "center": [
+      -12,
+      1,
+      -6
+     ],
+     "half": [
+      0.38,
+      2,
+      0.38
+     ]
+    },
+    {
+     "center": [
+      -13,
+      1,
+      -16
+     ],
+     "half": [
+      0.38,
+      2,
+      0.38
+     ]
+    },
+    {
+     "center": [
+      -10,
+      1,
+      -18
+     ],
+     "half": [
+      0.38,
+      2,
+      0.38
+     ]
+    },
+    {
+     "center": [
+      0,
+      1,
+      -5.2
+     ],
+     "half": [
+      0.38,
+      2,
+      0.38
+     ]
+    },
+    {
+     "center": [
+      4,
+      1,
+      -7
+     ],
+     "half": [
+      0.38,
+      2,
+      0.38
+     ]
+    },
+    {
+     "center": [
+      10,
+      1,
+      -10
+     ],
+     "half": [
+      0.38,
+      2,
+      0.38
+     ]
+    },
+    {
+     "center": [
+      13,
+      1,
+      -15
+     ],
+     "half": [
+      0.38,
+      2,
+      0.38
+     ]
+    },
+    {
+     "center": [
+      28,
+      1,
+      -31
+     ],
+     "half": [
+      0.38,
+      2,
+      0.38
+     ]
+    },
+    {
+     "center": [
+      15,
+      1,
+      -31
+     ],
+     "half": [
+      0.38,
+      2,
+      0.38
+     ]
+    },
+    {
+     "center": [
+      30,
+      1,
+      -18
+     ],
+     "half": [
+      0.38,
+      2,
+      0.38
+     ]
+    },
+    {
+     "center": [
+      -1.4,
+      0.6,
+      -7
+     ],
+     "half": [
+      0.85,
+      1,
+      0.34
+     ]
+    },
+    {
+     "center": [
+      -2.8,
+      0.6,
+      -11.4
+     ],
+     "half": [
+      0.12,
+      1,
+      0.12
+     ]
+    },
+    {
+     "center": [
+      20,
+      0.6,
+      -18
+     ],
+     "half": [
+      0.35,
+      1,
+      0.35
+     ]
+    },
+    {
+     "center": [
+      28,
+      0.6,
+      -28.5
+     ],
+     "half": [
+      1.5,
+      1,
+      1
+     ]
+    },
+    {
+     "center": [
+      16.65,
+      0.6,
+      -29.8
+     ],
+     "half": [
+      2.78,
+      1,
+      0.15
+     ]
+    },
+    {
+     "center": [
+      14,
+      0.6,
+      -28.4
+     ],
+     "half": [
+      0.15,
+      1,
+      1.28
+     ]
+    },
+    {
+     "center": [
+      27.5,
+      0.6,
+      -29.8
+     ],
+     "half": [
+      3.55,
+      1,
+      0.12
+     ]
+    },
+    {
+     "center": [
+      19.8,
+      0.6,
+      -30
+     ],
+     "half": [
+      0.23,
+      1,
+      0.23
+     ]
+    },
+    {
+     "center": [
+      24.2,
+      0.6,
+      -30
+     ],
+     "half": [
+      0.23,
+      1,
+      0.23
+     ]
+    }
+   ],
+   "walkable": [
+    {
+     "id": "bedroom",
+     "name": "Bedroom",
+     "title": "A little room of her own.",
+     "minX": -3.299999952316284,
+     "maxX": 3.299999952316284,
+     "minZ": -3.5999999046325684,
+     "maxZ": 3.5999999046325684
+    },
+    {
+     "id": "hall",
+     "name": "Landing",
+     "title": "Little everyday arrivals.",
+     "minX": 3.3000000715255737,
+     "maxX": 6.5000001192092896,
+     "minZ": 0.3999999761581421,
+     "maxZ": 3.600000023841858
+    },
+    {
+     "id": "bathroom",
+     "name": "Bathroom",
+     "title": "Freshen up.",
+     "minX": 3.3000000715255737,
+     "maxX": 6.5000001192092896,
+     "minZ": -3.600000023841858,
+     "maxZ": 0.3999999761581421
+    },
+    {
+     "id": "living",
+     "name": "Living room",
+     "title": "Make yourself at home.",
+     "minX": -3.3000000715255737,
+     "maxX": 6.5000001192092896,
+     "minZ": 3.6000001430511475,
+     "maxZ": 9.500000238418579
+    },
+    {
+     "id": "kitchen",
+     "name": "Kitchen & dining",
+     "title": "Something good cooking.",
+     "minX": -3.3000000417232513,
+     "maxX": 2.6000000536441803,
+     "minZ": 9.499999523162842,
+     "maxZ": 16.299999713897705
+    },
+    {
+     "id": "laundry",
+     "name": "Utility room",
+     "title": "Fresh little folds.",
+     "minX": 2.6000001430511475,
+     "maxX": 6.500000238418579,
+     "minZ": 9.500000357627869,
+     "maxZ": 13.200000405311584
+    },
+    {
+     "id": "nursery",
+     "name": "Lilah’s room",
+     "title": "Little dreams, big adventures.",
+     "minX": 6.5,
+     "maxX": 11,
+     "minZ": -3.5999999046325684,
+     "maxZ": 3.5999999046325684
+    },
+    {
+     "id": "marc-bedroom",
+     "name": "Marc’s room",
+     "title": "Dad’s little quiet corner.",
+     "minX": 6.5,
+     "maxX": 11,
+     "minZ": 3.59999942779541,
+     "maxZ": 13.199999809265137
+    },
+    {
+     "minX": -9,
+     "maxX": -3.3,
+     "minZ": -6,
+     "maxZ": 9.8
+    },
+    {
+     "minX": -14,
+     "maxX": 14,
+     "minZ": -19,
+     "maxZ": -4
+    },
+    {
+     "minX": -4,
+     "maxX": 31,
+     "minZ": -19.5,
+     "maxZ": -16
+    },
+    {
+     "minX": 20,
+     "maxX": 24,
+     "minZ": -27,
+     "maxZ": -18
+    },
+    {
+     "minX": 14,
+     "maxX": 31,
+     "minZ": -33,
+     "maxZ": -26
+    },
+    {
+     "minX": -100,
+     "maxX": 31,
+     "minZ": -27.5,
+     "maxZ": -16.3
+    },
+    {
+     "minX": -32,
+     "maxX": -20,
+     "minZ": -30.8,
+     "maxZ": -25.8
+    },
+    {
+     "minX": -56,
+     "maxX": -44,
+     "minZ": -30.8,
+     "maxZ": -25.8
+    },
+    {
+     "minX": -80,
+     "maxX": -68,
+     "minZ": -30.8,
+     "maxZ": -25.8
+    }
+   ],
+   "interactions": [
+    {
+     "id": "pickup-teddy",
+     "kind": "pickup",
+     "anchor": [
+      -0.7,
+      0.11,
+      1.55
+     ],
+     "marker": [
+      -0.7,
+      0.73,
+      1.55
+     ],
+     "range": 0.85
+    },
+    {
+     "id": "pickup-shirt",
+     "kind": "pickup",
+     "anchor": [
+      -1.7,
+      0.12,
+      0.55
+     ],
+     "marker": [
+      -1.7,
+      0.74,
+      0.55
+     ],
+     "range": 0.85
+    },
+    {
+     "id": "pickup-book",
+     "kind": "pickup",
+     "anchor": [
+      0.25,
+      0.12,
+      -0.8
+     ],
+     "marker": [
+      0.25,
+      0.74,
+      -0.8
+     ],
+     "range": 0.85
+    },
+    {
+     "id": "pickup-vacuum",
+     "kind": "pickup",
+     "anchor": [
+      4.65,
+      0.1,
+      12.15
+     ],
+     "marker": [
+      4.65,
+      0.9199999999999999,
+      12.15
+     ],
+     "range": 0.85
+    },
+    {
+     "id": "toy-chest",
+     "kind": "place",
+     "anchor": [
+      2.4800000190734863,
+      0,
+      -0.7899999618530273
+     ],
+     "marker": [
+      2.4800000190734863,
+      1.4500000476837158,
+      -1.5499999523162842
+     ],
+     "range": 1.1,
+     "placement": [
+      2.4800000190734863,
+      0.8500000238418579,
+      -1.5499999523162842
+     ]
+    },
+    {
+     "id": "hamper",
+     "kind": "place",
+     "anchor": [
+      -2.549999952316284,
+      0,
+      1
+     ],
+     "marker": [
+      -2.549999952316284,
+      1.0399999618530273,
+      1
+     ],
+     "range": 1.05,
+     "placement": [
+      -2.549999952316284,
+      0.6899999976158142,
+      1
+     ]
+    },
+    {
+     "id": "bookshelf",
+     "kind": "place",
+     "anchor": [
+      1.5499999523162842,
+      0,
+      -2.049999952316284
+     ],
+     "marker": [
+      1.5499999523162842,
+      2.3499999046325684,
+      -2.549999952316284
+     ],
+     "range": 1.05,
+     "placement": [
+      1.9399999380111694,
+      0.7900000214576721,
+      -2.490000009536743
+     ]
+    },
+    {
+     "id": "crayons",
+     "kind": "crayons",
+     "anchor": [
+      1.6,
+      0,
+      1.05
+     ],
+     "marker": [
+      2.15,
+      1.68,
+      1.04
+     ],
+     "range": 0.88
+    },
+    {
+     "id": "dirt",
+     "kind": "vacuum",
+     "anchor": [
+      -1.4,
+      0,
+      2.65
+     ],
+     "marker": [
+      -1.4,
+      0.55,
+      2.65
+     ],
+     "range": 1
+    },
+    {
+     "id": "pickup-hall-shoes",
+     "kind": "pickup",
+     "anchor": [
+      4.45,
+      0.09,
+      2.25
+     ],
+     "marker": [
+      4.45,
+      0.71,
+      2.25
+     ],
+     "range": 0.85
+    },
+    {
+     "id": "place-hall-shoes",
+     "kind": "place",
+     "anchor": [
+      5.150000095367432,
+      0,
+      2.5
+     ],
+     "marker": [
+      5.849999904632568,
+      1.2300000190734863,
+      2.5
+     ],
+     "range": 0.95,
+     "placement": [
+      5.849999904632568,
+      0.5799999833106995,
+      2.5
+     ]
+    },
+    {
+     "id": "pickup-hall-mail",
+     "kind": "pickup",
+     "anchor": [
+      4.05,
+      0.09,
+      1.55
+     ],
+     "marker": [
+      4.05,
+      0.71,
+      1.55
+     ],
+     "range": 0.85
+    },
+    {
+     "id": "place-hall-mail",
+     "kind": "place",
+     "anchor": [
+      5.150000095367432,
+      0,
+      1.100000023841858
+     ],
+     "marker": [
+      5.550000190734863,
+      1.5099999904632568,
+      1.100000023841858
+     ],
+     "range": 0.95,
+     "placement": [
+      5.550000190734863,
+      0.8600000143051147,
+      1.100000023841858
+     ]
+    },
+    {
+     "id": "pickup-living-toy",
+     "kind": "pickup",
+     "anchor": [
+      1,
+      0.09,
+      5.25
+     ],
+     "marker": [
+      1,
+      0.71,
+      5.25
+     ],
+     "range": 0.85
+    },
+    {
+     "id": "place-living-toy",
+     "kind": "place",
+     "anchor": [
+      1.9500000476837158,
+      0,
+      7.850000381469727
+     ],
+     "marker": [
+      1.8000000715255737,
+      1.1399999856948853,
+      8.550000190734863
+     ],
+     "range": 0.95,
+     "placement": [
+      1.8000000715255737,
+      0.49000000953674316,
+      8.550000190734863
+     ]
+    },
+    {
+     "id": "pickup-living-cushion",
+     "kind": "pickup",
+     "anchor": [
+      1,
+      0.09,
+      6.8
+     ],
+     "marker": [
+      1,
+      0.71,
+      6.8
+     ],
+     "range": 0.85
+    },
+    {
+     "id": "place-living-cushion",
+     "kind": "place",
+     "anchor": [
+      -1.2999999523162842,
+      0,
+      6
+     ],
+     "marker": [
+      -2,
+      1.3700000047683716,
+      6
+     ],
+     "range": 1.05,
+     "placement": [
+      -2,
+      0.7200000286102295,
+      6
+     ]
+    },
+    {
+     "id": "pickup-kitchen-dish",
+     "kind": "pickup",
+     "anchor": [
+      -0.55,
+      0.09,
+      11.6
+     ],
+     "marker": [
+      -0.55,
+      0.71,
+      11.6
+     ],
+     "range": 0.85
+    },
+    {
+     "id": "place-kitchen-dish",
+     "kind": "place",
+     "anchor": [
+      -1.7000000476837158,
+      0,
+      11.449999809265137
+     ],
+     "marker": [
+      -2.6500000953674316,
+      1.690000057220459,
+      11.449999809265137
+     ],
+     "range": 1.05,
+     "placement": [
+      -2.6500000953674316,
+      1.0399999618530273,
+      11.449999809265137
+     ]
+    },
+    {
+     "id": "pickup-kitchen-trash",
+     "kind": "pickup",
+     "anchor": [
+      0.4,
+      0.09,
+      10.5
+     ],
+     "marker": [
+      0.4,
+      0.71,
+      10.5
+     ],
+     "range": 0.85
+    },
+    {
+     "id": "place-kitchen-trash",
+     "kind": "place",
+     "anchor": [
+      1.3000000715255737,
+      0,
+      10.300000190734863
+     ],
+     "marker": [
+      1.9500000476837158,
+      1.2999999523162842,
+      10.300000190734863
+     ],
+     "range": 0.95,
+     "placement": [
+      1.9500000476837158,
+      0.6499999761581421,
+      10.300000190734863
+     ]
+    },
+    {
+     "id": "pickup-laundry-clothes",
+     "kind": "pickup",
+     "anchor": [
+      4.3,
+      0.09,
+      10.9
+     ],
+     "marker": [
+      4.3,
+      0.71,
+      10.9
+     ],
+     "range": 0.85
+    },
+    {
+     "id": "place-laundry-clothes",
+     "kind": "place",
+     "anchor": [
+      3.3499999046325684,
+      0,
+      11.149999618530273
+     ],
+     "marker": [
+      3.3499999046325684,
+      1.1799999475479126,
+      10.699999809265137
+     ],
+     "range": 0.95,
+     "placement": [
+      3.3499999046325684,
+      0.5299999713897705,
+      10.699999809265137
+     ]
+    },
+    {
+     "id": "pickup-laundry-clean",
+     "kind": "pickup",
+     "anchor": [
+      5.85,
+      0.48,
+      10.5
+     ],
+     "marker": [
+      5.85,
+      1.1,
+      10.5
+     ],
+     "range": 0.85
+    },
+    {
+     "id": "place-laundry-clean",
+     "kind": "place",
+     "anchor": [
+      5.800000190734863,
+      0,
+      11.75
+     ],
+     "marker": [
+      5.78000020980835,
+      1.6200000047683716,
+      12.630000114440918
+     ],
+     "range": 0.95,
+     "placement": [
+      5.78000020980835,
+      0.9700000286102295,
+      12.630000114440918
+     ]
+    },
+    {
+     "id": "pickup-bath-towel",
+     "kind": "pickup",
+     "anchor": [
+      4.65,
+      0.09,
+      -1.45
+     ],
+     "marker": [
+      4.65,
+      0.71,
+      -1.45
+     ],
+     "range": 0.85
+    },
+    {
+     "id": "place-bath-towel",
+     "kind": "place",
+     "anchor": [
+      4.049999713897705,
+      0,
+      -0.5249999761581421
+     ],
+     "marker": [
+      3.619999885559082,
+      1.4900000095367432,
+      -0.5249999761581421
+     ],
+     "range": 0.95,
+     "placement": [
+      3.619999885559082,
+      0.8399999737739563,
+      -0.5249999761581421
+     ]
+    },
+    {
+     "id": "pickup-bath-bottle",
+     "kind": "pickup",
+     "anchor": [
+      4.7,
+      0.09,
+      -2.15
+     ],
+     "marker": [
+      4.7,
+      0.71,
+      -2.15
+     ],
+     "range": 0.85
+    },
+    {
+     "id": "place-bath-bottle",
+     "kind": "place",
+     "anchor": [
+      4.119999885559082,
+      0,
+      -2.3499999046325684
+     ],
+     "marker": [
+      4.099999904632568,
+      1.6100000143051147,
+      -3.0799999237060547
+     ],
+     "range": 0.95,
+     "placement": [
+      4.099999904632568,
+      0.9599999785423279,
+      -3.0799999237060547
+     ]
+    },
+    {
+     "id": "pickup-scooper",
+     "kind": "pickup",
+     "anchor": [
+      3.8,
+      0.04,
+      3
+     ],
+     "marker": [
+      3.8,
+      0.66,
+      3
+     ],
+     "range": 0.85
+    },
+    {
+     "id": "scoop-poop",
+     "kind": "pet",
+     "anchor": [
+      3.7,
+      0,
+      5.3
+     ],
+     "marker": [
+      3.7,
+      0.55,
+      5.3
+     ],
+     "range": 0.9
+    },
+    {
+     "id": "flush-poop",
+     "kind": "pet",
+     "anchor": [
+      5.15,
+      0,
+      -0.38
+     ],
+     "marker": [
+      5.87,
+      1,
+      -0.38
+     ],
+     "range": 0.85
+    },
+    {
+     "id": "wash-hands",
+     "kind": "pet",
+     "anchor": [
+      4.12,
+      0,
+      -2.35
+     ],
+     "marker": [
+      4.1,
+      1.45,
+      -3.08
+     ],
+     "range": 0.9
+    },
+    {
+     "id": "lilah-mess-0",
+     "kind": "daily",
+     "anchor": [
+      0,
+      0,
+      0
+     ],
+     "marker": [
+      0,
+      0,
+      0
+     ],
+     "range": 1
+    },
+    {
+     "id": "lilah-mess-1",
+     "kind": "daily",
+     "anchor": [
+      0,
+      0,
+      0
+     ],
+     "marker": [
+      0,
+      0,
+      0
+     ],
+     "range": 1
+    },
+    {
+     "id": "lilah-mess-2",
+     "kind": "daily",
+     "anchor": [
+      0,
+      0,
+      0
+     ],
+     "marker": [
+      0,
+      0,
+      0
+     ],
+     "range": 1
+    },
+    {
+     "id": "play-lilah",
+     "kind": "daily",
+     "anchor": [
+      0.9962431788444519,
+      0.09000000357627869,
+      0.7338119745254517
+     ],
+     "marker": [
+      0.9962431788444519,
+      1.0346562535762787,
+      0.7338119745254517
+     ],
+     "range": 1.1
+    },
+    {
+     "id": "feed-dog",
+     "kind": "daily",
+     "anchor": [
+      4.800000190734863,
+      0,
+      8.800000190734863
+     ],
+     "marker": [
+      4.949999809265137,
+      0.20000000298023224,
+      8.550000190734863
+     ],
+     "range": 1
+    },
+    {
+     "id": "daily-teeth",
+     "kind": "daily",
+     "anchor": [
+      4.119999885559082,
+      0,
+      -2.3499999046325684
+     ],
+     "marker": [
+      4.119999885559082,
+      1.149999976158142,
+      -3.0299999713897705
+     ],
+     "range": 1
+    },
+    {
+     "id": "choose-clothes",
+     "kind": "daily",
+     "anchor": [
+      -0.699999988079071,
+      0,
+      2.4000000953674316
+     ],
+     "marker": [
+      -0.699999988079071,
+      0.800000011920929,
+      3.049999952316284
+     ],
+     "range": 1
+    },
+    {
+     "id": "get-dressed",
+     "kind": "daily",
+     "anchor": [
+      -0.8499999046325684,
+      0,
+      -0.6500000953674316
+     ],
+     "marker": [
+      -1.3499999046325684,
+      0.8999999761581421,
+      -0.6500000953674316
+     ],
+     "range": 1
+    },
+    {
+     "id": "night-clothes",
+     "kind": "daily",
+     "anchor": [
+      -0.8499999046325684,
+      0,
+      -0.6500000953674316
+     ],
+     "marker": [
+      -1.3499999046325684,
+      0.8999999761581421,
+      -0.6500000953674316
+     ],
+     "range": 1
+    },
+    {
+     "id": "clothes-drawer",
+     "kind": "daily",
+     "anchor": [
+      -0.699999988079071,
+      0,
+      2.4000000953674316
+     ],
+     "marker": [
+      -0.699999988079071,
+      0.800000011920929,
+      3.049999952316284
+     ],
+     "range": 1
+    },
+    {
+     "id": "take-egg",
+     "kind": "daily",
+     "anchor": [
+      -1.8000000715255737,
+      0,
+      14.550000190734863
+     ],
+     "marker": [
+      -2.6000001430511475,
+      1.100000023841858,
+      14.550000190734863
+     ],
+     "range": 1
+    },
+    {
+     "id": "crack-egg",
+     "kind": "daily",
+     "anchor": [
+      -1.7999999523162842,
+      0,
+      12.649999618530273
+     ],
+     "marker": [
+      -2.630000114440918,
+      1.149999976158142,
+      12.649999618530273
+     ],
+     "range": 1
+    },
+    {
+     "id": "cook-egg",
+     "kind": "daily",
+     "anchor": [
+      -1.7999999523162842,
+      0,
+      12.649999618530273
+     ],
+     "marker": [
+      -2.630000114440918,
+      1.149999976158142,
+      12.649999618530273
+     ],
+     "range": 1
+    },
+    {
+     "id": "take-breakfast",
+     "kind": "daily",
+     "anchor": [
+      -1.7999999523162842,
+      0,
+      12.649999618530273
+     ],
+     "marker": [
+      -2.630000114440918,
+      1.149999976158142,
+      12.649999618530273
+     ],
+     "range": 1
+    },
+    {
+     "id": "serve-breakfast",
+     "kind": "daily",
+     "anchor": [
+      0.550000011920929,
+      0,
+      11.90000057220459
+     ],
+     "marker": [
+      0.550000011920929,
+      0.8999999761581421,
+      13.15000057220459
+     ],
+     "range": 1
+    },
+    {
+     "id": "eat-breakfast",
+     "kind": "daily",
+     "anchor": [
+      0.550000011920929,
+      0,
+      11.90000057220459
+     ],
+     "marker": [
+      0.550000011920929,
+      0.8999999761581421,
+      13.15000057220459
+     ],
+     "range": 1
+    },
+    {
+     "id": "take-towel",
+     "kind": "daily",
+     "anchor": [
+      -1.7999999523162842,
+      0,
+      10.5
+     ],
+     "marker": [
+      -2.6500000953674316,
+      1.149999976158142,
+      10.5
+     ],
+     "range": 1
+    },
+    {
+     "id": "wipe-egg",
+     "kind": "daily",
+     "anchor": [
+      -1.5,
+      0,
+      12.55
+     ],
+     "marker": [
+      -1.5,
+      0.12,
+      12.55
+     ],
+     "range": 1
+    },
+    {
+     "id": "wipe-spill",
+     "kind": "daily",
+     "anchor": [
+      0.1,
+      0,
+      11.1
+     ],
+     "marker": [
+      0.1,
+      0.12,
+      11.1
+     ],
+     "range": 1
+    },
+    {
+     "id": "daily-vacuum",
+     "kind": "daily",
+     "anchor": [
+      4.650000095367432,
+      0.10000000149011612,
+      12.15000057220459
+     ],
+     "marker": [
+      4.650000095367432,
+      1,
+      12.15000057220459
+     ],
+     "range": 1
+    },
+    {
+     "id": "vacuum-0",
+     "kind": "daily",
+     "anchor": [
+      1.1,
+      0,
+      7.2
+     ],
+     "marker": [
+      1.1,
+      0.35,
+      7.2
+     ],
+     "range": 1
+    },
+    {
+     "id": "vacuum-1",
+     "kind": "daily",
+     "anchor": [
+      1,
+      0,
+      8.3
+     ],
+     "marker": [
+      1,
+      0.35,
+      8.3
+     ],
+     "range": 1
+    },
+    {
+     "id": "vacuum-2",
+     "kind": "daily",
+     "anchor": [
+      2.2,
+      0,
+      11.6
+     ],
+     "marker": [
+      2.2,
+      0.35,
+      11.6
+     ],
+     "range": 1
+    },
+    {
+     "id": "put-tool-away",
+     "kind": "daily",
+     "anchor": [
+      -2.65,
+      1.02,
+      10.5
+     ],
+     "marker": [
+      -2.65,
+      1.82,
+      10.5
+     ],
+     "range": 1
+    },
+    {
+     "id": "bedtime-book",
+     "kind": "daily",
+     "anchor": [
+      -0.8499999046325684,
+      0,
+      -0.8000000715255737
+     ],
+     "marker": [
+      -1.399999976158142,
+      0.8999999761581421,
+      -0.8000000715255737
+     ],
+     "range": 1
+    },
+    {
+     "id": "school-door",
+     "kind": "daily",
+     "anchor": [
+      -2.3499999046325684,
+      0,
+      8.199999809265137
+     ],
+     "marker": [
+      -3.0999999046325684,
+      1.100000023841858,
+      8.199999809265137
+     ],
+     "range": 1
+    },
+    {
+     "id": "shop-door",
+     "kind": "daily",
+     "anchor": [
+      -2.3499999046325684,
+      0,
+      8.199999809265137
+     ],
+     "marker": [
+      -3.0999999046325684,
+      1.100000023841858,
+      8.199999809265137
+     ],
+     "range": 1
+    },
+    {
+     "id": "sleep",
+     "kind": "daily",
+     "anchor": [
+      -0.8499999046325684,
+      0,
+      -1.600000023841858
+     ],
+     "marker": [
+      -1.399999976158142,
+      0.800000011920929,
+      -1.600000023841858
+     ],
+     "range": 1
+    },
+    {
+     "id": "lilah-bed",
+     "kind": "daily",
+     "anchor": [
+      8.55,
+      0,
+      -1.3
+     ],
+     "marker": [
+      9.1,
+      0.9,
+      -1.7
+     ],
+     "range": 1
+    }
+   ]
+  },
+  "corner": {
+   "name": "Clover Corner",
+   "obstacles": [
+    {
+     "center": [
+      1.4500000476837158,
+      0.5,
+      -4.769999980926514
+     ],
+     "half": [
+      1.5750000476837158,
+      1,
+      0.4099999964237213
+     ]
+    },
+    {
+     "center": [
+      -2.549999952316284,
+      0.5,
+      -0.75
+     ],
+     "half": [
+      0.46000000834465055,
+      1,
+      1.2599999904632568
+     ]
+    },
+    {
+     "center": [
+      -2.3499999046325684,
+      0.5,
+      -4.650000095367432
+     ],
+     "half": [
+      1.225000023841858,
+      1,
+      0.4749999940395355
+     ]
+    },
+    {
+     "center": [
+      -3.049999952316284,
+      0.5,
+      3.5
+     ],
+     "half": [
+      0.6499999761581421,
+      0.5,
+      0.4000000059604645
+     ]
+    },
+    {
+     "center": [
+      1.25,
+      0.5,
+      -0.6499999761581421
+     ],
+     "half": [
+      1.2599999904632568,
+      1,
+      0.46000000834465027
+     ]
+    },
+    {
+     "center": [
+      0.6000000238418579,
+      0.5,
+      3.3499999046325684
+     ],
+     "half": [
+      1.350000023841858,
+      0.75,
+      0.824999988079071
+     ]
+    },
+    {
+     "center": [
+      -4.050000190734863,
+      0,
+      1.5
+     ],
+     "half": [
+      0.3799999952316284,
+      1,
+      0.550000011920929
+     ]
+    },
+    {
+     "center": [
+      -4.050000190734863,
+      0,
+      -3.1500000953674316
+     ],
+     "half": [
+      0.3199999928474426,
+      1,
+      0.6499999761581421
+     ]
+    },
+    {
+     "center": [
+      4.050000190734863,
+      0,
+      3.450000047683716
+     ],
+     "half": [
+      0.33000001311302185,
+      1,
+      0.33000001311302185
+     ]
+    },
+    {
+     "center": [
+      3.6500000953674316,
+      0.4000000059604645,
+      1.4500000476837158
+     ],
+     "half": [
+      0.6499999761581421,
+      0.4000000059604645,
+      0.4000000059604645
+     ]
+    },
+    {
+     "center": [
+      -4.300000190734863,
+      0.574999988079071,
+      4.800000190734863
+     ],
+     "half": [
+      0.3449999988079071,
+      0.574999988079071,
+      0.3449999988079071
+     ]
+    },
+    {
+     "center": [
+      4.25,
+      0.574999988079071,
+      -3.299999952316284
+     ],
+     "half": [
+      0.3449999988079071,
+      0.574999988079071,
+      0.3449999988079071
+     ]
+    }
+   ],
+   "walkable": [
+    {
+     "minX": -4.800000190734863,
+     "maxX": 4.800000190734863,
+     "minZ": -5.800000190734863,
+     "maxZ": 5.800000190734863
+    }
+   ],
+   "sites": [
+    {
+     "id": 0,
+     "anchor": [
+      1.4500000476837158,
+      0,
+      -3.569999933242798
+     ],
+     "marker": [
+      1,
+      1.4800000190734863,
+      -4.420000076293945
+     ]
+    },
+    {
+     "id": 1,
+     "anchor": [
+      -1.399999976158142,
+      0,
+      -0.75
+     ],
+     "marker": [
+      -2.2899999618530273,
+      1.8300000429153442,
+      -1.100000023841858
+     ]
+    },
+    {
+     "id": 2,
+     "anchor": [
+      -2.3499999046325684,
+      0,
+      -3.3500001430511475
+     ],
+     "marker": [
+      -1.6499998569488525,
+      1.659999966621399,
+      -4.550000190734863
+     ]
+    },
+    {
+     "id": 3,
+     "anchor": [
+      -2,
+      0,
+      3.5
+     ],
+     "marker": [
+      -2.809999942779541,
+      0.9200000166893005,
+      3.5
+     ]
+    },
+    {
+     "id": 4,
+     "anchor": [
+      1.25,
+      0,
+      0.6000000238418579
+     ],
+     "marker": [
+      1.600000023841858,
+      1.8300000429153442,
+      -0.38999998569488525
+     ]
+    },
+    {
+     "id": 5,
+     "anchor": [
+      -1.2999999523162842,
+      0,
+      3.3499999046325684
+     ],
+     "marker": [
+      1.3200000524520874,
+      1.4700000286102295,
+      3.799999952316284
+     ]
+    }
+   ],
+   "exit": [
+    0,
+    0,
+    5.150000095367432
+   ]
+  },
+  "toys": {
+   "name": "Peachy Playroom",
+   "obstacles": [
+    {
+     "center": [
+      -3.4000000953674316,
+      0.5,
+      -5.650000095367432
+     ],
+     "half": [
+      1.225000023841858,
+      1,
+      0.36000001430511475
+     ]
+    },
+    {
+     "center": [
+      -1.149999976158142,
+      0.5,
+      0.699999988079071
+     ],
+     "half": [
+      0.4600000083446506,
+      1,
+      1.5750000476837158
+     ]
+    },
+    {
+     "center": [
+      3.799999952316284,
+      0.5,
+      4.699999809265137
+     ],
+     "half": [
+      0.8575000166893005,
+      1,
+      0.33250001072883606
+     ]
+    },
+    {
+     "center": [
+      -0.25,
+      0.5,
+      4.199999809265137
+     ],
+     "half": [
+      1.399999976158142,
+      0.6499999761581421,
+      0.550000011920929
+     ]
+    },
+    {
+     "center": [
+      2.1500000953674316,
+      0.5,
+      0.699999988079071
+     ],
+     "half": [
+      0.4600000083446506,
+      1,
+      1.5750000476837158
+     ]
+    },
+    {
+     "center": [
+      0.550000011920929,
+      0.5,
+      -3.549999952316284
+     ],
+     "half": [
+      1.350000023841858,
+      0.75,
+      0.824999988079071
+     ]
+    },
+    {
+     "center": [
+      -4.400000095367432,
+      0,
+      3.700000047683716
+     ],
+     "half": [
+      0.3799999952316284,
+      1,
+      0.550000011920929
+     ]
+    },
+    {
+     "center": [
+      0.10000000149011612,
+      0,
+      -5.699999809265137
+     ],
+     "half": [
+      0.3199999928474426,
+      1,
+      0.6499999761581421
+     ]
+    },
+    {
+     "center": [
+      4.449999809265137,
+      0,
+      -1.7000000476837158
+     ],
+     "half": [
+      0.33000001311302185,
+      1,
+      0.33000001311302185
+     ]
+    },
+    {
+     "center": [
+      -4,
+      0.5,
+      -0.550000011920929
+     ],
+     "half": [
+      0.675000011920929,
+      1,
+      1.899999976158142
+     ]
+    },
+    {
+     "center": [
+      3,
+      0.5,
+      -5.349999904632568
+     ],
+     "half": [
+      0.699999988079071,
+      0.5,
+      0.3499999940395355
+     ]
+    },
+    {
+     "center": [
+      -4.699999809265137,
+      0.574999988079071,
+      5.5
+     ],
+     "half": [
+      0.3449999988079071,
+      0.574999988079071,
+      0.3449999988079071
+     ]
+    },
+    {
+     "center": [
+      4.650000095367432,
+      0.574999988079071,
+      -4
+     ],
+     "half": [
+      0.3449999988079071,
+      0.574999988079071,
+      0.3449999988079071
+     ]
+    }
+   ],
+   "walkable": [
+    {
+     "minX": -5.199999809265137,
+     "maxX": 5.199999809265137,
+     "minZ": -6.5,
+     "maxZ": 6.5
+    }
+   ],
+   "sites": [
+    {
+     "id": 0,
+     "anchor": [
+      -3.4000000953674316,
+      0,
+      -4.449999809265137
+     ],
+     "marker": [
+      -3.75,
+      1.659999966621399,
+      -5.289999961853027
+     ]
+    },
+    {
+     "id": 1,
+     "anchor": [
+      0,
+      0,
+      0.699999988079071
+     ],
+     "marker": [
+      -0.8899999856948853,
+      1.8300000429153442,
+      0.3499999940395355
+     ]
+    },
+    {
+     "id": 2,
+     "anchor": [
+      2.549999952316284,
+      0,
+      4.699999809265137
+     ],
+     "marker": [
+      4.5,
+      1.659999966621399,
+      4.799999713897705
+     ]
+    },
+    {
+     "id": 3,
+     "anchor": [
+      -2.1500000953674316,
+      0,
+      4.199999809265137
+     ],
+     "marker": [
+      0.25,
+      1.2999999523162842,
+      4.5
+     ]
+    },
+    {
+     "id": 4,
+     "anchor": [
+      3.3000001907348633,
+      0,
+      0.699999988079071
+     ],
+     "marker": [
+      2.4100000858306885,
+      1.8300000429153442,
+      0.3499999940395355
+     ]
+    },
+    {
+     "id": 5,
+     "anchor": [
+      0.550000011920929,
+      0,
+      -2.049999952316284
+     ],
+     "marker": [
+      1.2699999809265137,
+      1.4700000286102295,
+      -3.0999999046325684
+     ]
+    }
+   ],
+   "exit": [
+    0,
+    0,
+    5.849999904632568
+   ]
+  },
+  "collector": {
+   "name": "Moonbeam Finds",
+   "obstacles": [
+    {
+     "center": [
+      -0.25,
+      0.5,
+      -5.679999828338623
+     ],
+     "half": [
+      2.125,
+      1,
+      0.41499999165534973
+     ]
+    },
+    {
+     "center": [
+      -1.7000000476837158,
+      0.5,
+      -0.05000000074505806
+     ],
+     "half": [
+      0.4600000083446507,
+      1,
+      2.0160000324249268
+     ]
+    },
+    {
+     "center": [
+      3.5199999809265137,
+      0.5,
+      -4.25
+     ],
+     "half": [
+      1.225000023841858,
+      1,
+      0.4749999940395355
+     ]
+    },
+    {
+     "center": [
+      -0.15000000596046448,
+      0.5,
+      4.449999809265137
+     ],
+     "half": [
+      1.399999976158142,
+      0.6499999761581421,
+      0.550000011920929
+     ]
+    },
+    {
+     "center": [
+      1.649999976158142,
+      0.5,
+      -0.05000000074505806
+     ],
+     "half": [
+      0.4600000083446507,
+      1,
+      2.0160000324249268
+     ]
+    },
+    {
+     "center": [
+      3.799999952316284,
+      0.5,
+      2.6500000953674316
+     ],
+     "half": [
+      0.824999988079071,
+      1,
+      0.824999988079071
+     ]
+    },
+    {
+     "center": [
+      -4.21999979019165,
+      0,
+      2.9000000953674316
+     ],
+     "half": [
+      0.3799999952316284,
+      1,
+      0.550000011920929
+     ]
+    },
+    {
+     "center": [
+      -4.150000095367432,
+      0,
+      -3.299999952316284
+     ],
+     "half": [
+      0.6499999761581422,
+      1,
+      0.3199999928474428
+     ]
+    },
+    {
+     "center": [
+      -4.25,
+      0,
+      4.900000095367432
+     ],
+     "half": [
+      0.33000001311302185,
+      1,
+      0.33000001311302185
+     ]
+    },
+    {
+     "center": [
+      -3.25,
+      0.5,
+      -5.800000190734863
+     ],
+     "half": [
+      0.3499999940395355,
+      0.5,
+      0.3499999940395355
+     ]
+    },
+    {
+     "center": [
+      -4.599999904632568,
+      0.574999988079071,
+      5.800000190734863
+     ],
+     "half": [
+      0.3449999988079071,
+      0.574999988079071,
+      0.3449999988079071
+     ]
+    },
+    {
+     "center": [
+      4.550000190734863,
+      0.574999988079071,
+      -4.300000190734863
+     ],
+     "half": [
+      0.3449999988079071,
+      0.574999988079071,
+      0.3449999988079071
+     ]
+    }
+   ],
+   "walkable": [
+    {
+     "minX": -5.099999904632568,
+     "maxX": 5.099999904632568,
+     "minZ": -6.800000190734863,
+     "maxZ": 6.800000190734863
+    }
+   ],
+   "sites": [
+    {
+     "id": 0,
+     "anchor": [
+      -0.25,
+      0,
+      -4.479999542236328
+     ],
+     "marker": [
+      -0.699999988079071,
+      1.4800000190734863,
+      -5.329999923706055
+     ]
+    },
+    {
+     "id": 1,
+     "anchor": [
+      -0.5500000715255737,
+      0,
+      -0.05000000074505806
+     ],
+     "marker": [
+      -1.440000057220459,
+      1.8300000429153442,
+      -0.4000000059604645
+     ]
+    },
+    {
+     "id": 2,
+     "anchor": [
+      3.5199999809265137,
+      0,
+      -2.950000047683716
+     ],
+     "marker": [
+      4.21999979019165,
+      1.659999966621399,
+      -4.150000095367432
+     ]
+    },
+    {
+     "id": 3,
+     "anchor": [
+      -2.049999952316284,
+      0,
+      4.449999809265137
+     ],
+     "marker": [
+      0.3499999940395355,
+      1.2999999523162842,
+      4.75
+     ]
+    },
+    {
+     "id": 4,
+     "anchor": [
+      2.799999952316284,
+      0,
+      -0.05000000074505806
+     ],
+     "marker": [
+      1.909999966621399,
+      1.8300000429153442,
+      -0.4000000059604645
+     ]
+    },
+    {
+     "id": 5,
+     "anchor": [
+      2.4499998092651367,
+      0,
+      2.6500000953674316
+     ],
+     "marker": [
+      4.25,
+      1.2200000286102295,
+      2.8000001907348633
+     ]
+    }
+   ],
+   "exit": [
+    0,
+    0,
+    6.150000095367432
+   ]
+  }
+ },
+ "errors": [],
+ "httpErrors": []
+}

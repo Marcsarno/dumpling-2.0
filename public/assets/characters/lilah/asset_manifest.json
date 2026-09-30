@@ -1,0 +1,13 @@
+{
+  "character": "Lilah",
+  "age_years": 2,
+  "source": "experiments/meshy/revisions/v2/lilah/lilah_review.glb",
+  "sha256": "1236fca01d74a3a6ece5b3ff4e725ff3267d236b75515ad467ba21a2aa583a80",
+  "source_preserved": true,
+  "rest_height_m": 1.03,
+  "height_relative_to_arianna": 0.625,
+  "up_axis": "+Y",
+  "forward_axis": "+Z",
+  "joints": 25,
+  "animations": ["Idle", "Walk", "CarryIdle", "CarryWalk", "PickUp", "PutDown", "Celebrate", "SitCar"]
+}

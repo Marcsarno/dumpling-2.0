@@ -1,0 +1,7 @@
+{
+  "assets": [
+    {"file":"blackboard.glb","title":"Blackboard","author":"Poly by Google","source":"https://poly.pizza/m/2Qv_L8pbv6W","license":"CC-BY-3.0","licenseUrl":"https://creativecommons.org/licenses/by/3.0/","changes":"Uniform scale and classroom placement; original GLB retained."},
+    {"file":"bulletin-board.glb","title":"Bulletin board","author":"Poly by Google","source":"https://poly.pizza/m/2CvK24vFhUK","license":"CC-BY-3.0","licenseUrl":"https://creativecommons.org/licenses/by/3.0/","changes":"Uniform scale, rotation and classroom placement; original GLB retained."}
+  ],
+  "furniture":"Desks, desk chairs, books, bookcase, coat rack, bench, plant and bin reuse the credited CC0 Kenney Furniture Kit with classroom-specific painted colors."
+}

@@ -1,0 +1,213 @@
+{
+ "registries": {
+  "dumplings": [
+   "mochi",
+   "rosie",
+   "minty",
+   "blueberry",
+   "sunny",
+   "lavendream",
+   "peachy",
+   "stardrop",
+   "shortcake",
+   "custard",
+   "cocoa",
+   "macaron",
+   "sorbet",
+   "sugarstar",
+   "bunny",
+   "kitten",
+   "panda",
+   "fox",
+   "sleepykoala",
+   "goldenbear",
+   "moonbean",
+   "comet",
+   "nebula",
+   "orbit",
+   "aurora",
+   "supernova",
+   "dewdrop-unicorn",
+   "sunbeam-unicorn",
+   "sugarplum-bunny",
+   "opal-bunny",
+   "starlight-panda",
+   "moonwish-panda",
+   "nebula-dragon",
+   "solstice-dragon"
+  ],
+  "series": [
+   "garden",
+   "treats",
+   "animals",
+   "galaxy"
+  ],
+  "stores": [
+   "corner",
+   "toys",
+   "collector"
+  ],
+  "traders": [
+   "rarity",
+   "series",
+   "cute"
+  ],
+  "popLevels": [
+   "little-chains",
+   "big-squishes",
+   "friend-party"
+  ],
+  "homeToys": [
+   "sofa",
+   "desk-surface",
+   "basket",
+   "ball",
+   "cup0",
+   "cup1",
+   "cup2",
+   "beanbag",
+   "teddy",
+   "picnic-plate",
+   "cake",
+   "pitcher",
+   "wagon",
+   "block0",
+   "block1",
+   "block2",
+   "block3",
+   "block4",
+   "car",
+   "ramp0",
+   "ramp1",
+   "cushion0",
+   "cushion1",
+   "blanket",
+   "toy-bed",
+   "paper",
+   "book",
+   "hat",
+   "pinwheel",
+   "board",
+   "jack",
+   "duck",
+   "fetch",
+   "basin",
+   "boat",
+   "bubbles",
+   "flower",
+   "can",
+   "flamingo",
+   "rake",
+   "marker0",
+   "marker1"
+  ],
+  "playActivities": [
+   "goal",
+   "bowling",
+   "cans",
+   "cart",
+   "boat",
+   "duck",
+   "bubbles",
+   "flower",
+   "pinwheel",
+   "jack",
+   "puddles",
+   "leaves",
+   "plane",
+   "flamingo",
+   "picnic"
+  ],
+  "afternoonExtras": [
+   "laundry-clothes",
+   "living-toy",
+   "kitchen-dish",
+   "kitchen-trash",
+   "bath-towel",
+   "hall-shoes",
+   "hall-mail",
+   "living-cushion",
+   "laundry-clean",
+   "bath-bottle",
+   "book"
+  ],
+  "rooms": [
+   "bedroom",
+   "hall",
+   "bathroom",
+   "living",
+   "kitchen",
+   "laundry",
+   "nursery",
+   "marc-bedroom"
+  ],
+  "stockSites": [
+   "Main shelf",
+   "Endcap",
+   "Checkout display",
+   "Basket",
+   "Lower shelf",
+   "Special display"
+  ],
+  "dust": [
+   [
+    1.2,
+    5.2
+   ],
+   [
+    3.3,
+    6.1
+   ],
+   [
+    1.1,
+    7.2
+   ],
+   [
+    1,
+    8.3
+   ],
+   [
+    0.2,
+    10.6
+   ],
+   [
+    2.2,
+    11.6
+   ]
+  ],
+  "spill": [
+   [
+    0.1,
+    11.1
+   ],
+   [
+    1.7,
+    10.7
+   ],
+   [
+    -0.8,
+    11.5
+   ]
+  ],
+  "definitions": {
+   "dumplings": "1d969faf4cf4d0741c3c2544b78fca8661fc8335e1de1eb483ee81dc5ca5d0d5",
+   "series": "bd844523dc9885d46257102bce75d7d2af9add6a0a10fa7eaaea1aa5c0d6c389",
+   "stores": "6718ab7021fa28c3ca98f9c8fe47c0c57c78f536cb679eea46ca4c0871df5e93",
+   "traders": "ef85c63a37536e2718b7f1e617bcd19b741c9a5d04b0901d6c2eac108ccb4cd5",
+   "popLevels": "c1d1acfada85e3a1eff479bf0be1aaad7a73e8e9ebe4ad6f72ad50122e3b2f14",
+   "homeToys": "8e862bdacfed8843abcd652d1af41548576aa947fb9f3e6c3aa12e2f9fc12f18",
+   "playActivities": "109ff0dcf8246a3ada425bcbb93e1e1863c225c1259894a4701bdef9d9d6b84d",
+   "afternoonExtras": "c63170c6665783c5e57672f1fb0cf9a3c2c6dde10722aeb4f8921977a681cbd9",
+   "rooms": "a4bd3a1ff5ed54e2c0f9b2cc365281a366160e05fc46b8f3bcda35e76d769945"
+  }
+ },
+ "registriesDigest": "76c8afff3f4e70b43554fdff45db7ea3093ed34c2da12500ed77cac5a363f088",
+ "outputs": {
+  "tradingDays": "38adf0b38e6a74e6b99b22ca87936c7a3233077ff07df92e3749f9a4291ff142",
+  "ticketPrizes": "37d2a5cc89ebfbafd80dcae43b9c39a973182039254b4f1c5f19a1f802273761",
+  "huntDays": "70ef392658f9b8962ea15236ce0e7a90d417f3046c9b4bfbaebab27b9c99b28a",
+  "dailyPlay": "4b16fbaf0fc213d6015cd263cace79a60882643e605a06d66deed2def55fc133",
+  "rollDumpling": "080eba28fc36e911f43ee32fe9e0e655e93ebf50234bc738765e673a9fdfae1d",
+  "rollSeries": "afdbbb35130070567bb98d30197c5b9a58a315fb3a8b08470aa2655f13be48c4"
+ }
+}

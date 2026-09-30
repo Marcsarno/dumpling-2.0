@@ -1,0 +1,57 @@
+{
+  "milestone": "House Gameplay Polish + Lilah Tornado V1",
+  "character": "Existing Arianna Meshy skeleton; original character GLB unchanged",
+  "motion_assets": [
+    {
+      "file": "cmu-trajectories.json",
+      "source": "Carnegie Mellon University Motion Capture Database",
+      "source_url": "https://mocap.cs.cmu.edu/",
+      "catalog_url": "https://mocap.cs.cmu.edu/search.php?maincat=5&subcat=1",
+      "clips": [
+        "13_20: wash windows",
+        "13_23: sweep floor"
+      ],
+      "source_files": [
+        "https://mocap.cs.cmu.edu/subjects/13/13.asf",
+        "https://mocap.cs.cmu.edu/subjects/13/13_20.amc",
+        "https://mocap.cs.cmu.edu/subjects/13/13_23.amc"
+      ],
+      "license": "CMU database terms: free for all uses, including inclusion in commercial products. The motion data itself may not be resold, including converted forms. This is not a CC0 declaration.",
+      "attribution": "The data used in this project was obtained from mocap.cs.cmu.edu. The database was created with funding from NSF EIA-0196217.",
+      "adaptation": "ASF forward kinematics; root-relative hand trajectories, frames 180–539, 120 to 30 Hz; centered and normalized; loop seam blended over 0.2 seconds. Existing Meshy upper limbs retargeted with two-bone IK. Hand envelope and torso lean adjusted for floor wiping and vacuum handle height; locomotion, feet, character proportions and original GLB preserved. Existing pickup/putdown clips retained for object handling. Floor wiping includes a deep crouch using foot IK to preserve both original floor anchors.",
+      "conversion_script": "scripts/prepare-house-motion.mjs",
+      "reviewed": "2026-09-17"
+    }
+  ],
+  "audio_assets": [
+    {
+      "source": "Kenney Interface Sounds",
+      "source_url": "https://kenney.nl/assets/interface-sounds",
+      "license": "CC0 1.0",
+      "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "files": [
+        "/assets/pop/audio/click_001.wav",
+        "/assets/pop/audio/pluck_001.wav",
+        "/assets/pop/audio/drop_001.wav",
+        "/assets/pop/audio/drop_002.wav",
+        "/assets/pop/audio/drop_003.wav",
+        "/assets/pop/audio/confirmation_001.wav"
+      ],
+      "usage": "Reuses previously downloaded licensed assets for anticipation, cleanup, escalating streak, comic interruption and reward cues. Additional short synthesized notes are project-authored. No new music is played during the house event.",
+      "reviewed": "2026-09-17"
+    }
+  ],
+  "other_libraries_reviewed": [
+    {
+      "url": "https://kaylousberg.itch.io/kaykit-character-animations",
+      "license": "CC0",
+      "decision": "Reviewed interaction/tools packs; selected CMU's task-specific washing and sweeping capture for this milestone."
+    },
+    {
+      "url": "https://quaternius.com/packs/universalanimationlibrary.html",
+      "license": "CC0",
+      "decision": "Reviewed reusable humanoid library; selected CMU cleaning captures. No Quaternius clips bundled."
+    }
+  ],
+  "reused_environment": "Existing family pug and poop props; original sources and licenses remain in ASSET_SOURCES.md and public/asset-credits.html. Event toys, cloth, basket and juice are project-authored primitives."
+}

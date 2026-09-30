@@ -1,0 +1,1 @@
+Run_Alternative was rejected by the user and removed from the GLB and Blender source. Do not regenerate, restore, or use that clip. Walk_Basic remains approved for Lilah. Original Running clips remain where present. Earlier validation reports describe the pre-removal revision; see ../../rejected_run_removal.json for current clip lists.

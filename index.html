@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>Dumpling Three · world viewer</title>
+  <link rel="icon" href="./favicon.svg">
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #ede6f4; overscroll-behavior: none; }
+    #game { position: fixed; inset: 0; height: 100dvh; }
+    #game-canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+    #viewer { position: fixed; top: max(8px, env(safe-area-inset-top)); left: 8px; z-index: 2; display: flex; gap: 6px;
+      font: 14px system-ui, sans-serif; }
+    #viewer select { font: inherit; padding: 6px 8px; border-radius: 8px; border: 1px solid #b9a7cd; background: #fffaf2; color: #3d3350; }
+    #status { position: fixed; bottom: 8px; left: 8px; z-index: 2; font: 12px system-ui, sans-serif; color: #3d3350; background: #fffaf2cc; padding: 4px 8px; border-radius: 6px; }
+    body[data-capture] #viewer, body[data-capture] #status { display: none; }
+  </style>
+</head>
+<body>
+  <div id="game"><canvas id="game-canvas"></canvas></div>
+  <div id="viewer"><select id="region" aria-label="Region"></select><select id="view" aria-label="View"></select></div>
+  <div id="status" role="status">Loading…</div>
+  <script type="module" src="./src/main.ts"></script>
+</body>
+</html>

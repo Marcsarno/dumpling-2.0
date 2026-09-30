@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import {selectDailyPlay,PLAY_ACTIVITIES} from '../src/data/dailyPlay.ts';
+import {DailyPlayStore} from '../src/systems/DailyPlayStore.ts';
+import {stepToy} from '../src/systems/PlayPhysics.ts';
+const memory=()=>{const data=new Map([['arianna.progress','unchanged']]);return{data,getItem:k=>data.get(k)??null,setItem:(k,v)=>data.set(k,v)}};
+test('Five distinct daily activities, stable reloads, all fifteen in three days',()=>{for(let seed=0;seed<100;seed++){const days=[1,2,3].map(day=>selectDailyPlay(seed,day));for(let day=1;day<=3;day++){assert.equal(new Set(days[day-1]).size,5);assert.deepEqual(days[day-1],selectDailyPlay(seed,day));}assert.equal(new Set(days.flat()).size,15);}assert.equal(PLAY_ACTIVITIES.length,15);});
+test('Progress is additive; daily selection survives reload; day advance clears only play progress',()=>{const m=memory(),a=new DailyPlayStore(m);a.ensure(1);const ids=[...a.data.ids];a.update(ids[0],3,true);const b=new DailyPlayStore(m);b.ensure(1);assert.deepEqual(b.data.ids,ids);assert.equal(b.progress(ids[0]).done,true);b.ensure(2);assert.equal(b.data.ids.filter(id=>ids.includes(id)).length,0);assert.deepEqual(b.data.progress,{});assert.equal(m.data.get('arianna.progress'),'unchanged');});
+test('Malformed and unavailable storage leave play usable',()=>{const m=memory();m.setItem('dumpling.editorMigration.daily-play.v1','broken');const a=new DailyPlayStore(m);a.ensure(1);assert.equal(a.data.ids.length,5);const b=new DailyPlayStore({getItem(){throw Error('disabled')},setItem(){throw Error('full')}});b.ensure(2);b.update(b.data.ids[0],1,true);assert.equal(b.progress(b.data.ids[0]).done,true);assert.match(b.problem,/could not be saved/);});
+test('Ball gravity, wall bounce and friction are consistent across frame rates',()=>{const run=hz=>{const b={x:0,y:1,z:0,vx:3,vy:2,vz:1,radius:.2};for(let i=0;i<hz*6;i++)stepToy(b,1/hz,0);return b;};const a=run(30),b=run(120);assert(Math.hypot(a.x-b.x,a.z-b.z)<.1);assert.equal(a.y,.2);assert(Math.hypot(a.vx,a.vz)<.05);assert(Math.abs(a.x)<2.06);});

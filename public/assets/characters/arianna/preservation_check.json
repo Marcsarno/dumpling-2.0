@@ -1,0 +1,38 @@
+{
+  "original_mesh_materials_skin_and_animation_data_preserved": true,
+  "comparisons": [
+    {
+      "clip": "CarryWalk",
+      "source": "Walking",
+      "unchanged_body_channels": 60,
+      "changed_bones": [
+        "LeftArm",
+        "LeftForeArm",
+        "LeftHand",
+        "LeftShoulder",
+        "RightArm",
+        "RightForeArm",
+        "RightHand",
+        "RightShoulder"
+      ],
+      "body_track_data": "identical original accessors and binary bytes"
+    },
+    {
+      "clip": "CarryRun",
+      "source": "Running",
+      "unchanged_body_channels": 60,
+      "changed_bones": [
+        "LeftArm",
+        "LeftForeArm",
+        "LeftHand",
+        "LeftShoulder",
+        "RightArm",
+        "RightForeArm",
+        "RightHand",
+        "RightShoulder"
+      ],
+      "body_track_data": "identical original accessors and binary bytes"
+    }
+  ],
+  "sha256": "35cfde9dba8d20d53019d654728972c04f7455ccc533040d00818f86d3f82989"
+}

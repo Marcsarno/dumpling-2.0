@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.pnpm-store/
+.vite/
+.vercel/
+*.local
+
+# Local evidence: screenshots, captures and scratch output. Metrics JSON that
+# tests compare against lives in baseline/ and is committed.
+artifacts/

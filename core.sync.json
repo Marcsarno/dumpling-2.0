@@ -1,0 +1,299 @@
+{
+ "note": "Vendored from the PlayCanvas game. Check with `node tools/check-core-sync.mjs`; refresh with `node tools/vendor-core.mjs` after reviewing upstream changes.",
+ "source": {
+  "repo": "Marcsarno/Dumpling",
+  "commit": "9a40b4ed1dcedd7659d7c78c96c28cb1104c87e5"
+ },
+ "files": [
+  {
+   "path": "src/data/collection.ts",
+   "mode": "verbatim",
+   "sourceSha256": "9bbc3a7b9043f70d4e810f498d0c2f4d92855011f39fa2de30ed7a9ce5fd1aa9",
+   "localSha256": "9bbc3a7b9043f70d4e810f498d0c2f4d92855011f39fa2de30ed7a9ce5fd1aa9"
+  },
+  {
+   "path": "src/data/dailyPlay.ts",
+   "mode": "verbatim",
+   "sourceSha256": "13747960fe7e144f4b8e037a58ebd05d1127e2069619557772d2db61feb099b0",
+   "localSha256": "13747960fe7e144f4b8e037a58ebd05d1127e2069619557772d2db61feb099b0"
+  },
+  {
+   "path": "src/data/homePlay.ts",
+   "mode": "verbatim",
+   "sourceSha256": "3b92bb8974568d74aa925cb3c24c1146ef9c3623016527662d23038d70c15f3d",
+   "localSha256": "3b92bb8974568d74aa925cb3c24c1146ef9c3623016527662d23038d70c15f3d"
+  },
+  {
+   "path": "src/data/house.ts",
+   "mode": "verbatim",
+   "sourceSha256": "832fe5155ef0af453917ba3737fbe776348312d26b141fa65eb9e950d70ab33b",
+   "localSha256": "832fe5155ef0af453917ba3737fbe776348312d26b141fa65eb9e950d70ab33b"
+  },
+  {
+   "path": "src/data/hunt.ts",
+   "mode": "verbatim",
+   "sourceSha256": "1d3d36b9963cef491451d80b1922efc46a763d994f035890e1742e52ec2d9179",
+   "localSha256": "1d3d36b9963cef491451d80b1922efc46a763d994f035890e1742e52ec2d9179"
+  },
+  {
+   "path": "src/data/popIdentity.ts",
+   "mode": "verbatim",
+   "sourceSha256": "f5c9c67b77f53971a11828767138f79d4eb534ba289a9c62a6c8b2b83fbea287",
+   "localSha256": "f5c9c67b77f53971a11828767138f79d4eb534ba289a9c62a6c8b2b83fbea287"
+  },
+  {
+   "path": "src/data/popLevels.ts",
+   "mode": "verbatim",
+   "sourceSha256": "f0557f83bb6aaf86fc2eb23e54ad58bbd39d6799392b390a764db392c3e5a075",
+   "localSha256": "f0557f83bb6aaf86fc2eb23e54ad58bbd39d6799392b390a764db392c3e5a075"
+  },
+  {
+   "path": "src/data/squishyPop.ts",
+   "mode": "verbatim",
+   "sourceSha256": "b1a4a272fb38f88a1e9cc5054a753e0fb2afb582602da831f4d0c85dc8e1f9ad",
+   "localSha256": "b1a4a272fb38f88a1e9cc5054a753e0fb2afb582602da831f4d0c85dc8e1f9ad"
+  },
+  {
+   "path": "src/data/squishyPresentation.ts",
+   "mode": "verbatim",
+   "sourceSha256": "680682f2429944c258e52aecb9b142cdbefd2a5254b46bd2a212a838209bfd30",
+   "localSha256": "680682f2429944c258e52aecb9b142cdbefd2a5254b46bd2a212a838209bfd30"
+  },
+  {
+   "path": "src/data/ticketPrizes.ts",
+   "mode": "verbatim",
+   "sourceSha256": "a52ea9f4e040715a73f01278839b3745025c4ade08b66cb0bf641f7e9bbf3456",
+   "localSha256": "a52ea9f4e040715a73f01278839b3745025c4ade08b66cb0bf641f7e9bbf3456"
+  },
+  {
+   "path": "src/data/tradeHelp.ts",
+   "mode": "verbatim",
+   "sourceSha256": "34bd8e29729a4e4eb907da44b2acae81c6e97e3366b670ea682c8b7d403203cf",
+   "localSha256": "34bd8e29729a4e4eb907da44b2acae81c6e97e3366b670ea682c8b7d403203cf"
+  },
+  {
+   "path": "src/data/trading.ts",
+   "mode": "verbatim",
+   "sourceSha256": "1343a18eb666d090bc92b870617a5ca15bb0f06c9b0101005999a96153dc181b",
+   "localSha256": "1343a18eb666d090bc92b870617a5ca15bb0f06c9b0101005999a96153dc181b"
+  },
+  {
+   "path": "src/systems/DailyClock.ts",
+   "mode": "verbatim",
+   "sourceSha256": "06af1aa31f79e27e466145255c934b47b7fe264de2119ea2f1055d3cb54adacb",
+   "localSha256": "06af1aa31f79e27e466145255c934b47b7fe264de2119ea2f1055d3cb54adacb"
+  },
+  {
+   "path": "src/systems/DailyPlayStore.ts",
+   "mode": "verbatim",
+   "sourceSha256": "faa2be22f9082fcf49a23db1c35fb0115feff393a54d3de32afb6ad676b496e2",
+   "localSha256": "faa2be22f9082fcf49a23db1c35fb0115feff393a54d3de32afb6ad676b496e2"
+  },
+  {
+   "path": "src/systems/FishingRound.ts",
+   "mode": "verbatim",
+   "sourceSha256": "1dd38fc046c7fcefc992b0e4690e07829aa0bfa2c9ec56192b1641d7359ba477",
+   "localSha256": "1dd38fc046c7fcefc992b0e4690e07829aa0bfa2c9ec56192b1641d7359ba477"
+  },
+  {
+   "path": "src/systems/HomePlayStore.ts",
+   "mode": "verbatim",
+   "sourceSha256": "b2a574e73082585a25526030bd0872802223a7eac80a0356d725f6babd949c02",
+   "localSha256": "b2a574e73082585a25526030bd0872802223a7eac80a0356d725f6babd949c02"
+  },
+  {
+   "path": "src/systems/InteractionGuidance.ts",
+   "mode": "verbatim",
+   "sourceSha256": "c44fafce1b396ce2d673425043001f125230caf874a2678223e22e46ae0115e8",
+   "localSha256": "c44fafce1b396ce2d673425043001f125230caf874a2678223e22e46ae0115e8"
+  },
+  {
+   "path": "src/systems/InteractionSystem.ts",
+   "mode": "verbatim",
+   "sourceSha256": "b7190a50c46032074449b64fce1fca5b8cb6c003d2cd86e28c82fddd3417c88a",
+   "localSha256": "b7190a50c46032074449b64fce1fca5b8cb6c003d2cd86e28c82fddd3417c88a"
+  },
+  {
+   "path": "src/systems/MissionSystem.ts",
+   "mode": "verbatim",
+   "sourceSha256": "d92b0c1a14bf2feb099fabbe07b7b57b31e0a11384be217546c4c3e5f34a596d",
+   "localSha256": "d92b0c1a14bf2feb099fabbe07b7b57b31e0a11384be217546c4c3e5f34a596d"
+  },
+  {
+   "path": "src/systems/PlayPhysics.ts",
+   "mode": "verbatim",
+   "sourceSha256": "94229914eadb44dd77f05a41c12b0d0928acb44ed8cb20e253c6e73ca4176d1f",
+   "localSha256": "94229914eadb44dd77f05a41c12b0d0928acb44ed8cb20e253c6e73ca4176d1f"
+  },
+  {
+   "path": "src/systems/ProgressStore.ts",
+   "mode": "verbatim",
+   "sourceSha256": "75896e24ceb414d224ab87d7c01cd34232d7d5131b7a20ab5aafe2cae5a64443",
+   "localSha256": "75896e24ceb414d224ab87d7c01cd34232d7d5131b7a20ab5aafe2cae5a64443"
+  },
+  {
+   "path": "src/systems/SchoolBallPhysics.ts",
+   "mode": "verbatim",
+   "sourceSha256": "f0fa4e1c05dd5ca779d7bd101853c0c0e9323ed18dc5b77f0bedd750fe260696",
+   "localSha256": "f0fa4e1c05dd5ca779d7bd101853c0c0e9323ed18dc5b77f0bedd750fe260696"
+  },
+  {
+   "path": "src/systems/ScooterDynamics.ts",
+   "mode": "verbatim",
+   "sourceSha256": "b866ea9a96da96341ff7bff1472ce2f800be448c7f5457c3a593c6601c05d670",
+   "localSha256": "b866ea9a96da96341ff7bff1472ce2f800be448c7f5457c3a593c6601c05d670"
+  },
+  {
+   "path": "src/systems/TornadoRules.ts",
+   "mode": "verbatim",
+   "sourceSha256": "495c5339a40bf952b79beedafb23771271fa1877c563ab3aa752c0af71689503",
+   "localSha256": "495c5339a40bf952b79beedafb23771271fa1877c563ab3aa752c0af71689503"
+  },
+  {
+   "path": "src/systems/saveId.ts",
+   "mode": "verbatim",
+   "sourceSha256": "02b7c32b981285952d89221c0f7bc127d57a215945af73a1578c6a0c0a755454",
+   "localSha256": "02b7c32b981285952d89221c0f7bc127d57a215945af73a1578c6a0c0a755454"
+  },
+  {
+   "path": "src/dev/DeveloperSaves.ts",
+   "mode": "verbatim",
+   "sourceSha256": "fbbee5a634cd5f249d7bf1cec6baf3a27f8c47ec437aa21f49d3c3eb49f32e71",
+   "localSha256": "fbbee5a634cd5f249d7bf1cec6baf3a27f8c47ec437aa21f49d3c3eb49f32e71"
+  },
+  {
+   "path": "src/systems/SaveNamespace.ts",
+   "mode": "replaced",
+   "sourceSha256": "5e1dbbc71b993424744d5032a12ff78b3937a7df48a739c11a64fcf5643c9490",
+   "localSha256": "ff74fefa81cee422d871d95d061e6d3ba81202224e50c482d120f2e3088a4133",
+   "reason": "Rebuild saves use the dumpling.three prefix with the same precedence; no branch can resolve to arianna.* before an owner-approved cutover."
+  },
+  {
+   "path": "scripts/verify-arianna-quality.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "fe18c0216220b02cc1abad1806ed37a2558ae4c07c437b8c26dd49b9314118d2",
+   "localSha256": "fe18c0216220b02cc1abad1806ed37a2558ae4c07c437b8c26dd49b9314118d2"
+  },
+  {
+   "path": "scripts/verify-lilah-quality.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "1931e6cac46e01cdc776a9d5d243ad97bc5f911df75c4352ddfb743939235da8",
+   "localSha256": "1931e6cac46e01cdc776a9d5d243ad97bc5f911df75c4352ddfb743939235da8"
+  },
+  {
+   "path": "scripts/test-register.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "fe1f851743ef674243cde5c799195306ed7ae390634bc93af65433eb4f693a9d",
+   "localSha256": "fe1f851743ef674243cde5c799195306ed7ae390634bc93af65433eb4f693a9d"
+  },
+  {
+   "path": "scripts/animal-sculpt-test.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "0990c524c321b8221db22fb4442116e1d934c6abeabdb3ab06b2e1deb5f999dd",
+   "localSha256": "0990c524c321b8221db22fb4442116e1d934c6abeabdb3ab06b2e1deb5f999dd"
+  },
+  {
+   "path": "scripts/daily-clock-test.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "1861cf700f6a0d21e7cc2cd97b7a8220e5484a0008160017e28da75c256d5cda",
+   "localSha256": "1861cf700f6a0d21e7cc2cd97b7a8220e5484a0008160017e28da75c256d5cda"
+  },
+  {
+   "path": "scripts/daily-play-test.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "e3ff182d4f38a6b0686cf6149409ad761adbd8d647ec619d4db30baeaf8cae94",
+   "localSha256": "e3ff182d4f38a6b0686cf6149409ad761adbd8d647ec619d4db30baeaf8cae94"
+  },
+  {
+   "path": "scripts/fishing-test.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "2a78902a55602db391dbd92e15797aa30de9f9823c6347a9356eff7e0d2abe57",
+   "localSha256": "2a78902a55602db391dbd92e15797aa30de9f9823c6347a9356eff7e0d2abe57"
+  },
+  {
+   "path": "scripts/home-play-state-test.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "ce96494c50c84f675969dd28eab8e1976f6ae6320c38642710ffb823047e0d74",
+   "localSha256": "ce96494c50c84f675969dd28eab8e1976f6ae6320c38642710ffb823047e0d74"
+  },
+  {
+   "path": "scripts/hunt-test.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "cce0c8a8a07381722160f12e3d9b62f10ba41cc77d8dfb160ce369c8e2ec90ee",
+   "localSha256": "cce0c8a8a07381722160f12e3d9b62f10ba41cc77d8dfb160ce369c8e2ec90ee"
+  },
+  {
+   "path": "scripts/life-polish-test.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "46459e358e11885536668b77a226c94a2bec08be16291b5cb3eef7a258767fa3",
+   "localSha256": "46459e358e11885536668b77a226c94a2bec08be16291b5cb3eef7a258767fa3"
+  },
+  {
+   "path": "scripts/mission-test.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "6c56fc459a3925d9ce74bef6b590921cd27689c65a1b12861fd23cae16d36f52",
+   "localSha256": "6c56fc459a3925d9ce74bef6b590921cd27689c65a1b12861fd23cae16d36f52"
+  },
+  {
+   "path": "scripts/pop-core-test.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "e9a447ace722ba52e3d7243bf68971627a17ba19dd560587719cb02b933aa067",
+   "localSha256": "e9a447ace722ba52e3d7243bf68971627a17ba19dd560587719cb02b933aa067"
+  },
+  {
+   "path": "scripts/pop-levels-test.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "526e2e4cdce3e8047dc5307dc4f6359e7a90465b20af5def41a360589673d484",
+   "localSha256": "526e2e4cdce3e8047dc5307dc4f6359e7a90465b20af5def41a360589673d484"
+  },
+  {
+   "path": "scripts/pop-milestone-test.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "e3bfdc7cec25df7f3feb4d0f0a746b296de7a550e3116325998c61d01a4dbb59",
+   "localSha256": "e3bfdc7cec25df7f3feb4d0f0a746b296de7a550e3116325998c61d01a4dbb59"
+  },
+  {
+   "path": "scripts/pop-rules-test.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "9f0ed7e97e626e1c416cfe928f920e21eb641f135efb4cae983d1b5a75aae924",
+   "localSha256": "9f0ed7e97e626e1c416cfe928f920e21eb641f135efb4cae983d1b5a75aae924"
+  },
+  {
+   "path": "scripts/progress-test.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "7d7047638aee3f5dc2b7232e2e66ac7d7f3496b8efc3b06c46591b4b5c5c859e",
+   "localSha256": "7d7047638aee3f5dc2b7232e2e66ac7d7f3496b8efc3b06c46591b4b5c5c859e"
+  },
+  {
+   "path": "scripts/school-ball-test.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "cd617751ee3088d844132d7725dc720aa235360cd84b484bb9e231cf175d37f6",
+   "localSha256": "cd617751ee3088d844132d7725dc720aa235360cd84b484bb9e231cf175d37f6"
+  },
+  {
+   "path": "scripts/scooter-test.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "1bd7be75cd474ebd76045d168b35a6252c312a29b2b4b5816ca5882c4a2d85cb",
+   "localSha256": "1bd7be75cd474ebd76045d168b35a6252c312a29b2b4b5816ca5882c4a2d85cb"
+  },
+  {
+   "path": "scripts/tornado-rules-test.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "6bca3c17a4ea5dc21f1e9aa39dab7ff3ba07c41371ff6a4ed15a25cbc36b66b2",
+   "localSha256": "6bca3c17a4ea5dc21f1e9aa39dab7ff3ba07c41371ff6a4ed15a25cbc36b66b2"
+  },
+  {
+   "path": "scripts/trading-test.mjs",
+   "mode": "verbatim",
+   "sourceSha256": "8e5eab75383aed1d8b2b282d9f158cc34559b0d64992d84e1b965c0b9c09a5d7",
+   "localSha256": "8e5eab75383aed1d8b2b282d9f158cc34559b0d64992d84e1b965c0b9c09a5d7"
+  },
+  {
+   "path": "scripts/developer-saves-test.mjs",
+   "mode": "patched",
+   "sourceSha256": "cc63f98c64cbe7f9ee6215bcfb1638686d68419bd1d4186f95bc7f57b8b13729",
+   "localSha256": "5dfbcc2d60a42ed8c79edb8cae19937516fa7beef58b74a047841b1597fffb92",
+   "reason": "Seeds keys through saveKey() instead of hard-coded arianna.* keys (the original fails outside production for this reason)."
+  }
+ ]
+}

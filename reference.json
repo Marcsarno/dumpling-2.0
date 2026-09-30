@@ -1,0 +1,10 @@
+{
+  "note": "The PlayCanvas game this rebuild tracks. Tools read it only; they never write there.",
+  "playcanvasRepo": "Marcsarno/Dumpling",
+  "playcanvasCommit": "9a40b4ed1dcedd7659d7c78c96c28cb1104c87e5",
+  "playcanvasRuntimeHash": "9193f79319fb999c",
+  "editorScene": 2600724,
+  "editorSceneFile": "editor-release/2600724.json",
+  "editorConfigFile": "editor-release/config.json",
+  "liveUrl": "https://dumpling-sandy.vercel.app/"
+}
