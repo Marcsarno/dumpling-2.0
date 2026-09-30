@@ -1,8 +1,19 @@
-import {AnimationMixer, LoopOnce, LoopRepeat, type AnimationAction, type AnimationClip, type Object3D} from 'three';
+import {AnimationMixer, LoopOnce, LoopRepeat, Matrix4, Object3D, Vector3, type AnimationAction, type AnimationClip, type Bone} from 'three';
 import {RUN_SPEED, WALK_SPEED} from '../game/movement';
 
 const GAITS = new Set(['Walk', 'Run', 'CarryWalk', 'CarryRun']);
-const TRAVEL: Record<string, number> = {Walk: WALK_SPEED, Run: RUN_SPEED, CarryWalk: WALK_SPEED, CarryRun: RUN_SPEED};
+
+/** Per-character gait tuning. Arianna's defaults are the game's full-stick speeds. */
+export interface AnimatorOptions {
+  initialYaw?: number;
+  /** Travel speed (m/s) each gait clip is played at full rate for. */
+  travel?: Record<string, number>;
+  /** Characters without a Run clip (Lilah) always walk. */
+  canRun?: boolean;
+  /** Playback rate for one-shot actions, e.g. Lilah's 2.4 s PickUp plays in 0.8 s (3x). */
+  actionRate?: Record<string, number>;
+}
+const ARIANNA_TRAVEL: Record<string, number> = {Walk: WALK_SPEED, Run: RUN_SPEED, CarryWalk: WALK_SPEED, CarryRun: RUN_SPEED};
 
 /**
  * Locomotion for a character on its existing rig: one mixer action per clip, short
@@ -21,8 +32,13 @@ export class CharacterAnimator {
   yaw: number;
   carrying = false;
   turnRate = 22;
+  private readonly travel: Record<string, number>;
+  private readonly canRun: boolean;
+  private readonly actionRate: Record<string, number>;
 
-  constructor(private readonly pivot: Object3D, model: Object3D, clips: AnimationClip[], initialYaw = 30 * Math.PI / 180) {
+  constructor(private readonly pivot: Object3D, model: Object3D, clips: AnimationClip[], options: AnimatorOptions = {}) {
+    const initialYaw = options.initialYaw ?? 30 * Math.PI / 180;
+    this.travel = options.travel ?? ARIANNA_TRAVEL; this.canRun = options.canRun ?? true; this.actionRate = options.actionRate ?? {};
     this.mixer = new AnimationMixer(model);
     for (const clip of clips) { const a = this.mixer.clipAction(clip); a.setLoop(LoopRepeat, Infinity); this.actions.set(clip.name, a); }
     this.yaw = initialYaw; pivot.rotation.y = initialYaw;
@@ -47,7 +63,7 @@ export class CharacterAnimator {
    * Play a one-shot action (0.08 s blend in). Events fire on the clip's own clock, the way
    * gameplay expects (e.g. 'mouth-contact' at 0.65 s of MealBite), then locomotion resumes.
    */
-  playAction(name: string, handlers: {onEvent?: (event: string) => void; done?: () => void} = {}) {
+  playAction(name: string, handlers: {onEvent?: (event: string) => void; done?: () => void} = {}, rate = this.actionRate[name] ?? 1) {
     const clip = this.actions.get(name)?.getClip();
     if (!clip) throw Error(`Unknown action ${name}`);
     const events = ((clip.userData?.events ?? []) as {time: number; event: string}[]).map(e => ({...e}));
@@ -55,7 +71,7 @@ export class CharacterAnimator {
     const a = this.actions.get(name)!;
     a.setLoop(clip.userData?.loop ? LoopRepeat : LoopOnce, Infinity); a.clampWhenFinished = true;
     this.transition(name, .08);
-    a.timeScale = 1;
+    a.timeScale = rate;
   }
   cancelAction() { this.action = null; }
 
@@ -74,17 +90,52 @@ export class CharacterAnimator {
       this.yaw += delta * (1 - Math.exp(-this.turnRate * dt));
       this.pivot.rotation.y = this.yaw;
     }
-    const run = speed > (this.state.includes('Run') ? 1.05 : 1.3);
+    const run = this.canRun && speed > (this.state.includes('Run') ? 1.05 : 1.3);
     const gait = this.carrying ? (run ? 'CarryRun' : 'CarryWalk') : run ? 'Run' : 'Walk';
     const desired = moving ? gait : this.carrying ? 'CarryIdle' : 'Idle';
     if (desired !== this.state) this.transition(desired, .14);
-    const travel = TRAVEL[desired];
+    const travel = this.travel[desired];
     if (this.current) this.current.timeScale = travel ? Math.min(1, speed / travel) : 1;
     this.mixer.update(dt);
   }
 
+  /** Turn gently toward a floor point while standing (rate: 1/s time constant). */
+  turnToward(x: number, z: number, dt: number, rate = 4) {
+    const p = this.pivot.getWorldPosition(new Vector3());
+    let delta = (Math.atan2(x - p.x, z - p.z) - this.yaw + Math.PI) % (2 * Math.PI); if (delta < 0) delta += 2 * Math.PI; delta -= Math.PI;
+    this.yaw += delta * (1 - Math.exp(-rate * dt)); this.pivot.rotation.y = this.yaw;
+  }
+
+  /** Face a floor point (used when an action should look at its target). */
+  face(x: number, z: number) {
+    const p = this.pivot.getWorldPosition(new Vector3());
+    this.yaw = Math.atan2(x - p.x, z - p.z); this.pivot.rotation.y = this.yaw;
+  }
+
   snapshot() {
     return {state: this.state, action: this.action?.name ?? null, yaw: this.yaw * 180 / Math.PI, clipTime: this.current?.time ?? 0, playbackRate: this.current?.timeScale ?? 1};
+  }
+}
+
+/**
+ * Held-item attachment point: the midpoint of the two hands in the character's yaw-pivot
+ * space, nudged 2.5 cm forward, updated after the pose each frame (PlayCanvas
+ * CharacterAnimator carry socket). Props parented here follow the hands exactly.
+ */
+export class CarrySocket extends Object3D {
+  private readonly a = new Vector3();
+  private readonly b = new Vector3();
+  private readonly inverse = new Matrix4();
+  constructor(private readonly frame: Object3D, private readonly hands: [Bone, Bone], private readonly forward = .025) {
+    super(); this.name = 'Carry socket'; frame.add(this);
+  }
+  update() {
+    this.hands[0].getWorldPosition(this.a); this.hands[1].getWorldPosition(this.b);
+    this.a.add(this.b).multiplyScalar(.5);
+    this.frame.updateWorldMatrix(true, false);
+    this.a.applyMatrix4(this.inverse.copy(this.frame.matrixWorld).invert());
+    this.a.z += this.forward;
+    this.position.copy(this.a);
   }
 }
 

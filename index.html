@@ -21,6 +21,10 @@
     #joystick.dragging #joystick-knob { background: #9b7ac8; }
     body[data-playing] #joystick { display: block; }
     body[data-playing] #view { display: none; }
+    /* Speech bubbles above family members (PlayCanvas .lilah-label). */
+    .speech-label { position: absolute; top: 0; left: 0; max-width: 165px; padding: 7px 10px; border-radius: 15px 15px 15px 3px; background: #fff2ceef; color: #735978;
+      font: 700 12px system-ui, sans-serif; pointer-events: none; box-shadow: 0 3px 12px #7c627525; z-index: 5; text-align: center; }
+    .speech-label[hidden] { display: none; }
   </style>
 </head>
 <body>

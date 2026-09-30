@@ -51,9 +51,20 @@ Started on 2026-09-29 after the owner approved P0.
 - **Deferred to polish (owner, 2026-09-29):** the braid is weighted to RightShoulder/RightArm and lifts with that arm.
 - **Follow-up:** the coat-safe limits on upper-arm lift in `actionSpecs.ts` were set for the fused mesh and can now be relaxed where a motion looks better with more lift.
 
+## Lilah (2026-09-29)
+
+- **Loaded untouched** in play mode: runtime probe reports 2048×2048 colour, 1024×1024 metallic/roughness, 11,271 triangles, 25 joints, native pixel ratio. Height 0.625 × Arianna (0.8647 m).
+- **Clips:** her eight authored clips as supplied (`buildLilahClips`). PickUp/PutDown play at 3× (0.8 s) with take-toy at 1.1 s and drop-toy at 1.3 s of clip time; Celebrate is a one-shot. She never runs.
+- **Animator:** the shared `CharacterAnimator` now takes per-character travel speeds, `canRun` and action rates (Lilah walks at 0.7 m/s).
+- **Carry socket:** `CarrySocket` (hand midpoint in yaw-pivot space, 2.5 cm forward) for both Arianna (LeftHand/RightHand) and Lilah (hand.L/hand.R, which three.js names handL/handR). Lilah's favourite block rides there.
+- **Behaviour** (`src/game/Lilah.ts`, `HousePath.ts` ported from PlayCanvas): first decision at 3 s, then every 12 s; 55% follow a spot beside Arianna, otherwise one of six explore spots; next decision 7 s after arriving; reaches each waypoint before turning; stops 0.4 m short of Arianna. Speech bubbles as in PlayCanvas. She stays home (hidden, clock paused) during shop visits.
+- **Deliberate upgrades:** follows to the nearest free spot beside Arianna (PlayCanvas always tried the same corner first); waits up to 1 s for Arianna to step aside before re-deciding (PlayCanvas dropped the route at once); turns to watch Arianna while standing within 3.5 m.
+- **Tests:** `tests/node/house-path.test.mjs` (routes on the real house), `tests/browser/lilah-house.mjs` (quality, pace, free floor, personal space, carry socket, 3× PickUp timing, shop visit). Review video: `node tests/browser/record-lilah-play.mjs`.
+- **Later, with their features (P2):** bedtime (Sleep pose and crib), play-together, home-toy invites, messes and the Tornado event, and the evening "sleepy" walk to the crib. Braid secondary motion is a polish idea.
+
 ## Remaining in P1
 
 - Owner review of the motion captures. The eating, pick-up and celebrate motions are new.
 - The chore, sleep, fishing, scooter and play clips land with their features (P2/P4). Their inputs (CMU and KayKit motion) are already shipped assets.
-- Lilah, Marc and Sunny Pup loaders and animators. Lilah is protected too, so she also gets a runtime quality probe.
-- Carry socket (midpoint of the hands) for held props.
+- Marc and Sunny Pup loaders and animators.
+- Owner review of Lilah in play (`artifacts/play/lilah-play.webm`).

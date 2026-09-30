@@ -43,3 +43,22 @@ export function buildClipLibrary(character: LoadedCharacter): ClipLibrary {
   poser.dispose();
   return {clips, notes};
 }
+
+/**
+ * Lilah's motion library: her own eight authored clips, untouched (PlayCanvas Lilah.ts).
+ * One-shots and their gameplay events are marked on the clip; PickUp and PutDown play at
+ * 3x (2.4 s authored, 0.8 s in play) via the animator's action rate.
+ */
+export const LILAH_ACTION_RATE: Record<string, number> = {PickUp: 3, PutDown: 3};
+export const LILAH_WALK_SPEED = .7;
+export function buildLilahClips(character: LoadedCharacter): ClipLibrary {
+  const required = ['Idle', 'Walk', 'CarryIdle', 'CarryWalk', 'PickUp', 'PutDown', 'Celebrate'];
+  for (const name of required) if (!character.clips.some(c => c.name === name)) throw Error(`Lilah is missing authored clip ${name}`);
+  const events: Record<string, {time: number; event: string}[]> = {PickUp: [{time: 1.1, event: 'take-toy'}], PutDown: [{time: 1.3, event: 'drop-toy'}]};
+  const clips = character.clips.map(source => {
+    const clip = fromFirstKey(source, source.name);
+    clip.userData = {loop: !['PickUp', 'PutDown', 'Celebrate'].includes(clip.name), events: events[clip.name] ?? []};
+    return clip;
+  });
+  return {clips, notes: {PickUp: 'Authored; plays at 3x (0.8 s), take-toy at 1.1 s clip time.', PutDown: 'Authored; plays at 3x (0.8 s), drop-toy at 1.3 s clip time.'}};
+}

@@ -1,7 +1,8 @@
 import {Group, type Scene, type WebGLRenderer} from 'three';
 import {loadArianna, ariannaQuality, type LoadedCharacter} from '../characters/Arianna';
 import {buildClipLibrary} from '../characters/clips';
-import {CharacterAnimator, groundHeight} from '../characters/CharacterAnimator';
+import {CarrySocket, CharacterAnimator, groundHeight} from '../characters/CharacterAnimator';
+import {Lilah} from './Lilah';
 import {PlayerMovement, type MovementArea, type Walkable} from './movement';
 import {MoveInput} from '../input/Input';
 import {HOUSE_ROOMS} from '../data/house';
@@ -28,6 +29,9 @@ export class PlaySession {
   readonly input: MoveInput;
   animator!: CharacterAnimator;
   character!: LoadedCharacter;
+  /** Arianna's held-item point between her hands. */
+  socket!: CarrySocket;
+  lilah?: Lilah;
   private region: LoadedRegion;
   private last = 0;
   private running = false;
@@ -46,6 +50,11 @@ export class PlaySession {
     const library = buildClipLibrary(session.character);
     session.player.add(session.character.root);
     session.animator = new CharacterAnimator(session.character.root, session.character.model, library.clips);
+    const hand = (n: string) => session.character.bones.get(n)!;
+    session.socket = new CarrySocket(session.character.root, [hand('LeftHand'), hand('RightHand')]);
+    // Lilah lives in the house; she loads alongside Arianna and waits out shop visits.
+    session.lilah = await Lilah.load(renderer, movementArea(region));
+    scene.add(session.lilah.root);
     session.placeAtStart();
     session.running = true; session.last = performance.now();
     requestAnimationFrame(session.frame);
@@ -54,6 +63,7 @@ export class PlaySession {
 
   setRegion(region: LoadedRegion) {
     this.region = region; this.movement.setArea(movementArea(region)); this.placeAtStart();
+    if (region.region === 'house') this.lilah?.setArea(movementArea(region));
   }
 
   private placeAtStart() {
@@ -74,14 +84,18 @@ export class PlaySession {
     const dt = Math.min(.04, Math.max(0, (now - this.last) / 1000)); this.last = now;
     this.movement.update(dt, this.input.read());
     this.animator.update(dt, this.movement.velocity);
+    this.socket.update();
     this.sync(dt);
+    this.lilah?.update(dt, this.movement.position, this.region.surfaces, this.region.region === 'house');
     this.draw();
+    this.lilah?.updateLabel(this.camera.camera, this.renderer.domElement);
     requestAnimationFrame(this.frame);
   };
 
   snapshot() {
     return {position: [this.movement.position.x, this.movement.position.y, this.movement.position.z], velocity: [this.movement.velocity.x, 0, this.movement.velocity.z],
-      input: [this.input.value.x, this.input.value.y], animation: this.animator.snapshot(), quality: ariannaQuality(this.character, this.renderer)};
+      input: [this.input.value.x, this.input.value.y], animation: this.animator.snapshot(), quality: ariannaQuality(this.character, this.renderer),
+      socket: this.socket.getWorldPosition(this.socket.position.clone()).toArray(), lilah: this.lilah?.snapshot(this.renderer)};
   }
-  stop() { this.running = false; this.input.destroy(); this.player.removeFromParent(); }
+  stop() { this.running = false; this.input.destroy(); this.player.removeFromParent(); this.lilah?.dispose(); }
 }
