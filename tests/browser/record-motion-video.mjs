@@ -1,6 +1,6 @@
 // Records a review video of Arianna's motions from the motion lab, played in real time with
 // captions, in a disposable headless Edge context. Output: artifacts/motion/review.webm
-//   node tests/browser/record-motion-video.mjs [routines|chores]
+//   node tests/browser/record-motion-video.mjs [routines|chores|family|lilah]
 import {chromium} from 'playwright-core';
 import {mkdir,writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
@@ -35,8 +35,19 @@ const CHORES=[
  ['FeedBowl','front','Filling the puppy bowl: crouch, tip the scoop with a little shake, stand',2],
  ['FeedBowl','right','Filling the bowl from the side',2],
 ];
+// Slice 6 family life (P2): Arianna tucking Lilah in; Lilah climbing into her crib and sleeping.
+const FAMILY=[
+ ['Tuck','front','Tucking Lilah in: lean over the rail, smooth the blanket, straighten up',1],
+ ['Tuck','right','Tucking in from the side: elbows stay in',1],
+];
+const LILAH_BED=[
+ ['SleepEnter','right','Lilah climbs into her crib: reach, tuck a knee, sit, lie back',2],
+ ['SleepEnter','three-quarter','Climbing in, three-quarter view',1],
+ ['Sleep','three-quarter','Asleep: lying face-up, a slow breath',2],
+];
 const SET=process.argv[2]??'';
-const SHOTS=SET==='routines'?ROUTINES:SET==='chores'?CHORES:P1;
+const SHOTS=SET==='routines'?ROUTINES:SET==='chores'?CHORES:SET==='family'?FAMILY:SET==='lilah'?LILAH_BED:P1;
+const CHARACTER=SET==='lilah'?'&character=lilah':'';
 const NAME=SET?SET+'-review.webm':'review.webm';
 const out=resolve(ROOT,'artifacts','motion');await mkdir(out,{recursive:true});
 const {createServer}=await import('vite');
@@ -45,7 +56,7 @@ const browser=await chromium.launch({channel:'msedge',headless:true});
 try{
  // Recorded in the page itself (canvas + MediaRecorder), so no video tools are downloaded.
  const page=await browser.newPage({viewport:{width:540,height:760},deviceScaleFactor:2});
- await page.goto(server.resolvedUrls.local[0]+'lab.html?capture=1');
+ await page.goto(server.resolvedUrls.local[0]+'lab.html?capture=1'+CHARACTER);
  await page.waitForFunction(()=>document.body.dataset.ready==='true',undefined,{timeout:120000});
  const webm=await page.evaluate(async shots=>{
   const gl=document.querySelector('#game-canvas'),out=document.createElement('canvas');out.width=gl.width;out.height=gl.height;

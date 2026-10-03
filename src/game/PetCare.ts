@@ -9,12 +9,13 @@ const POOP_HOME: [number, number, number] = [3.7, .04, 5.3];
 const BOWL_WATER: [number, number, number] = [5.78, .5, -.36];
 
 /**
- * Cleaning up after Sunny (PlayCanvas PetCleanup): one chore in four steps. Take the
+ * Cleaning up after Baxter, the puppy (PlayCanvas PetCleanup): one chore in four steps. Take the
  * scooper from the landing, scoop the poop in the living room, flush it down the bathroom
  * toilet (it swirls away), then wash hands at the sink. Only handwashing completes the task,
  * and once the poop is flushed nothing else can be started until her hands are clean.
  *
- * Sunny herself is the roaming SunnyPup; PlayCanvas kept a second, static copy here.
+ * Baxter himself is the roaming dog (Baxter.ts); PlayCanvas, too, had one dog entity, shared by
+ * pet care and roaming (its code calls him "Sunny pup").
  */
 export class PetCare {
   stage: Stage = 'tool';

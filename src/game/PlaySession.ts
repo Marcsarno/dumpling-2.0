@@ -1,10 +1,11 @@
-import {Group, type Scene, type WebGLRenderer} from 'three';
+import {Group, Vector3, type Scene, type WebGLRenderer} from 'three';
 import {loadArianna, ariannaQuality, type LoadedCharacter} from '../characters/Arianna';
 import {buildClipLibrary} from '../characters/clips';
 import {CarrySocket, CharacterAnimator, groundHeight} from '../characters/CharacterAnimator';
 import {Lilah} from './Lilah';
 import {Marc} from './Marc';
-import {SunnyPup} from './SunnyPup';
+import {Baxter} from './Baxter';
+import {propSpace} from '../world/propSpace';
 import {DayLoop} from './DayLoop';
 import {AdventureHUD, type HudState} from '../ui/AdventureHUD';
 import {ActionButton} from '../ui/ActionButton';
@@ -44,7 +45,8 @@ export class PlaySession {
   socket!: CarrySocket;
   lilah?: Lilah;
   marc?: Marc;
-  pup?: SunnyPup;
+  /** Baxter, the family puppy ("Sunny pup" in the PlayCanvas code). */
+  pup?: Baxter;
   /** The household day: clock, chores, wallet and saves. */
   readonly day: DayLoop;
   hud!: AdventureHUD;
@@ -55,6 +57,8 @@ export class PlaySession {
   readonly music = new HouseMusic();
   settings!: SoundSettings;
   private drawnSize = '';
+  private toastText = '';
+  private toastUntil = 0;
   private readonly completed = new Set<string>();
   private syncPicker = () => {};
   private region: LoadedRegion;
@@ -101,8 +105,10 @@ export class PlaySession {
     // (The session starts in the house, so its region carries their chair and routes.)
     const area = movementArea(region);
     [session.lilah, session.marc, session.pup] = await Promise.all([
-      Lilah.load(renderer, area), Marc.load(renderer, area, region.data.semantics), SunnyPup.load(renderer, area)]);
+      Lilah.load(renderer, area), Marc.load(renderer, area, region.data.semantics), Baxter.load(renderer, area)]);
     for (const member of [session.lilah, session.marc, session.pup]) scene.add(member.root);
+    scene.add(session.marc.dinner.tray);
+    session.connectFamily(region);
     session.placeAtStart();
     // Compile the lit house now so nightfall never stalls a frame.
     session.lighting?.prepare(renderer, camera.camera);
@@ -110,6 +116,20 @@ export class PlaySession {
     requestAnimationFrame(session.frame);
     return session;
   }
+
+  /** Hook the family into the house: Lilah's crib and targets, Baxter's bowl. */
+  private connectFamily(region: LoadedRegion) {
+    const routines = this.chores.routines, crib = propSpace(region.data.semantics, 'crib');
+    routines.lilah = this.lilah ?? null;
+    this.lilah?.setCrib((x, z) => crib.point(x, z));
+    // The bowl is a house fixture; its kibble and Baxter's visits follow wherever it is.
+    const bowl = region.root.getObjectByName('Puppy bowl'), at = bowl ? bowl.getWorldPosition(new Vector3()) : new Vector3(4.95, 0, 8.55);
+    routines.dogFood.position.x = at.x; routines.dogFood.position.z = at.z;
+    if (this.pup) this.pup.bowl = {position: {x: at.x, z: at.z}, hasFood: () => routines.hasDogFood, eat: () => routines.consumeDogFood()};
+  }
+
+  /** A short note in the HUD (e.g. Dad's dinner is ready). */
+  toast(text: string, seconds = 5) { this.toastText = text; this.toastUntil = performance.now() + seconds * 1000; }
 
   setRegion(region: LoadedRegion) {
     this.region = region; this.movement.setArea(movementArea(region)); this.placeAtStart();
@@ -157,9 +177,12 @@ export class PlaySession {
     this.sync(dt);
     const arianna = this.movement.position, surfaces = this.region.surfaces;
     const marc = this.marc?.position, pup = this.pup?.position;
-    this.lilah?.update(dt, arianna, surfaces, home, [...(marc ? [{...marc, space: .4}] : []), ...(pup ? [{...pup, space: .35}] : [])]);
-    this.marc?.update(dt, arianna, this.lilah?.position ?? null, surfaces, home);
-    this.pup?.update(dt, [arianna, ...[this.lilah?.position, this.marc?.position].filter(v => !!v)], surfaces, home);
+    // The family lives on the same clock as the day: paused while a menu is open.
+    const family = this.hud.modalOpen ? 0 : dt, s = this.day.state, everyday = chores.mode === 'day';
+    this.lilah?.update(family, arianna, surfaces, home, [...(marc ? [{...marc, space: .4}] : []), ...(pup ? [{...pup, space: .35}] : [])],
+      {minutes: s.minutes, phase: s.phase, asleep: !!s.lilahAsleep, everyday, beckoned: chores.activeTarget === 'play-lilah'});
+    this.marc?.update(family, arianna, this.lilah?.position ?? null, surfaces, home, {state: s, everyday, save: () => this.day.save(), toast: t => this.toast(t)});
+    this.pup?.update(family, [arianna, ...[this.lilah?.position, this.marc?.position].filter(v => !!v)], surfaces, home);
     // After dark at home in everyday life, the lamps come on and the sun sets (PlayCanvas main.ts).
     const night = home && chores.mode === 'day' && this.day.state.phase === 'night';
     this.lighting?.update(night, document.hidden ? 0 : dt);
@@ -189,8 +212,10 @@ export class PlaySession {
     return {location: this.location, day: s.day, time: this.day.clock.label, phase: s.phase, balance: this.day.balance,
       tasks: everyday ? this.day.clock.tasks : m.tasks, completed: this.completed, hint: everyday ? this.chores.dayHint ?? this.day.hint : this.chores.hint,
       timed: home && m.timed, remaining: `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`, urgent: seconds <= 10 && m.state === 'running',
-      clockNote: !home ? '' : m.timed && m.state === 'running' ? 'Your round timer keeps running while you browse.' : everyday ? 'Your day continues while you browse.' : '',
-      action: home ? this.chores.action : {ready: false, title: 'Action', detail: 'Come closer'}, message: this.day.message || this.day.problem};
+      // The day clock (and the family) pause behind menus (PlayCanvas said the day continued).
+      clockNote: !home ? '' : m.timed && m.state === 'running' ? 'Your round timer keeps running while you browse.' : everyday ? 'Your day waits while you browse.' : '',
+      action: home ? this.chores.action : {ready: false, title: 'Action', detail: 'Come closer'},
+      message: this.day.message || this.day.problem || (performance.now() < this.toastUntil ? this.toastText : '')};
   }
 
   /** "Choose an activity" in the menu (PlayCanvas mission picker, same ids and labels). */

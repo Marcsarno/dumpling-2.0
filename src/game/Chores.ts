@@ -16,6 +16,7 @@ import {DailyRoutines} from './DailyRoutines';
 import {addHouseProps} from './houseProps';
 import {PetCare, PET_TASKS} from './PetCare';
 import {ChoreAudio} from '../ui/ChoreAudio';
+import {tuckInTime} from './familyRules';
 import type {PathArea} from './HousePath';
 
 export type ChoreMode = 'day' | 'house' | 'bedroom' | 'pet' | 'practice';
@@ -64,6 +65,8 @@ export class Chores {
   private finishedHandled = false;
   private celebrated = false;
   private readonly announcement = document.createElement('p');
+  /** A soft dim while Lilah is tucked in (upgrade: PlayCanvas blacked the screen out, hiding her climb). */
+  private readonly bedtimeDim = document.createElement('div');
   readonly results = document.createElement('dialog');
   private readonly hands = new Vector3();
   private readonly rightHand = new Vector3();
@@ -94,11 +97,14 @@ export class Chores {
     this.results.addEventListener('cancel', e => e.preventDefault());
     this.results.querySelector('#replay')!.addEventListener('click', () => this.replay());
     this.results.querySelector('#results-day')!.addEventListener('click', () => this.configure('day'));
-    document.querySelector('#game')!.append(this.announcement, this.results);
+    this.bedtimeDim.id = 'bedtime-fade'; this.bedtimeDim.setAttribute('aria-hidden', 'true');
+    document.querySelector('#game')!.append(this.announcement, this.results, this.bedtimeDim);
     this.configure('day');
   }
 
   get carried() { return this.carry.item?.id ?? null; }
+  /** The chore she is doing or walking up to (PlayCanvas activeInteractionId; Dad and Lilah read it). */
+  get activeTarget() { return this.activity?.target.id ?? this.aligning?.id ?? null; }
   /** Movement is locked while an action plays or work is under way (walk-ups still move). */
   get movementLocked() { return this.animator.busy || !!this.activity; }
   get working() { return !!this.activity; }
@@ -177,7 +183,15 @@ export class Chores {
     this.mission.completed.clear(); for (const id of this.day.state.done) this.mission.completed.add(id);
   }
 
-  private refreshFocus() { this.interactions.update(this.movement.position as Vector3, this.carried, this.mission); }
+  private refreshFocus() {
+    this.interactions.update(this.movement.position as Vector3, this.carried, this.mission);
+    // Lilah following close by must not take the button from the chore Arianna is at.
+    if (this.interactions.focus?.id !== 'play-lilah') return;
+    const at = this.movement.position as Vector3, other = this.props.interactions
+      .filter(t => t.id !== 'play-lilah' && this.interactions.available(t, this.carried, this.mission) && this.interactions.distance(t, at) <= t.range)
+      .sort((a, b) => this.interactions.distance(a, at) - this.interactions.distance(b, at))[0];
+    if (other) this.interactions.focus = other;
+  }
 
   /** Action pressed (button, Space or E). */
   press = (now = performance.now()) => {
@@ -267,6 +281,19 @@ export class Chores {
       this.heightOverride = .07; this.animator.workClip = 'EatSit'; this.animator.faceTarget = seat.face;
       return;
     }
+    if (target.id === 'play-lilah') {
+      // Both sisters cheer together; Lilah stops and turns to her.
+      const lilah = this.routines.lilah;
+      if (!lilah?.playTogether(this.movement.position)) { this.activity = null; return; }
+      this.animator.workClip = 'Celebrate'; this.animator.faceTarget = lilah.position;
+      return;
+    }
+    if (target.id === 'lilah-bed') {
+      // Lilah climbs into her crib while Arianna tucks her in, under a soft dim.
+      if (!this.routines.lilah?.startTuck()) { this.activity = null; return; }
+      this.animator.workClip = 'Tuck'; this.animator.faceTarget = face;
+      return;
+    }
     this.animator.faceTarget = face;
     if (target.id.startsWith('wipe-')) this.animator.workClip = 'Wipe';
     else if (target.id.includes('vacuum')) this.animator.workClip = 'Vacuum';
@@ -287,6 +314,9 @@ export class Chores {
   private cancelActivity() {
     this.audio.stop();
     this.leaveSeat();
+    if (this.activity?.target.id === 'lilah-bed') this.routines.lilah?.cancelTuck();
+    // A fill cut short leaves the bowl as the saved day says (slice 4 left half-risen kibble).
+    if (this.activity?.target.id === 'feed-dog') this.routines.syncBowl();
     this.animator.workClip = null; this.animator.faceTarget = null;
     this.activity?.target.mess?.scale.setScalar(1);
     this.activity = null; this.progress = 0;
@@ -313,6 +343,9 @@ export class Chores {
   /** Per frame. `held`: is the action still held; `moving`: any movement input (starts the round timer). */
   update(now: number, held: boolean, moving: boolean) {
     if (!this.activity && !this.animator.busy) this.audio.stop();
+    this.routines.trackFamily();
+    const tucking = this.activity?.target.id === 'lilah-bed';
+    this.bedtimeDim.classList.toggle('on', tucking && this.progress < .86);
     this.syncDay();
     if (moving && this.mode !== 'day') this.mission.start(now);
     this.mission.tick(now); this.refreshFocus();
@@ -357,7 +390,7 @@ export class Chores {
       this.activity = null; this.progress = 0;
       this.routines.perform(target);
       this.leaveSeat();
-      this.feedback.reward(target.marker, target.task ? '+$1' : '✓', now);
+      this.feedback.reward(target.marker, target.task || target.id === 'lilah-bed' ? '+$1' : '✓', now);
       return;
     }
     this.cancelActivity();
@@ -412,6 +445,7 @@ export class Chores {
     if (pet && (item?.id === 'scooper' || pet.startsWith('🫧'))) return pet;
     if (item?.id === 'vacuum') return this.routines.dustLeft ? '✦ Go to the dust, then hold Action to vacuum.' : '↩ All vacuumed! Put the vacuum back in the utility room.';
     if (item?.id === 'paper-towel' && this.day.state.phase === 'afternoon') return '🧻 Hold Action over the kitchen spill to wipe it.';
+    if (!item && this.routines.lilah?.state === 'sleepy' && tuckInTime(this.day.state)) return '🌙 Lilah is sleepy. Tuck her in at her crib.';
     const chore = item && this.props.interactions.find(t => t.kind === 'place' && t.item === item.id);
     if (chore) return `${item.icon} Take ${item.name.toLowerCase()} to the ${chore.name.toLowerCase()}.`;
     return null;
@@ -444,5 +478,5 @@ export class Chores {
       targets: this.props.interactions.map(t => ({id: t.id, position: [t.anchor.x, 0, t.anchor.z], range: t.range}))};
   }
 
-  dispose() { this.audio.destroy(); this.feedback.dispose(); this.props.root.removeFromParent(); this.announcement.remove(); this.results.remove(); }
+  dispose() { this.bedtimeDim.remove(); this.audio.destroy(); this.feedback.dispose(); this.props.root.removeFromParent(); this.announcement.remove(); this.results.remove(); }
 }

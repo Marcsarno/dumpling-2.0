@@ -6,6 +6,7 @@ import type {RegionSemantics} from '../world/format';
 import {propSpace} from '../world/propSpace';
 import {HousePath, type FloorPoint, type PathArea} from './HousePath';
 import {SpeechLabel} from './SpeechLabel';
+import {FamilyDinner, type DinnerDay} from './FamilyDinner';
 
 /** His reading chair in the living room, authored against the chair prop (PlayCanvas Marc.ts). */
 const SEAT = {x: 4.5, z: 7.35}, SEAT_YAW = -35;
@@ -17,21 +18,23 @@ const REMARKS = ['Need a hand, sweetie?', 'I came. I saw. I stepped on a block.'
   'My coffee has been reheated three times. A new record.', 'The laundry and I are in a long-term relationship.', 'Nice collecting, sweetie. I collect missing socks.'];
 /** He gives Arianna and Lilah room (PlayCanvas: 0.6 m and 0.48 m). */
 const ROOM_ARIANNA = .6, ROOM_LILAH = .48;
-type State = 'idle' | 'walking' | 'sitting-down' | 'seated' | 'standing-up';
+type State = 'idle' | 'walking' | 'sitting-down' | 'seated' | 'standing-up' | 'dining';
 
 /**
  * Marc (Dad), 1.3 x Arianna's height: household presence only, never Arianna's chores or
  * money. He alternates between his reading chair (18 s seated) and a patrol of the house,
- * and chats when Arianna is near. Dinner and tidying Lilah's messes arrive with the daily
- * loop (P2) on top of this.
+ * and chats when Arianna is near. Once a day he serves dinner (FamilyDinner), standing up
+ * from his chair when it is time; while he serves, his own routine and remarks wait.
  *
- * Upgrade: his turns are smoothed by the shared animator instead of snapping each frame.
+ * Upgrades: his turns are smoothed by the shared animator instead of snapping each frame;
+ * once Lilah is asleep he keeps his voice down and his patrol skips her nursery.
  */
 export class Marc {
   readonly root = new Group();
   animator!: CharacterAnimator;
   character!: LoadedCharacter;
   socket!: CarrySocket;
+  dinner!: FamilyDinner;
   private planner: HousePath;
   private seat!: ReturnType<typeof propSpace>;
   private route: FloorPoint[] = [];
@@ -61,6 +64,8 @@ export class Marc {
     const hand = (n: string) => marc.character.bones.get(n)!;
     marc.socket = new CarrySocket(marc.character.root, [hand('LeftHand'), hand('RightHand')]);
     marc.root.position.set(3.5, 0, 6.2);
+    marc.dinner = new FamilyDinner({root: marc.root, animator: marc.animator, socket: marc.socket, planner: () => marc.planner, say: t => marc.say(t),
+      dining: propSpace(semantics, 'dining'), fridge: propSpace(semantics, 'fridge')}, base);
     return marc;
   }
 
@@ -81,12 +86,23 @@ export class Marc {
     this.animator.idleClip = 'Idle'; this.animator.playAction('StandUp');
   }
 
-  update(dt: number, arianna: FloorPoint, lilah: FloorPoint | null, surfaces: GroundSurface[], active: boolean) {
+  update(dt: number, arianna: FloorPoint, lilah: FloorPoint | null, surfaces: GroundSurface[], active: boolean, day?: DinnerDay) {
     this.root.visible = active;
     this.velocity.x = this.velocity.z = 0;
     if (!active) { this.label.hide(); return; }
     this.time += dt;
     const entry = this.seat.point(ENTRY.x, ENTRY.z), seated = this.seat.point(SEATED.x, SEATED.z), yaw = this.seat.yaw(SEAT_YAW);
+    const quiet = !!day?.state.lilahAsleep;
+    if (day) {
+      // Dinner time: up from the reading chair, then dinner runs him until it is served.
+      if (this.state === 'seated' && this.dinner.due(day)) this.stand();
+      const canStart = (this.state === 'idle' || this.state === 'walking') && !this.animator.busy;
+      if (this.dinner.update(dt, day, canStart, lilah ? [arianna, lilah] : [arianna], this.velocity)) {
+        this.route = []; this.state = 'dining'; this.purpose = 'wander'; this.until = this.time + 4;
+        this.finishFrame(dt, surfaces); return;
+      }
+      if (this.state === 'dining') { this.state = 'idle'; this.until = this.time + 4; }
+    }
     if (this.state === 'walking') this.walk(dt, arianna, lilah, yaw);
     else if (this.state === 'sitting-down' || this.state === 'standing-up') {
       const down = this.state === 'sitting-down', t = Math.min(1, (this.time - this.transitionStart) / (down ? 1.3 : 1)), k = t * t * (3 - 2 * t);
@@ -98,12 +114,20 @@ export class Marc {
     } else if (this.state === 'seated') { if (this.time >= this.until) this.stand(); }
     else if (this.time >= this.until) {
       // Chair, then the next patrol point, then back to the chair.
-      if (this.purpose === 'seat') { if (!this.go(PATROL[this.patrolIndex++ % PATROL.length], 'wander')) this.until = this.time + 3; }
+      if (this.purpose === 'seat') {
+        let next = PATROL[this.patrolIndex++ % PATROL.length];
+        if (quiet && next.x > 6.5 && next.z < 3.6) next = PATROL[this.patrolIndex++ % PATROL.length]; // let Lilah sleep
+        if (!this.go(next, 'wander')) this.until = this.time + 3;
+      }
       else if (!this.go(entry, 'seat')) this.until = this.time + 3;
     }
     // His first destination is the chair.
     if (this.time < 2 && this.state === 'idle' && this.purpose === 'seat') this.go(entry, 'seat');
-    if (this.time >= this.nextSpeech && Math.hypot(arianna.x - this.root.position.x, arianna.z - this.root.position.z) < 5) this.say(REMARKS[this.lineIndex++ % REMARKS.length]);
+    if (!quiet && this.time >= this.nextSpeech && Math.hypot(arianna.x - this.root.position.x, arianna.z - this.root.position.z) < 5) this.say(REMARKS[this.lineIndex++ % REMARKS.length]);
+    this.finishFrame(dt, surfaces);
+  }
+
+  private finishFrame(dt: number, surfaces: GroundSurface[]) {
     this.root.position.y = groundHeight(surfaces, this.root.position.x, this.root.position.z);
     this.animator.update(dt, this.velocity);
     this.socket.update();
@@ -136,7 +160,8 @@ export class Marc {
 
   snapshot(renderer: WebGLRenderer) {
     return {position: [this.root.position.x, this.root.position.y, this.root.position.z], state: this.state, purpose: this.purpose, sits: this.sits,
-      speech: this.speech, routeLength: this.route.length, visible: this.root.visible, animation: this.animator.snapshot(), quality: characterQuality(this.character, renderer)};
+      speech: this.speech, routeLength: this.route.length, visible: this.root.visible, animation: this.animator.snapshot(), quality: characterQuality(this.character, renderer),
+      dinner: this.dinner.snapshot()};
   }
-  dispose() { this.label.dispose(); this.root.removeFromParent(); }
+  dispose() { this.label.dispose(); this.dinner.dispose(); this.root.removeFromParent(); }
 }

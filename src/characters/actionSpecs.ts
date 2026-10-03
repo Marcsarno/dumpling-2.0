@@ -86,6 +86,16 @@ export const ACTIONS: ActionSpec[] = [
     {t: .98, hips: [0, -.19, -.04], crouch: .5, lean: 42, head: [24, -2], ...sym([.05, .34, .36], 70)},
     {t: 1.1, ease: 'inOut', hips: [0, -.16, -.03], crouch: .45, lean: 34, head: [18, 0], ...sym([.05, .38, .32], 30)},
     standing(1.4)]},
+  // Tucking Lilah in (3.2 s, matched to her climb into the crib): lean over the rail and
+  // smooth the blanket with a few gentle pats, then straighten up. Elbows stay in (jacket-safe).
+  {name: 'Tuck', duration: 3.2, breathe: .3, keys: [
+    standing(0),
+    {t: .7, ease: 'out', lean: 26, head: [24, 0], ...sym([.08, .74, .36], 15)},
+    {t: 1.25, lean: 30, head: [28, 2], ...sym([.08, .67, .41], 25)},
+    {t: 1.65, lean: 29, head: [27, -2], ...sym([.08, .72, .39], 20)},
+    {t: 2.05, lean: 30, head: [28, 2], ...sym([.08, .67, .41], 25)},
+    {t: 2.45, lean: 27, head: [25, 0], ...sym([.08, .73, .37], 18)},
+    standing(3.2)]},
   // Reading: the book held open at chest height, head bowed to the page.
   {name: 'Read', duration: 2.4, loop: true, keys: [
     {t: 0, head: [24, 2], ...sym([.09, .74, .27], 25)},

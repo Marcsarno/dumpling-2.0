@@ -128,7 +128,7 @@ Browser tests keep the PlayCanvas ids (`#action-button`, `#joystick`) and the `_
 ### Slice 4 — afternoon chores, pet care and timed missions (2026-09-29)
 
 - **`src/game/houseProps.ts`**: the ten PlayCanvas carry-and-put-away pairs (shoes, mail, living-room toy, cushion, dish, trash, dirty and clean laundry, bath towel, toiletries), built from primitives exactly as PlayCanvas builds them, with Editor anchor/marker/placement edits applied. The drop-off fixtures come from the converted house. The towel hangs on the rack; trash and laundry go inside.
-- **`src/game/PetCare.ts`** (PlayCanvas PetCleanup): take the scooper from the landing, scoop, flush (the poop swirls away) and wash hands. Only washing completes the task, and once the poop is flushed nothing else is offered until her hands are clean (the vendored `InteractionSystem` guard). Sunny stays the roaming `SunnyPup`; PlayCanvas kept a second, static dog here.
+- **`src/game/PetCare.ts`** (PlayCanvas PetCleanup): take the scooper from the landing, scoop, flush (the poop swirls away) and wash hands. Only washing completes the task, and once the poop is flushed nothing else is offered until her hands are clean (the vendored `InteractionSystem` guard). The puppy is the one roaming dog, as in PlayCanvas (corrected in slice 6: PlayCanvas did not have a second dog).
 - **`DailyRoutines`**: the afternoon's three dust piles at their saved `DUST_LOCATIONS`, fetching the vacuum (`daily-vacuum`), holding to vacuum each pile (`vacuum-0..2`) and putting it back; filling the puppy's bowl (`feed-dog`, 1.4 s) with the kibble state `dogFoodEmpty` ready for Sunny's bowl in slice 6. The vacuum only comes out in the afternoon.
 - **`Chores`**:
   - Modes `house` (six of eleven chores, $6 + $2 bonus = $8), `bedroom` ($7), `pet` ($1 + $2 = $3) and `practice` (Explore: all 16 chores, no timer, no allowance).
@@ -179,3 +179,34 @@ Browser tests keep the PlayCanvas ids (`#action-button`, `#joystick`) and the `_
 - **Tests:**
   - `tests/browser/night-house.mjs`: lamps off by day; the 1.2 s fade; the authored strengths; shade glow; dusk; no shader compiled at nightfall; the garden flagged outdoors; captures of seven rooms at night; the settings dialog saves, and nothing draws behind it; music routed through its gain node, playing the right track per phase; back to full sun in the afternoon.
   - `tests/baseline/capture-playcanvas-night.mjs` captures PlayCanvas at night for comparison (`artifacts/baseline/night/`).
+
+### Slice 6 — family life (2026-10-01/02, built, tested and pushed)
+
+Owner decisions: Baxter's half of fetch now, with the toss in slice 7; Lilah's daily messes left out, as in the shipped game. The dog is **Baxter** (a boy); PlayCanvas and its assets call him "Sunny pup".
+
+- **`familyRules.ts`** holds the pure rules (node test `family-rules.test.mjs`): the dinner schedule and menu, the bowl rule, the tuck-in window, and a continuous crib path.
+- **Lilah** (`Lilah.ts`, `restPose.ts`):
+  - At 6:15 PM she gets sleepy and toddles to the crib at 0.5 m/s, then asks "Tuck me in, Ari?".
+  - The tuck-in ("Put Lilah to bed", 3.2 s) has her climb in. `SleepEnter` and `Sleep` are generated on her own rig, as in PlayCanvas RestingPose. Arianna plays the new `Tuck` motion from the crib's long front side, under a soft dim.
+  - It pays $1 by receipt `day-{d}-lilah-bed`; the dollar is credited before `lilahAsleep` is saved.
+  - She stays asleep through a reload, silently, and wakes at the crib the next day.
+  - "Play with Lilah": both cheer (Celebrate), with varied lines and a 6 s cooldown. She waits while Arianna walks over, and it never takes the button from a nearby chore.
+- **Dad's dinner** (`FamilyDinner.ts`, `Marc.ts`): the PlayCanvas stages, from the fridge (new `Reach` clip) to carry, place, saving `dinnerServed`, sitting and standing; the menu rotates pizza, taco, turkey. Upgrades:
+  - he steps around children instead of stalling;
+  - a HUD toast says the dinner is served;
+  - a dinner missed in the afternoon is served until 8 PM;
+  - he goes quiet once Lilah is asleep.
+- **Baxter** (`Baxter.ts`, renamed from SunnyPup): bowl visits read the saved day (`DailyRoutines.hasDogFood` / `consumeDogFood`), and the bowl position comes from the house's 'Puppy bowl' node. Fetch API: `fetchToy(toy, player, drop)`.
+- **Fixes:**
+  - The slice-4 bug where a cancelled bowl fill left the kibble half-risen.
+  - The family pauses with the clock behind menus; the HUD note now says "Your day waits while you browse".
+  - Wrong ledger note about a second PlayCanvas dog.
+- **Tests:**
+  - `family-life.mjs` (new): play, the sleepy walk, the tuck-in with reload and the next morning, dinner with reload, Baxter's bowl and his fetch.
+  - `full-day.mjs` now pays **$12** with 12 receipts.
+  - All 13 browser suites and 24 node files pass.
+- **Review videos:**
+  - `artifacts/play/family-life.webm` (`node tests/browser/record-home-play.mjs life`)
+  - `artifacts/motion/family-review.webm` and `lilah-review.webm` (`record-motion-video.mjs family|lilah`)
+  - Frame grabs: `tests/browser/video-frames.mjs`
+- **Remaining before commit:** the owner's video review. The multi-agent review pass was stopped part-way at the owner's request; a lighter self-review is optional.

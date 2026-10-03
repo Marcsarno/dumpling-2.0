@@ -1,8 +1,10 @@
 // A whole household day with real key presses (disposable headless Edge, 390x844 @3x):
 // the morning routine, school, the five afternoon chores (vacuuming two dust piles, two house
-// chores and pet care), the night routine, and bed. The routine pays $11 once; tucking Lilah
-// in (slice 6) makes it the full $12. Also: a reload mid-afternoon keeps finished chores done
+// chores and pet care), the night routine, tucking Lilah in, and bed. The day pays the full
+// $12 once (11 routines + the tuck-in). Also: a reload mid-afternoon keeps finished chores done
 // and tidied; a second afternoon covers the spill, the puppy's bowl and the other place styles.
+// Dad's dinner is marked served up front so he isn't walking through the scripted chores
+// (family-life.mjs covers it).
 import assert from 'node:assert/strict';
 import {resolve} from 'node:path';
 import {openGame, out} from './lib/chore-driver.mjs';
@@ -12,8 +14,8 @@ try {
   const day = async () => (await snap()).day;
   const setAfternoon = tasks => page.evaluate(tasks => {
     const s = window.__player.session();
-    Object.assign(s.day.state, {phase: 'afternoon', minutes: 900, done: [], afternoonTasks: tasks, petTask: tasks.includes('feed-dog') ? 'feed-dog' : 'pet-care', dogFoodEmpty: false});
-    s.day.save(); s.chores.dayChanged();
+    Object.assign(s.day.state, {phase: 'afternoon', minutes: 900, done: [], afternoonTasks: tasks, petTask: tasks.includes('feed-dog') ? 'feed-dog' : 'pet-care', dogFoodEmpty: false, dinnerServed: true});
+    s.day.update(0, false); s.day.save(); s.chores.dayChanged();
   }, tasks);
   let d = await day();
   assert.deepEqual([d.day, d.phase], [1, 'morning']);
@@ -78,12 +80,18 @@ try {
   await page.evaluate(() => { window.__player.session().day.state.minutes = 1139.6; });
   await page.waitForFunction(() => window.__player.snapshot().day.phase === 'night', undefined, {timeout: 6000});
   await doIt('daily-teeth'); await doIt('night-clothes'); await doIt('clothes-drawer'); await doIt('bedtime-book');
-  d = await day(); assert.equal(d.balance, money + 11, 'the day routine pays $11 (tucking Lilah in adds the twelfth dollar in slice 6)');
+  d = await day(); assert.equal(d.balance, money + 11, 'eleven routines');
+  // Lilah is sleepy and waiting at her crib (brought close to keep the test short).
+  await page.evaluate(() => window.__player.session().lilah.place(8.4, -.9));
+  await page.waitForFunction(() => window.__player.snapshot().lilah.tuckable, undefined, {timeout: 20000});
+  await doIt('lilah-bed');
+  await page.waitForFunction(() => window.__player.snapshot().lilah.state === 'sleeping', undefined, {timeout: 5000});
+  d = await day(); assert.equal(d.balance, money + 12, 'the day routine pays $12');
   await doIt('sleep');
   await page.waitForFunction(() => window.__player.snapshot().day.day === 2, undefined, {timeout: 10000});
-  d = await day(); assert.equal(d.balance, money + 11, 'nothing paid twice');
+  d = await day(); assert.equal(d.balance, money + 12, 'nothing paid twice');
   const receipts = await page.evaluate(() => JSON.parse(localStorage.getItem('dumpling.three.progress.v1')).creditedRounds);
-  assert.equal(receipts.filter(r => r.startsWith('day-1-')).length, 11, 'one receipt per routine');
+  assert.equal(receipts.filter(r => r.startsWith('day-1-')).length, 12, 'one receipt per routine and the tuck-in');
   await page.waitForTimeout(400); await idle();
 
   // Afternoon B (day 2): the spill, the book, laundry, the towel rack and the puppy's bowl.
@@ -109,5 +117,5 @@ try {
   d = await day(); assert.equal(d.ready, true); assert.equal(d.balance, before + 5);
   await page.screenshot({path: resolve(out, 'afternoon-13-done.png')});
   assert.deepEqual(errors, []);
-  console.log('PASS full-day:', JSON.stringify({routine: 11, afternoonB: d.balance - before, balance: d.balance}));
+  console.log('PASS full-day:', JSON.stringify({routine: 12, afternoonB: d.balance - before, balance: d.balance}));
 } finally { await close(); }

@@ -7,6 +7,9 @@ import type {DayLoop} from './DayLoop';
 import type {CarrySystem} from './CarrySystem';
 import type {CleanupItem, CleanupProps, Interaction} from './cleanupProps';
 import {importProp} from './importProp';
+import type {Lilah} from './Lilah';
+import {LILAH} from '../characters/Arianna';
+import {CRIB_ENTRY_SECONDS, LILAH_BED_RECEIPT, bowlHasFood, tuckInTime} from './familyRules';
 
 /** House palette used by the routine props (PlayCanvas bedroom.ts materials). */
 const M = {trim: '#fff1df', pink: '#e99db9', yellow: '#f3d68f', blue: '#9cbed5', dark: '#76647e', sky: '#c4e4ea'};
@@ -16,7 +19,7 @@ const M = {trim: '#fff1df', pink: '#e99db9', yellow: '#f3d68f', blue: '#9cbed5',
  * putting away clothes, the breakfast chain (take an egg, crack it — half the time it drops
  * and needs a paper towel — cook, carry, serve, sit and eat), the afternoon vacuuming (three
  * dust piles, placed by the saved day), filling the puppy's bowl, the bedtime book, going to
- * bed, and leaving for school. Each routine is a 'daily' interaction whose availability follows
+ * bed, and leaving for school. Family life adds playing with Lilah and tucking her in. Each routine is a 'daily' interaction whose availability follows
  * the saved day, so a reload puts every prop back where the day left it.
  *
  * Static fixtures (pan, toothbrush cup, drawers, dog bowl) are already part of the converted
@@ -34,6 +37,8 @@ export class DailyRoutines {
   private eggFall = 0;
   active = false;
   onSchool: () => void = () => {};
+  /** Lilah, once the family has loaded (her targets wait for her). */
+  lilah: Lilah | null = null;
   private readonly stove; private readonly dining; private readonly bed;
 
   constructor(private readonly props: CleanupProps, semantics: RegionSemantics, private readonly day: DayLoop, private readonly carry: CarrySystem, base: string) {
@@ -110,6 +115,14 @@ export class DailyRoutines {
     for (let i = 0; i < 3; i++) target('vacuum-' + i, 'Hold to vacuum', '✦', [0, 0, 0], [0, .3, 0], h => h === 'vacuum' && phase() === 'afternoon' && this.needs('dust-' + i), 1150, 'dust-' + i, true, this.dust[i]);
     target('put-tool-away', 'Put tool away', '↩', [0, 0, 0], [0, .8, 0], h => h === 'vacuum' || h === 'paper-towel', 0);
     target('bedtime-book', 'Read a bedtime book', '📘', [-.85, 0, -.8], [-1.4, .9, -.8], h => !h && phase() === 'night' && notDone('read'), 1600, 'read');
+    // Family life (PlayCanvas DailyLife): play follows Lilah around; the tuck-in is at her crib.
+    target('play-lilah', 'Play with Lilah', '💕', [0, 0, 0], [0, 1, 0], h => !h && !!this.lilah?.canPlay, 1000);
+    props.interactions.at(-1)!.range = 1.1;
+    // Upgrade: Arianna tucks her in from the crib's long front side, leaning over the rail
+    // (PlayCanvas stood her at the crib's foot); the moon floats over Lilah's pillow.
+    const crib = propSpace(semantics, 'crib'), c = (x: number, y: number, z: number): Triple => { const p = crib.point(x, z); return [p.x, y, p.z]; };
+    target('lilah-bed', 'Put Lilah to bed', '🌙', c(9.8, 0, -.35), c(9.8, .95, -1.7), h => !h && tuckInTime(s()) && !!this.lilah?.tuckable, CRIB_ENTRY_SECONDS * 1000);
+    props.interactions.at(-1)!.placement = c(9.8, .9, -.72);
     target('school-door', 'Go to school', '🎒', [-2.35, 0, 8.2], [-3.1, 1.1, 8.2], h => !h && this.day.clock.schoolDue, 0);
     target('sleep', 'Go to bed', '🌙', [-.85, 0, -1.6], [-1.4, .8, -1.6], h => !h && this.canSleep, 6500);
     // Editor overrides (anchor:/marker:/placement: tags) for routine targets.
@@ -124,6 +137,24 @@ export class DailyRoutines {
   }
 
   private at(space: ReturnType<typeof propSpace>, [x, y, z]: Triple): Triple { const p = space.point(x, z); return [p.x, y, p.z]; }
+  /** Is there kibble in the bowl? From the saved day, in everyday life only (not the mesh). */
+  get hasDogFood() { return this.active && bowlHasFood(this.day.state); }
+  /** The pup ate: the bowl is empty until it is filled again (PlayCanvas consumeDogFood). */
+  consumeDogFood() {
+    if (!this.hasDogFood) return false;
+    this.day.state.dogFoodEmpty = true; this.dogFood.visible = false; this.day.save();
+    return true;
+  }
+  /** Put the kibble back to what the saved day says (after a cancelled fill, a meal or a reload). */
+  syncBowl() { this.dogFood.visible = bowlHasFood(this.day.state); this.dogFood.scale.set(.33, .055, .33); this.kibbleScoop.visible = false; }
+
+  /** Keep Lilah's play target on her (PlayCanvas copied her position into the anchor each frame). */
+  trackFamily() {
+    const play = this.props.interactions.find(t => t.id === 'play-lilah')!, l = this.lilah;
+    if (!l) return;
+    const p = l.position; play.anchor.set(p.x, 0, p.z); play.marker.set(p.x, LILAH.displayHeight + .08, p.z);
+  }
+
   /** Any of today's dust piles still to vacuum. */
   get dustLeft() { return [0, 1, 2].some(i => this.needs('dust-' + i)); }
   private needs(id: string) { return this.day.clock.tasks.some(t => t.id === id) && !this.day.state.done.includes(id); }
@@ -145,8 +176,7 @@ export class DailyRoutines {
       this.dust[i].position.set(x, .04, z); t.anchor.set(x, 0, z); t.marker.set(x, .35, z);
       this.dust[i].visible = st.phase === 'afternoon' && this.needs('dust-' + i);
     }
-    this.dogFood.visible = !st.dogFoodEmpty && (st.done.includes('feed-dog') || st.phase !== 'afternoon' || st.petTask !== 'feed-dog');
-    this.dogFood.scale.set(.33, .055, .33);
+    this.syncBowl();
     // The vacuum lives in the utility room and comes out for the afternoon chores.
     const vacuum = this.props.items.find(i => i.id === 'vacuum')!;
     if (this.active && this.carry.item !== vacuum) vacuum.object.visible = st.phase === 'afternoon';
@@ -191,6 +221,8 @@ export class DailyRoutines {
       case 'get-dressed': case 'clothes-drawer': release(); break;
       case 'school-door': if (this.day.clock.goSchool()) this.onSchool(); break;
       case 'sleep': if (this.canSleep) this.day.sleep(true); break;
+      // The $1 is credited before Lilah is saved asleep, so a failed save can never lose it.
+      case 'lilah-bed': if (!st.lilahAsleep) { this.day.credit(LILAH_BED_RECEIPT(st.day), 1); st.lilahAsleep = true; } break;
     }
     if (target.task) this.day.complete(target.task);
     if (target.mess) target.mess.visible = false;

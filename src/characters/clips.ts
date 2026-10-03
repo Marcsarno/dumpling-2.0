@@ -1,9 +1,10 @@
-import {AnimationClip, type KeyframeTrack} from 'three';
+import {AnimationClip, Euler, Quaternion, type KeyframeTrack} from 'three';
 import type {LoadedCharacter} from './Arianna';
 import {Poser} from './pose';
 import {balancedRun} from './run';
 import {ActionBaker} from './actions';
 import {ACTIONS} from './actionSpecs';
+import {restClips, LILAH_REST} from './restPose';
 
 /**
  * Arianna's motion library. Authored clips come from her untouched GLB; derived clips
@@ -47,7 +48,8 @@ export function buildClipLibrary(character: LoadedCharacter): ClipLibrary {
 /**
  * Lilah's motion library: her own eight authored clips, untouched (PlayCanvas Lilah.ts).
  * One-shots and their gameplay events are marked on the clip; PickUp and PutDown play at
- * 3x (2.4 s authored, 0.8 s in play) via the animator's action rate.
+ * 3x (2.4 s authored, 0.8 s in play) via the animator's action rate. Sleep and SleepEnter
+ * are generated on her own rig at load (PlayCanvas RestingPose; restPose.ts).
  */
 export const LILAH_ACTION_RATE: Record<string, number> = {PickUp: 3, PutDown: 3};
 export const LILAH_WALK_SPEED = .7;
@@ -60,7 +62,9 @@ export function buildLilahClips(character: LoadedCharacter): ClipLibrary {
     clip.userData = {loop: !['PickUp', 'PutDown', 'Celebrate'].includes(clip.name), events: events[clip.name] ?? []};
     return clip;
   });
-  return {clips, notes: {PickUp: 'Authored; plays at 3x (0.8 s), take-toy at 1.1 s clip time.', PutDown: 'Authored; plays at 3x (0.8 s), drop-toy at 1.3 s clip time.'}};
+  clips.push(...restClips(character, clips.find(c => c.name === 'Idle')!, LILAH_REST));
+  return {clips, notes: {PickUp: 'Authored; plays at 3x (0.8 s), take-toy at 1.1 s clip time.', PutDown: 'Authored; plays at 3x (0.8 s), drop-toy at 1.3 s clip time.',
+    Sleep: 'Generated: CMU 140_08 resting flex, lying face-up, 4 s breath.', SleepEnter: 'Generated: 3.2 s climb into the crib (reach, tuck, sit, recline).'}};
 }
 
 /**
@@ -88,5 +92,17 @@ export function buildMarcClips(character: LoadedCharacter): ClipLibrary {
     return c;
   }));
   hold.userData = {loop: true, events: []};
-  return {clips: [...clips, walk, hold], notes: {Walk: 'Walk_Basic (Quaternius Walk_Loop retargeted), as PlayCanvas.', CarryIdle: 'CarryWalk first frame, held.'}};
+  // Reach: Idle with a forward lean spread down the spine and neck, for taking dinner out of
+  // the fridge (PlayCanvas 'Cleaning' bent one spine joint 24°; spread, it reads as a reach).
+  const lean: Record<string, number> = {Spine02: 13, Spine01: 9, Spine: 5, neck: 7};
+  const idle = character.clips.find(c => c.name === 'Idle')!;
+  const reach = new AnimationClip('Reach', 0, fromFirstKey(idle, 'Reach').tracks.map(t => {
+    const [bone, property] = t.name.split('.'), degrees = lean[bone];
+    if (property !== 'quaternion' || !degrees) return t;
+    const c = t.clone() as KeyframeTrack, bend = new Quaternion().setFromEuler(new Euler(degrees * Math.PI / 180, 0, 0)), q = new Quaternion();
+    for (let i = 0; i < c.values.length; i += 4) { q.fromArray(c.values, i).multiply(bend); q.toArray(c.values as unknown as number[], i); }
+    return c;
+  }));
+  reach.resetDuration(); reach.userData = {loop: true, events: []};
+  return {clips: [...clips, walk, hold, reach], notes: {Walk: 'Walk_Basic (Quaternius Walk_Loop retargeted), as PlayCanvas.', CarryIdle: 'CarryWalk first frame, held.', Reach: 'Idle with a 34° lean spread over the spine and neck.'}};
 }

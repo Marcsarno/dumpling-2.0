@@ -36,7 +36,14 @@ export function driver(page) {
   const idle = () => page.waitForFunction(() => { const c = window.__player.snapshot().cleanup; return !c.aligning && !c.working && !window.__player.session().animator.busy; }, undefined, {timeout: 12000});
   const offered = async id => {
     await page.waitForFunction(id => document.querySelector('#action-button')?.dataset.target === id, id, {timeout: 5000})
-      .catch(async () => { throw Error(`${id} not offered (focus ${(await snap()).cleanup.focus})`); });
+      .catch(async () => {
+        const why = await page.evaluate(id => {
+          const s = window.__player.session(), c = s.chores, t = c.props.interactions.find(t => t.id === id);
+          return {focus: c.interactions.focus?.id ?? null, available: c.interactions.available(t, c.carried, c.mission), distance: +c.interactions.distance(t, s.movement.position).toFixed(2),
+            range: t.range, carrying: c.carried, busy: s.animator.busy, working: c.working, aligning: c.aligning?.id ?? null, mission: c.mission.state, modal: s.hud.modalOpen};
+        }, id);
+        throw Error(`${id} not offered: ${JSON.stringify(why)}`);
+      });
   };
   /** Use a target: `hold` keeps Space down until the work finishes; `during` runs mid-work (e.g. a screenshot). */
   const doIt = async (id, {hold = false, during} = {}) => {

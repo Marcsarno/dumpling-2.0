@@ -88,3 +88,7 @@ body[data-playing] .controls{display:flex}
 .sound-settings .audio-mutes button[aria-pressed=false]{background:#fff;color:#8a7b94}
 .sound-settings .sound-note{font-size:13px;color:var(--muted-ink);margin:0 0 6px}
 .sound-settings .adventure-resume{margin-top:16px}
+/* Tucking Lilah in: a soft evening dim under the HUD (PlayCanvas blacked the screen out). */
+#bedtime-fade{position:absolute;inset:0;z-index:3;background:#161325;opacity:0;pointer-events:none;transition:opacity .8s ease}
+#bedtime-fade.on{opacity:.42}
+@media(prefers-reduced-motion:reduce){#bedtime-fade{transition:none}}
